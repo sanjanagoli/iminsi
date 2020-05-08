@@ -1,6 +1,6 @@
-# Project Name
+# Project Name: Iminsi
 
-![Team Photo](Insert a Team Photo URL here)
+![Team Photo](Screen Shot 2020-05-05 at 4.06.21 PM.png)
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 TODO: short project description, some sample screenshots or mockups
