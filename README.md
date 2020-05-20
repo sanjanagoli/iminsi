@@ -4,6 +4,10 @@
 
 TODO: short project description, some sample screenshots or mockups
 
+## Notes
+
+In order to run, `cd project-iminsi/iminsi` and run `expo start` in terminal
+
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
