@@ -26,7 +26,6 @@ const BottomNavigation = () => {
         {/* <Tab.Screen name="For You" component={ForYouScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="Verified" component={VerifiedScreen} /> */}
-        <Tab.Screen name="For You" component={AboutTab} />
         <Tab.Screen name="Profile" component={AboutTab} />
         <Tab.Screen name="Verified" component={SearchTab} />
       </Tab.Navigator>
