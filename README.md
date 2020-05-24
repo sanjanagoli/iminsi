@@ -4,9 +4,9 @@
 
 TODO: short project description, some sample screenshots or mockups
 
-## Notes
-
-In order to run, `cd project-iminsi/iminsi` and run `expo start` in terminal
+## Run Project
+`cd project-iminsi/iminsi`
+Run `expo start` in terminal (need to have Xcode simulator downloaded)
 
 ## Architecture
 
