@@ -26,8 +26,9 @@ const getArticle = (articleID) => {
 
 const getArticles = () => {
   return (dispatch) => {
-    articleRequest.getArticles()
+    articleRequest.getAllArticles()
       .then((response) => {
+        console.log(response);
         dispatch({ type: ActionTypes.GET_ARTICLES, payload: { data: response } });
       })
       .catch((error) => {

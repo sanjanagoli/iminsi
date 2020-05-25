@@ -10,6 +10,8 @@ const UserReducer = (state = initialState, action) => {
       return { ...state, user: action.payload.data };
     case ActionTypes.DEAUTH_USER:
       return { ...state, user: {} };
+    case ActionTypes.UPDATE_USER:
+      return { ...state, user: {} };
     case ActionTypes.AUTH_ERROR:
       return { ...state, error: action.payload };
     default:

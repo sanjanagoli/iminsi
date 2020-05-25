@@ -7,6 +7,6 @@ export default StyleSheet.create({
   },
   contentContainer: {
     width: '100%',
-    paddingTop: 15,
+    paddingTop: 50,
   },
 });

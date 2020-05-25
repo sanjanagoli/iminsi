@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+// import { View, Text } from 'react-native';
 // import HTML from 'react-native-render-html';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -22,9 +22,7 @@ export default function App(props) {
   // `;
   return (
     <Provider store={store}>
-      <View>
-        <BottomNavigation />
-      </View>
+      <BottomNavigation />
     </Provider>
   );
 }

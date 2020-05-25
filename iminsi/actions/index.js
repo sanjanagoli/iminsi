@@ -12,6 +12,7 @@ import {
   ActionTypes as userActionTypes,
   signUpUser,
   signInUser,
+  updateUser,
 } from './user';
 
 
@@ -35,4 +36,5 @@ export {
   decrementScore,
   signUpUser,
   signInUser,
+  updateUser,
 };

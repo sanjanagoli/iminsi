@@ -6,6 +6,7 @@ const initialState = {
 };
 
 const ArticleReducer = (state = initialState, action) => {
+  console.log('reducer', action.type, action.payload);
   switch (action.type) {
     case ActionTypes.GET_ARTICLES:
       return { ...state, articles: action.payload.data };

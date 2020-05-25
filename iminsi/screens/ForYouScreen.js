@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getArticles } from '../actions/index';
-import styles from '../stylesheets/LoginStyle';
+import styles from '../stylesheets/ForYouStyle';
 
 class ForYouScreen extends Component {
   constructor(props) {
@@ -20,10 +20,16 @@ class ForYouScreen extends Component {
   }
 
   render() {
-    console.log(this.props.articles);
+    // eslint-disable-next-line prefer-destructuring
+    console.log(` in component ${this.props.articles}`);
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>Profile page</Text>
+        <Text>
+          {' '}
+          Hello world
+          {' '}
+          {JSON.stringify(this.props.articles)}
+        </Text>
       </ScrollView>
     );
   }
