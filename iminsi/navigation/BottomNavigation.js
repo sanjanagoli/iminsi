@@ -18,7 +18,6 @@ import VerifiedScreen from '../screens/VerifiedScreen';
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
-  console.log('bye');
   return (
     <>
       <NavigationContainer>

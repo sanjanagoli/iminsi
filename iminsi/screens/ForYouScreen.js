@@ -21,7 +21,6 @@ class ForYouScreen extends Component {
 
   render() {
     // eslint-disable-next-line prefer-destructuring
-    console.log(` in component ${this.props.articles}`);
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <Text>

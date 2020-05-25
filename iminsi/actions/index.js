@@ -19,11 +19,13 @@ import {
 // combine all action types
 const ActionTypes = {};
 
+
 Object.keys(articleActionTypes).forEach((key) => {
   ActionTypes[key] = articleActionTypes[key];
 });
 
-Object.keys(articleActionTypes).forEach((key) => {
+
+Object.keys(userActionTypes).forEach((key) => {
   ActionTypes[key] = userActionTypes[key];
 });
 
