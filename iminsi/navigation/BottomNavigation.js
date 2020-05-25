@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { connect } from 'react-redux';
 import ForYouScreen from '../screens/ForYouScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import VerifiedScreen from '../screens/VerifiedScreen';
@@ -15,6 +16,7 @@ import VerifiedScreen from '../screens/VerifiedScreen';
 //   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>Search</Text></View>;
 // };
 
+// const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {

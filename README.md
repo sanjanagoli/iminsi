@@ -4,6 +4,10 @@
 
 TODO: short project description, some sample screenshots or mockups
 
+## Run Project
+`cd project-iminsi/iminsi`
+Run `expo start` in terminal (need to have Xcode simulator downloaded)
+
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
