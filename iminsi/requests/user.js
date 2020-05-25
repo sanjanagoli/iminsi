@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:9090/api/article';
+const URL = 'http://localhost:9090/api/user';
 
-const getAllArticles = () => {
+const signUp = (data) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}`)
+    axios.post(`${URL}`, data)
       .then((response) => {
         resolve(response.data.response);
       })
@@ -15,9 +15,9 @@ const getAllArticles = () => {
 };
 
 
-const getArticle = () => {
+const signIn = (data) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}`)
+    axios.get(`${URL}/${data.id}`)
       .then((response) => {
         resolve(response.data.response);
       })
@@ -26,8 +26,9 @@ const getArticle = () => {
       });
   });
 };
+
 
 export {
-  getAllArticles,
-  getArticle,
+  signUp,
+  signIn,
 };

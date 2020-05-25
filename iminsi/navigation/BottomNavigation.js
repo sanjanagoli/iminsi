@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ForYouScreen from '../screens/ForYouScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import VerifiedScreen from '../screens/VerifiedScreen';
+// import ForYouScreen from '../screens/ForYouScreen';
+// import ProfileScreen from '../screens/ProfileScreen';
+// import VerifiedScreen from '../screens/VerifiedScreen';
 
 const AboutTab = (props) => {
   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
@@ -17,6 +18,7 @@ const SearchTab = (props) => {
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
+  console.log('bye');
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -31,4 +33,4 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation;
+export default connect(null, null)(BottomNavigation);
