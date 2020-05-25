@@ -15,7 +15,7 @@ const getAllArticles = () => {
   };
 
 
-const getAllArticles = () => {
+const getArticle = () => {
     return new Promise((resolve, reject) => {
         axios.get(`${URL}`)
         .then((response) => {
@@ -28,9 +28,7 @@ const getAllArticles = () => {
 };
 
 export {
-    getCountryCount,
-    getStateCount,
-    getCountyData,
-    getStateData,
+    getAllArticles,
+    getArticle,
 };
   
