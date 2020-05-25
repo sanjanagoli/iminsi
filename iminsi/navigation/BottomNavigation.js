@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { connect } from 'react-redux';
-// import ForYouScreen from '../screens/ForYouScreen';
-// import ProfileScreen from '../screens/ProfileScreen';
-// import VerifiedScreen from '../screens/VerifiedScreen';
+import ForYouScreen from '../screens/ForYouScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import VerifiedScreen from '../screens/VerifiedScreen';
 
 // const AboutTab = (props) => {
 //   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
@@ -20,7 +20,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
-  console.log('bye');
   return (
     <>
       <NavigationContainer>
