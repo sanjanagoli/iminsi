@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import {
   StyleSheet, View, TextInput, TouchableOpacity, Text,
 } from 'react-native';
-import { connect } from 'react-redux';
-
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -16,13 +14,6 @@ export default class SignIn extends Component {
       username: 'username',
       password: 'Password',
     };
-  }
-
-  const handleSignIn = () => {
-    const fields = {
-      username: this.state.username, password: this.state.password,
-    };
-    this.props.signinUser(fields, this.props.history);
   }
 
   render() {
@@ -38,11 +29,14 @@ export default class SignIn extends Component {
         <TextInput
           placeholder="password"
           style={style.input}
+          secureTextEntry={true}
           onChange={(event) => { this.setState({ password: event.target.value }); }}
         />
 
         <TouchableOpacity>
-          <Text style={styles.buttonText} onPress={handleSignIn}>LOGIN</Text>
+          {/* Modify the signInUser parameters depending on actions/index.js */}
+          <Text style={styles.buttonText} onPress= {() => { this.signInUser(); }}> LOGIN
+          </Text>
         </TouchableOpacity>
 
       </View>
@@ -54,4 +48,12 @@ const styles = StyleSheet.create({
   container: {
     padding: 30,
   },
+  
+  header: {
+      fontSize: 24,
+  },
+
+  input: {},
+
+  buttonText: {},
 });
