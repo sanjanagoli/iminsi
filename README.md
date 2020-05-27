@@ -4,24 +4,23 @@
 
 TODO: short project description, some sample screenshots or mockups
 
-## Run Project
-`cd project-iminsi/iminsi`
-Run `expo start` in terminal (need to have Xcode simulator downloaded)
-
 ## Architecture
 
-TODO:  descriptions of code organization and tools and libraries used
+Backend: https://github.com/dartmouth-cs52-20S/project-api-iminsi
 
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc
+`cd project-iminsi/iminsi`
+Run `expo start` in terminal (need to have Xcode simulator downloaded)
 
 ## Deployment
 
-TODO: how to deploy the project
+In order to deploy, first run `expo start`
+Click the option to publish the project (on the left side of the screen).
+Enter your expo credentials
 
 ## Authors
 
-TODO: list of authors
+Meriem Fouad, Sanjana Goli, Abubakar Kasule, Rohith Mandavilli, Bryan Manzi, Katrina Yu
 
 ## Acknowledgments
