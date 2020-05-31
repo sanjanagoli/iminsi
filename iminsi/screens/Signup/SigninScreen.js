@@ -5,10 +5,10 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../../stylesheets/LoginStyle';
-import SignUp from '../../components/onboarding/components/SignUp';
+import SignIn from '../../components/onboarding/components/SignIn';
 
 
-class SignupScreen extends Component {
+class SigninScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +17,7 @@ class SignupScreen extends Component {
 
   render() {
     return (
-      <SignUp />
+      <SignIn />
     );
   }
 }
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapReduxStateToProps, mapDispatchToProps)(SignupScreen);
+export default connect(mapReduxStateToProps, mapDispatchToProps)(SigninScreen);

@@ -1,10 +1,12 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import styles from '../stylesheets/LoginStyle';
+import { getArticles } from '../actions/index';
+import styles from '../stylesheets/ForYouStyle';
 
 class ForYouScreen extends Component {
   constructor(props) {
@@ -13,10 +15,20 @@ class ForYouScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getArticles();
+  }
+
   render() {
+    // eslint-disable-next-line prefer-destructuring
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>Profile page</Text>
+        <Text>
+          {' '}
+          Hello world
+          {' '}
+          {JSON.stringify(this.props.articles)}
+        </Text>
       </ScrollView>
     );
   }
@@ -24,13 +36,15 @@ class ForYouScreen extends Component {
 
 function mapReduxStateToProps(reduxState) {
   return {
-
+    articles: reduxState.article.articles,
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    getArticles: () => {
+      dispatch(getArticles());
+    },
   };
 };
 

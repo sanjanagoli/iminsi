@@ -19,18 +19,19 @@ export default class SignIn extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style = {styles.header}> Sign In to your Iminsi Account </Text>
         <TextInput
           placeholder="username"
-          placeholderTextColor="rgba(255,255,255,0.2)"
-          style={style.input}
-          onChange={(event) => { this.setState({ username: event.target.value }); }}
+          // placeholderTextColor="rgba(255,255,255,0.2)"
+          style={styles.input}
+          // onChange={(event) => { this.setState({ username: event.target.value }); }}
         />
 
         <TextInput
           placeholder="password"
-          style={style.input}
+          style={styles.input}
           secureTextEntry={true}
-          onChange={(event) => { this.setState({ password: event.target.value }); }}
+          // onChange={(event) => { this.setState({ password: event.target.value }); }}
         />
 
         <TouchableOpacity>

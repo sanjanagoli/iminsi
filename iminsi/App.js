@@ -1,11 +1,16 @@
 import React from 'react';
-// import { View } from 'react-native';
+// import { View, Text } from 'react-native';
 // import HTML from 'react-native-render-html';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import BottomNavigation from './navigation/BottomNavigation';
+import rootReducer from './reducers/index';
 
 console.disableYellowBox = true;
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-const App = () => {
+export default function App(props) {
   // const htmlContent = `
   // <div><div><div><div><div><div><div><div><span><a href="https://www.nme.com/news">News</a></span> <span><a href="https://www.nme.com/news/gaming-news">Gaming News</a></span></div></div><div><div><h1>Ubisoft sues Apple, Google for selling ‘Rainbow Six: Siege’ clone</h1></div></div><div><div><p>Apple and Google have allegedly refused to remove ‘Area F2’ from its stores</p></div></div><div><div><div><span>By</span> <a href="https://www.nme.com/author/ssingh">Surej Singh</a></div></div></div>
   // <div><div>18th May 2020</div></div></div></div></div></div><div><div><div><div><div><div><img src="https://www.nme.com/wp-content/uploads/2020/05/rainbow-six-siege-credit-ubisoft@2000x1270-1-696x442.jpg" alt="Artwork from Tom Clancy's Rainbow Six: Siege" />Tom Clancy's Rainbow Six: Siege. Credit: Ubisoft</div></div><div><div><div><div><div><div><p>Video game publisher <a href="https://www.nme.com/brands/ubisoft">Ubisoft</a> has filed a lawsuit against Apple and Google for selling a game that’s a “near carbon copy” of the company’s 2015 title, <em>Tom Clancy’s Rainbow Six: Siege.</em></p><ul><li><strong>Read More:</strong>
@@ -16,9 +21,11 @@ const App = () => {
   // <a href="https://www.nme.com/tag/android">Android</a></li><li><a href="https://www.nme.com/tag/ios">iOS</a></li><li><a href="https://www.nme.com/tag/pc">PC</a></li><li><a href="https://www.nme.com/tag/ps4">PS4</a></li><li><a href="https://www.nme.com/tag/xbox-one">Xbox One</a></li></ul></div></div><div><div><div></div></div></div></div></div></div></div></div></div><div><div><div><span>Advertisement</span></div><div><div></div></div><div><span>Advertisement</span></div></div></div></div></div></div></div><span></span><span><span></span></span><span></span>
   // `;
   return (
-    <BottomNavigation />
+    <Provider store={store}>
+      <BottomNavigation />
+    </Provider>
   );
-};
+}
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -28,5 +35,3 @@ const App = () => {
 //     justifyContent: 'center',
 //   },
 // });
-
-export default App;
