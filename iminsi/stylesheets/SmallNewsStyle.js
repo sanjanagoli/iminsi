@@ -3,22 +3,29 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     borderTopColor: '#000000',
     borderTopWidth: 0.2,
     borderBottomColor: '#000000',
     borderBottomWidth: 0.2,
     minHeight: 110,
+    backgroundColor: 'red',
   },
   title: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Baskerville',
+    fontWeight: 'bold',
     justifyContent: 'center',
+    width: '70%',
+    paddingLeft: 15,
   },
+
   newsOrganization: {
     fontFamily: 'AmericanTypewriter-Bold',
     fontSize: 12,
+    backgroundColor: 'green',
+    height: 12,
   },
   tags: {
     color: 'grey',
@@ -34,20 +41,22 @@ const styles = StyleSheet.create({
   },
   picture: {
     flex: 1,
-    width: '50%',
     backgroundColor: 'black',
+    maxWidth: '30%',
+    justifyContent: 'flex-start',
   },
   date: {
     fontSize: 12,
     fontFamily: 'Baskerville',
   },
-  titleTagsAndOrg: {
+  titleAndPicture: {
     flex: 1,
-    flexDirection: 'column',
-    width: '55%',
+    flexDirection: 'row',
+    width: '100%',
     paddingLeft: '8.5%',
     paddingBottom: 10,
     paddingTop: 10,
+    backgroundColor: 'blue',
   },
   content: {
     backgroundColor: '#fff',

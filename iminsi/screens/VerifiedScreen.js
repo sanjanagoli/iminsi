@@ -29,14 +29,10 @@ class VerifiedScreen extends Component {
     return (
       <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
         <View style={smallStoryStyles.container}>
-          <View style={smallStoryStyles.titleTagsAndOrg}>
-            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
-            <Text style={smallStoryStyles.title}>{article.title}</Text>
-            <Text style={smallStoryStyles.tags}>{article.tags}</Text>
-          </View>
-          <View style={smallStoryStyles.pictureDate}>
+          <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+          <View style={smallStoryStyles.titleAndPicture}>
             <Image style={smallStoryStyles.picture} source={{ url: article.imageURL }} />
-            <Text style={smallStoryStyles.date}>{article.date}</Text>
+            <Text style={smallStoryStyles.title}>{article.title}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -59,7 +55,7 @@ class VerifiedScreen extends Component {
         >
           {this.props.articles.map((article) => {
             return (
-              <HighlightedNewsManzi key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
+              <HighlightedNewsManzi key={article.id} article={article} navigation={this.props.navigation} />
             );
           })}
         </ScrollView>
