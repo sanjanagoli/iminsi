@@ -1,12 +1,17 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/prefer-stateless-function */
-//sign in 
+// sign in
 import React, { Component } from 'react';
 import {
   StyleSheet, View, TextInput, TouchableOpacity, Text,
 } from 'react-native';
+// eslint-disable-next-line no-unused-vars
+import { connect } from 'react-redux';
+import { signInUser } from '../../../actions/user';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +24,7 @@ export default class SignIn extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style = {styles.header}> Sign In to your Iminsi Account </Text>
+        <Text style={styles.header}> Sign In to your Iminsi Account </Text>
         <TextInput
           placeholder="username"
           // placeholderTextColor="rgba(255,255,255,0.2)"
@@ -30,13 +35,15 @@ export default class SignIn extends Component {
         <TextInput
           placeholder="password"
           style={styles.input}
-          secureTextEntry={true}
+          secureTextEntry
           // onChange={(event) => { this.setState({ password: event.target.value }); }}
         />
 
         <TouchableOpacity>
           {/* Modify the signInUser parameters depending on actions/index.js */}
-          <Text style={styles.buttonText} onPress= {() => { this.signInUser(); }}> LOGIN
+          <Text style={styles.buttonText} onPress={() => { signInUser(); }}>
+            {' '}
+            LOGIN
           </Text>
         </TouchableOpacity>
 
@@ -45,13 +52,15 @@ export default class SignIn extends Component {
   }
 }
 
+export default connect(null, { signInUser })(SignIn);
+
 const styles = StyleSheet.create({
   container: {
     padding: 30,
   },
-  
+
   header: {
-      fontSize: 24,
+    fontSize: 24,
   },
 
   input: {},

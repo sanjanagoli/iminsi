@@ -20,6 +20,7 @@ const signUpUser = (data) => {
 };
 
 const signInUser = (data) => {
+  console.log('inside sign in user - actions');
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
@@ -43,7 +44,6 @@ const updateUser = (data) => {
       });
   };
 };
-
 
 export {
   ActionTypes,

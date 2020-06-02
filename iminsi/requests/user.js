@@ -17,6 +17,7 @@ const signUp = (data) => {
 
 
 const signIn = (data) => {
+  console.log('inside sign in user - request');
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/${data.id}`)
       .then((response) => {
