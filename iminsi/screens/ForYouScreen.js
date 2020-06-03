@@ -116,7 +116,7 @@ class ForYouScreen extends Component {
           </ScrollView>
         </View>
         {this.state.selectedInterests.map((interest) => { return (
-          <HighlightedNews navTrigger={() => {this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles })}} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1,-1)} numberOfArticles={this.props.articles.slice(1,-1).length} />
+          <HighlightedNews articleNav={(article) => {this.props.navigation.navigate('ArticleDetail', { article });}} navTrigger={() => {this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles })}} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1,-1)} numberOfArticles={this.props.articles.slice(1,-1).length} />
         );})}
       </ScrollView>
     );

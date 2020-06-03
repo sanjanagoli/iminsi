@@ -3,12 +3,85 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import {
-  StyleSheet, Text, View, Image,
+  StyleSheet, Text, View, Image, Dimensions,
 } from 'react-native';
 import { getArticles } from '../actions/index';
 import HighlightedNewsTrending from '../components/HighlightedNewsTrending';
-import smallStoryStyles from '../stylesheets/SmallNewsStyle';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const smallStoryStyles = StyleSheet.create({
+
+  title: {
+    fontSize: 16,
+    fontFamily: 'Baskerville',
+    fontWeight: '200',
+    textAlign: 'left',
+    width: '70%',
+    flexWrap: 'wrap',
+  },
+
+  newsOrganization: {
+    fontFamily: 'Baskerville',
+    fontSize: 12,
+  },
+  tags: {
+    color: 'grey',
+    fontSize: 10,
+    fontFamily: 'Baskerville',
+  },
+  pictureDate: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  picture: {
+    backgroundColor: 'black',
+    width: '20%',
+    height: '100%',
+  },
+  date: {
+    fontSize: 12,
+    fontFamily: 'Baskerville',
+  },
+  seperator: {
+    marginVertical: 2,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  tagsText: {
+    fontSize: 10,
+    fontFamily: 'Baskerville',
+    fontWeight: "100",
+    color: 'black',
+  },
+  date: {
+    fontFamily: 'Baskerville',
+    fontWeight: "100",
+    flexWrap: 'wrap',
+    fontSize: 15,
+    color: 'black',
+  },
+  titleAndPicture: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '70%',
+  },
+  tagDate: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  content: {
+    backgroundColor: '#fff',
+    padding: 30,
+  },
+});
 
 class VerifiedScreen extends Component {
   constructor(props) {
@@ -25,40 +98,48 @@ class VerifiedScreen extends Component {
     this.props.navigation.navigate('ArticleDetail', { article });
   }
 
-  smallArticle(article) {
-    return (
-      <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
-        <View style={smallStoryStyles.container}>
-          <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
-          <View style={smallStoryStyles.titleAndPicture}>
-            <Image style={smallStoryStyles.picture} source={{ url: article.imageURL }} />
-            <Text style={smallStoryStyles.title}>{article.title}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
+  dateRender = (dateStr) => {
+    let x = new Date(dateStr);
+    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
   }
+
+  smallArticle = (article) => {
+    return (
+      <View key={article.id} >
+
+        <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+
+          <View style={smallStoryStyles.container}>
+            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+            <View style={smallStoryStyles.titleAndPicture}>
+              <Text style={smallStoryStyles.title}>{article.title}</Text>
+              <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
+            </View>
+            <View style={smallStoryStyles.tagDate}>
+              <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+              <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
+            </View>
+          </View>
+
+        </TouchableOpacity>
+        <View style={smallStoryStyles.seperator} />
+      </View>
+    );
+  };
+
 
   render() {
     // eslint-disable-next-line prefer-destructuring
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.heading}>Trending</Text>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{
-            height: '100%', justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'column',
-          }}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={200}
-          decelerationRate="fast"
-        >
-          {this.props.articles.map((article) => {
-            return (
-              <HighlightedNewsTrending key={article.id} article={article} navigation={this.props.navigation} />
-            );
-          })}
-        </ScrollView>
+        <View style={{flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
+          <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
+          <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
+          <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
+        </View>
+
         {this.props.articles.map((article) => {
           return (
             this.smallArticle(article)
