@@ -17,64 +17,70 @@ const windowHeight = Dimensions.get('window').height;
 import { StyleSheet } from 'react-native';
 
 const smallStoryStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    borderTopColor: '#000000',
-    borderTopWidth: 0.2,
-    borderBottomColor: '#000000',
-    borderBottomWidth: 0.2,
-    minHeight: windowHeight/6,
-  },
+
   title: {
-    flex: 1,
     fontSize: 16,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
-    justifyContent: 'center',
+    fontWeight: '200',
+    textAlign: 'left',
     width: '70%',
-    paddingLeft: 15,
+    flexWrap: 'wrap',
   },
 
   newsOrganization: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
-    fontSize: 15,
-    paddingLeft: 15,
-    marginTop: 15,
+    fontSize: 12,
   },
   tags: {
     color: 'grey',
     fontSize: 10,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
   },
   pictureDate: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    paddingTop: 10,
     paddingBottom: 10,
   },
   picture: {
-    flex: 1,
     backgroundColor: 'black',
-    maxWidth: '30%',
-    justifyContent: 'flex-start',
+    width: '20%',
+    height: '100%',
   },
   date: {
     fontSize: 12,
     fontFamily: 'Baskerville',
+  },
+  seperator: {
+    marginVertical: 2,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  tagsText: {
+    fontSize: 10,
     fontFamily: 'Baskerville',
     fontWeight: "100",
+    color: 'black',
+  },
+  date: {
+    fontFamily: 'Baskerville',
+    fontWeight: "100",
+    flexWrap: 'wrap',
+    fontSize: 15,
+    color: 'black',
   },
   titleAndPicture: {
-    flex: 1,
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     width: '100%',
-    paddingLeft: '8.5%',
-    paddingBottom: 10,
-    paddingTop: 10,
-    minHeight: windowHeight/15,
+    height: '70%',
+  },
+  tagDate: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   content: {
     backgroundColor: '#fff',
@@ -87,6 +93,16 @@ class InterestScreen extends Component {
     this.props.getArticles();
   }
 
+  dateRender = (dateStr) => {
+    let x = new Date(dateStr);
+    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
+  }
+
+  showArticleDetail(article) {
+    this.props.navigation.navigate('ArticleDetail', { article });
+  }
 
   render() {
     return (
@@ -96,19 +112,29 @@ class InterestScreen extends Component {
         width: windowWidth,
         backgroundColor: 'white',
       }}>
-        {/*this.props.route.params.articles*/ [{id: 1, newsOrganization: "The NewYork Times", title: 'Fake Article', tags: '#Tag1 #Tag2', imageURL: 'https://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png?cb=1'}, {id: 2, newsOrganization: "The NewYork Times", title: 'Fake Article',}, {id: 3, newsOrganization: "The NewYork Times", title: 'Fake Article',},].map((article) => {
+        {this.props.route.params.articles.map((article) => {
           return (
-            <TouchableOpacity key={article.id} onPress={() => {  }} underlayColor="none">
-              <View style={smallStoryStyles.container}>
-                <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
-                <View style={smallStoryStyles.titleAndPicture}>
-                  <Image style={smallStoryStyles.picture} source={{ url: article.imageURL }} />
-                  <Text style={smallStoryStyles.title}>{article.title}</Text>
+            <View  key={article.id} >
+             
+              <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth/45, paddingRight: windowWidth/45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+
+                <View style={smallStoryStyles.container}>
+                  <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+                  <View style={smallStoryStyles.titleAndPicture}>
+                    <Text style={smallStoryStyles.title}>{article.title}</Text>
+                    <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
+                  </View>
+                  <View style={smallStoryStyles.tagDate}>
+                    <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+                    <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
+                  </View>
                 </View>
-                <Text style={smallStoryStyles.tags}>{article.tags}</Text>
-              </View>
-            </TouchableOpacity>
-        );
+
+              </TouchableOpacity>
+              <View style={smallStoryStyles.seperator} />
+            </View>
+
+          );
         })}
       </ScrollView>
     );

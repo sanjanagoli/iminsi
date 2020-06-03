@@ -1,14 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import {
-  ScrollView, StyleSheet, Dimensions, View, Text, Button,
+  ScrollView, StyleSheet, Dimensions, View, Text, Button, Image,
 } from 'react-native';
 import HTML from 'react-native-render-html';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { incrementScore, decrementScore } from '../actions/index';
-
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 class ArticleDetail extends Component {
   constructor(props) {
@@ -91,9 +91,6 @@ class ArticleDetail extends Component {
     const { article } = route.params;
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <TouchableOpacity key={article.id} onPress={() => { this.showVerified(); }}>
-          <Icons name="arrow-back" size={30} style={{ marginLeft: '3%' }} />
-        </TouchableOpacity>
         <View style={styles.text}>
           <Text style={styles.title}>{article.title}</Text>
           <HTML html={article.content} imagesMaxWidth={Dimensions.get('window').width} />
@@ -101,6 +98,7 @@ class ArticleDetail extends Component {
             Score is
             {' '}
             {article.score}
+            {' '}
           </Text>
           {this.ArticleReliable(article.id)}
         </View>

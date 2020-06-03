@@ -7,7 +7,62 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from '../stylesheets/HighlightedNewsTrendingStyle';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+
+  container: {
+    width: windowWidth,
+    height: 0.7 * windowHeight,
+    paddingBottom: 20,
+  },
+  picture: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+  },
+  linearGradient: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: '500',
+    fontFamily: 'Baskerville',
+    width: 260,
+    paddingBottom: 5,
+  },
+  newsOrganization: {
+    fontWeight: 'bold',
+    fontFamily: 'Baskerville',
+    fontSize: 12,
+    color: 'white',
+    paddingBottom: 5,
+  },
+  tags: {
+    fontSize: 10,
+    color: 'white',
+  },
+  TitleTagsOrganization: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column-reverse',
+    paddingLeft: 25,
+    paddingBottom: 15,
+  },
+  date: {
+    fontSize: 12,
+    fontFamily: 'Baskerville',
+    color: 'white',
+    paddingRight: 25,
+  },
+});
 
 class HighlightedNewsManzi extends Component {
   fillContent() {
@@ -15,7 +70,7 @@ class HighlightedNewsManzi extends Component {
     if (!article.newsOrganization || article.newsOrganization.length === 0) {
       article.newsOrganization = 'PlaceHolder Times';
     }
-    if (!article.content.length || article.content.length === 0) {
+    if (article.content === undefined || article.content.length === 0) {
       article.content = 'Lorem Ipsum is the single greatest threat. We are not - we are not keeping up with other websites. Lorem Ipsum best not make any more threats to your website. It will be met with fire and fury like the world has never seen. Does everybody know that pig named Lorem Ipsum? An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.';
     }
   }
@@ -45,7 +100,7 @@ class HighlightedNewsManzi extends Component {
     this.fillContent();
     const { article } = this.props;
     return (
-      <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+      <TouchableOpacity style={{ height: windowHeight * this.props.h }} key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
         <View style={styles.container}
           key={article.id}
         >
