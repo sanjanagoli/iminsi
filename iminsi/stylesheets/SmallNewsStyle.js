@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 
   newsOrganization: {
-    fontFamily: 'AmericanTypewriter',
+    fontFamily: 'Baskerville',
     fontSize: 12,
     height: 12,
     paddingLeft: 15,

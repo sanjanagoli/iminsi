@@ -34,7 +34,7 @@ class ArticleDetail extends Component {
     let i = 0;
     while (i > score) {
       this.props.incrementScore(score, id);
-      i += 1;
+      i -= 1;
     }
   }
 
