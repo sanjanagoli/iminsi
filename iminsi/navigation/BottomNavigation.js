@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ForYouScreen from '../screens/ForYouScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import VerifiedScreen from '../screens/VerifiedScreen';
+import ForYouStack from '../navigation/ForYouStack';
 
 // const AboutTab = (props) => {
 //   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
@@ -24,7 +25,7 @@ const BottomNavigation = () => {
     <>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="For You" component={ForYouScreen} />
+          <Tab.Screen name="For You" component={ForYouStack} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
           <Tab.Screen name="Verified" component={VerifiedScreen} />
           {/* <Tab.Screen name="For You" component={AboutTab} />
