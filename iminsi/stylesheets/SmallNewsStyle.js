@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000000',
     borderBottomWidth: 0.2,
     minHeight: 130,
+    minHeight: 110,
+
   },
   title: {
     flex: 1,
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
   tags: {
     color: 'grey',
     fontSize: 10,
-
+    fontFamily: 'Baskerville',
   },
   pictureDate: {
     flex: 1,
