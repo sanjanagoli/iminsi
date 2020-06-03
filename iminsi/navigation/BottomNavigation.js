@@ -6,18 +6,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { connect } from 'react-redux';
 import ForYouScreen from '../screens/ForYouScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import VerifiedScreenTab from './VerifiedTab';
 import VerifiedScreen from '../screens/VerifiedScreen';
 import ForYouStack from '../navigation/ForYouStack';
 
-// const AboutTab = (props) => {
-//   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
-// };
 
-// const SearchTab = (props) => {
-//   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>Search</Text></View>;
-// };
-
-// const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
@@ -27,10 +20,7 @@ const BottomNavigation = () => {
         <Tab.Navigator>
           <Tab.Screen name="For You" component={ForYouStack} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
-          <Tab.Screen name="Verified" component={VerifiedScreen} />
-          {/* <Tab.Screen name="For You" component={AboutTab} />
-          <Tab.Screen name="Profile" component={AboutTab} />
-          <Tab.Screen name="Verified" component={SearchTab} /> */}
+          <Tab.Screen name="Verified" component={VerifiedScreenTab} />
         </Tab.Navigator>
       </NavigationContainer>
     </>

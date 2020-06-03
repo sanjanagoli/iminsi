@@ -6,5 +6,22 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "@react-native-community/masked-view": "0.1.5",
+    "@react-navigation/bottom-tabs": "^5.5.1",
+    "@react-navigation/native": "^5.5.0",
+    "@react-navigation/stack": "^5.4.1",
+    "react": "^16.13.1",
+    "react-native": "^0.62.2",
+    "react-native-gesture-handler": "~1.5.0",
+    "react-native-reanimated": "~1.4.0",
+    "react-native-safe-area-context": "0.6.0",
+    "react-native-screens": "2.0.0-alpha.12",
+    "react-navigation": "^4.3.9",
+    "react-navigation-stack": "react-navigation/stack",
+    "typeface-playfair-display": "^1.1.4"
   }
 }
