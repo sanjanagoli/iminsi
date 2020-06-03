@@ -6,7 +6,7 @@ import {
   StyleSheet, Text, View, Image,
 } from 'react-native';
 import { getArticles } from '../actions/index';
-import HighlightedNewsManzi from '../components/HighlightedNewsManzi';
+import HighlightedNewsTrending from '../components/HighlightedNewsTrending';
 import smallStoryStyles from '../stylesheets/SmallNewsStyle';
 
 
@@ -55,7 +55,7 @@ class VerifiedScreen extends Component {
         >
           {this.props.articles.map((article) => {
             return (
-              <HighlightedNewsManzi key={article.id} article={article} navigation={this.props.navigation} />
+              <HighlightedNewsTrending key={article.id} article={article} navigation={this.props.navigation} />
             );
           })}
         </ScrollView>

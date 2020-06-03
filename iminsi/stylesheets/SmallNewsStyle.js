@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   newsOrganization: {
     fontFamily: 'Baskerville',
     fontSize: 12,
-    height: 12,
+    paddingTop: 20,
     paddingLeft: 15,
   },
   tags: {
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
   picture: {
     flex: 1,
     backgroundColor: 'black',
-    maxWidth: '30%',
+    maxWidth: 60,
+    maxHeight: 60,
     justifyContent: 'flex-start',
   },
   date: {

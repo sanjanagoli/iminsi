@@ -15,6 +15,7 @@ class ArticleDetail extends Component {
     super(props);
     this.state = {
       htmlContent: '',
+      userRatedArticle: false,
     };
   }
 
@@ -23,6 +24,9 @@ class ArticleDetail extends Component {
   }
 
   updateScoreIncrease(score, id) {
+    this.setState({
+      userRatedArticle: true,
+    });
     let i = 0;
     while (i < score) {
       this.props.incrementScore(score, id);
@@ -31,6 +35,9 @@ class ArticleDetail extends Component {
   }
 
   updateScoreDecrease(score, id) {
+    this.setState({
+      userRatedArticle: true,
+    });
     let i = 0;
     while (i > score) {
       this.props.incrementScore(score, id);
@@ -39,6 +46,12 @@ class ArticleDetail extends Component {
   }
 
   ArticleReliable(id) {
+    const { userRatedArticle } = this.state;
+    if (userRatedArticle) {
+      return (
+        <Text>Thanks!</Text>
+      );
+    }
     return (
       <View>
         <View
