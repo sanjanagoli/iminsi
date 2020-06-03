@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from '../stylesheets/HighlightedNewsTrending';
+import styles from '../stylesheets/HighlightedNewsTrendingStyle';
 
 class HighlightedNewsManzi extends Component {
   fillContent() {

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -5,12 +6,13 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getArticles } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
-import { Dimensions } from 'react-native';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -40,16 +42,19 @@ class Pill extends Component {
 
   render() {
     return (
-      <TouchableOpacity key={this.props.name} style={{
-        
-        borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74/360)*windowWidth), height: ((26/640)*windowHeight), marginRight: windowHeight/50, }} onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}>
+      <TouchableOpacity key={this.props.name}
+        style={{
+
+          borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74 / 360) * windowWidth), height: ((26 / 640) * windowHeight), marginRight: windowHeight / 50,
+        }}
+        onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
+      >
         <Text style={styles.pillText}>
           {this.props.name}
         </Text>
       </TouchableOpacity>
     );
   }
-
 }
 
 class ForYouScreen extends Component {
@@ -65,10 +70,10 @@ class ForYouScreen extends Component {
   }
 
   pillClick = (interest) => {
-    var newStateArray = this.state.selectedInterests.slice();
+    const newStateArray = this.state.selectedInterests.slice();
     let x = 0;
     this.state.selectedInterests.forEach((int, idx) => {
-      if(int.interestName === interest.interestName){
+      if (int.interestName === interest.interestName) {
         // remove it
         newStateArray.splice(idx, 1);
         this.setState(() => ({
@@ -77,16 +82,14 @@ class ForYouScreen extends Component {
         x++;
       }
     });
-    if(x == 0){
+    if (x == 0) {
       // ADDS TO IT from top
       newStateArray.unshift(interest);
       this.setState(() => ({
         selectedInterests: newStateArray,
       }));
     }
-    
   }
-
 
 
   render() {
@@ -108,16 +111,20 @@ class ForYouScreen extends Component {
             showsHorizontalScrollIndicator={false}
             scrollEventThrottle={200}
             decelerationRate="fast"
-            alwaysBounceHorizontal={true}
+            alwaysBounceHorizontal
           >
-            {this.props.user.interests.map((interest) => { return (
-              <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-            );})}
+            {this.props.user.interests.map((interest) => {
+              return (
+                <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
+              );
+            })}
           </ScrollView>
         </View>
-        {this.state.selectedInterests.map((interest) => { return (
-          <HighlightedNews navTrigger={() => {this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles })}} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1,-1)} numberOfArticles={this.props.articles.slice(1,-1).length} />
-        );})}
+        {this.state.selectedInterests.map((interest) => {
+          return (
+            <HighlightedNews navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
+          );
+        })}
       </ScrollView>
     );
   }
@@ -127,13 +134,13 @@ function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
     user: {
-      interests: [{ interestName: 'Politics', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'Sports', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'International', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'Health', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'Economics', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'Stocks', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
-      { interestName: 'Fashion', articles: [{date: 'ereerdsfsfs'}, {date: 'ereerdsfsfs'},] },
+      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
       ],
     }/* reduxState.user.user */,
   };
