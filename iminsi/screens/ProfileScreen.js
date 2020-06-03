@@ -4,8 +4,11 @@ import {
   Text, View,
   StyleSheet,
   ImageBackground,
+  Image,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { getArticles } from '../actions/index';
+import smallStoryStyles from '../stylesheets/SmallNewsStyle';
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -26,6 +29,20 @@ class ProfileScreen extends Component {
         onTrustedSources: true,
       });
     }
+  }
+
+  smallArticle(article) {
+    return (
+      <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+        <View style={smallStoryStyles.container}>
+          <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+          <View style={smallStoryStyles.titleAndPicture}>
+            <Image style={smallStoryStyles.picture} source={{ url: article.imageURL }} />
+            <Text style={smallStoryStyles.title}>{article.title}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
   }
 
   newsOrgs() {
@@ -60,6 +77,18 @@ class ProfileScreen extends Component {
     );
   }
 
+  bookmarked() {
+    const { articles } = this.props;
+    return (
+      articles.map((article) => {
+        return (
+          this.smallArticle(article)
+          // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
+        );
+      })
+    );
+  }
+
   bottomScreen() {
     const { onTrustedSources } = this.state;
     if (onTrustedSources) {
@@ -70,7 +99,7 @@ class ProfileScreen extends Component {
           />
           <View style={styles.toggles}>
             <Text style={styles.toggleElementActive}>Trusted Sources</Text>
-            <Text style={styles.toggleElementInactive}>Bookmarked</Text>
+            <Text style={styles.toggleElementInactive} onPress={() => { this.flip(); }}>Bookmarked</Text>
           </View>
           <View
             style={styles.line}
@@ -87,12 +116,13 @@ class ProfileScreen extends Component {
             style={styles.line}
           />
           <View style={styles.toggles}>
-            <Text style={styles.toggleElementInActive}>Trusted Sources</Text>
+            <Text style={styles.toggleElementInactive} onPress={() => { this.flip(); }}>Trusted Sources</Text>
             <Text style={styles.toggleElementActive}>Bookmarked</Text>
           </View>
           <View
             style={styles.line}
           />
+          {this.bookmarked()}
         </View>
       );
     }
@@ -116,12 +146,15 @@ class ProfileScreen extends Component {
 
 function mapReduxStateToProps(reduxState) {
   return {
+    articles: reduxState.article.articles,
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    getArticles: () => {
+      dispatch(getArticles());
+    },
   };
 };
 
