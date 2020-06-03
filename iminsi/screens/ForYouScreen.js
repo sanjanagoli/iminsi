@@ -66,19 +66,25 @@ class ForYouScreen extends Component {
 
   pillClick = (interest) => {
     var newStateArray = this.state.selectedInterests.slice();
-    if (newStateArray.includes(interest)) {
-      // remove it
-      newStateArray.splice(newStateArray.indexOf(interest), 1);
-      this.setState(() => ({
-        selectedInterests: newStateArray,
-      }));
-    } else {
+    let x = 0;
+    this.state.selectedInterests.forEach((int, idx) => {
+      if(int.interestName === interest.interestName){
+        // remove it
+        newStateArray.splice(idx, 1);
+        this.setState(() => ({
+          selectedInterests: newStateArray,
+        }));
+        x++;
+      }
+    });
+    if(x == 0){
       // ADDS TO IT from top
       newStateArray.unshift(interest);
       this.setState(() => ({
         selectedInterests: newStateArray,
       }));
     }
+    
   }
 
 
