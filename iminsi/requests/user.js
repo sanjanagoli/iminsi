@@ -3,40 +3,41 @@ import axios from 'axios';
 const URL = 'http://localhost:9090/api';
 // const URL = 'http://iminsi-api.herokuapp.com/api/user';
 
-const signUp = (data) => {
+const signUp = (params) => {
   return new Promise((resolve, reject) => {
-    axios.post(`${URL}/signUp`, data)
+    axios.post(`${URL}/signup`, params)
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
 
 
-const signIn = (data) => {
+const signIn = (params) => {
   console.log('inside sign in user - request');
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/signIn`, data)
+    axios.post(`${URL}/signin`, params)
       .then((response) => {
-        resolve(response.data.response);
+        console.log(response);
+        resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
 
-const updateUser = (data) => {
+const updateUser = (params) => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/${data.id}`, { data })
+    axios.put(`${URL}/${data.id}`, { params })
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };

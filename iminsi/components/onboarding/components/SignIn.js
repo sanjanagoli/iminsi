@@ -16,9 +16,22 @@ class SignIn extends Component {
     super(props);
 
     this.state = {
-      username: 'username',
-      password: 'Password',
+      username: '',
+      password: '',
     };
+
+  }
+
+  onSignin = () => {
+    if (this.state.username != '' && this.state.password != '') {
+      const data = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      this.props.signInUser(data);
+    } else {
+      Alert.alert("Required: username and password")
+    }
   }
 
   render() {
@@ -29,19 +42,19 @@ class SignIn extends Component {
           placeholder="username"
           // placeholderTextColor="rgba(255,255,255,0.2)"
           style={styles.input}
-          // onChange={(event) => { this.setState({ username: event.target.value }); }}
+          onChange={(event) => { this.setState({ username: event.target.value }); }}
         />
 
         <TextInput
           placeholder="password"
           style={styles.input}
           secureTextEntry
-          // onChange={(event) => { this.setState({ password: event.target.value }); }}
+          onChange={(event) => { this.setState({ password: event.target.value }); }}
         />
 
         <TouchableOpacity>
           {/* Modify the signInUser parameters depending on actions/index.js */}
-          <Text style={styles.buttonText} onPress={() => { this.props.signInUser(); }}>
+          <Text style={styles.buttonText} onPress={() => { this.onSignin(); }}>
             {' '}
             LOGIN
           </Text>

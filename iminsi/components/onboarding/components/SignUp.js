@@ -2,21 +2,41 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text,
+  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { signUpUser } from '../../../actions/user';
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
+  
+  onSignup = () => {
+    if (this.state.username != '' && this.state.password != '') {
+      const data = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      this.props.signUpUser(data);
+    } else {
+      Alert.alert("Required: username and password")
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.header}> Create your Iminsi Account </Text>
-        <TextInput style={styles.input} placeholder="Your Username" />
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
+        <TextInput style={styles.input} placeholder="Your Username" onChange={(event) => { this.setState({ username: event.target.value }); }}/>
+        <TextInput style={styles.input} placeholder="Password" onChange={(event) => { this.setState({ password: event.target.value }); }} secureTextEntry />
         {/* Alternatively, the onPress could read as "Next" and navigate to the onboarding survey and the real "Sign Up" happends after onboarding survey */}
         <TouchableOpacity>
-          <Text style={styles.buttonText} onPress={() => { this.props.signUpUser(); }}> Sign Up </Text>
+          <Text style={styles.buttonText} onPress={() => { this.onSignup(); }}> Sign Up </Text>
         </TouchableOpacity>
       </View>
     );

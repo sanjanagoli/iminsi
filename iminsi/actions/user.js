@@ -11,6 +11,7 @@ const signUpUser = (data) => {
   return (dispatch) => {
     userRequest.signUp(data)
       .then((response) => {
+        console.log(`in action ${response}` );
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
