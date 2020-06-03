@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.2,
     borderBottomColor: '#000000',
     borderBottomWidth: 0.2,
-    minHeight: 110,
-    backgroundColor: 'red',
+    minHeight: 130,
   },
   title: {
     flex: 1,
@@ -22,10 +21,10 @@ const styles = StyleSheet.create({
   },
 
   newsOrganization: {
-    fontFamily: 'AmericanTypewriter-Bold',
+    fontFamily: 'AmericanTypewriter',
     fontSize: 12,
-    backgroundColor: 'green',
     height: 12,
+    paddingLeft: 15,
   },
   tags: {
     color: 'grey',
@@ -56,7 +55,6 @@ const styles = StyleSheet.create({
     paddingLeft: '8.5%',
     paddingBottom: 10,
     paddingTop: 10,
-    backgroundColor: 'blue',
   },
   content: {
     backgroundColor: '#fff',
