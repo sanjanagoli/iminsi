@@ -40,7 +40,9 @@ class Pill extends Component {
 
   render() {
     return (
-      <TouchableOpacity key={this.props.name} style={{ borderRadius: '5%', justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74/360)*windowWidth), height: ((26/640)*windowHeight), marginRight: windowHeight/50, }} onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}>
+      <TouchableOpacity key={this.props.name} style={{
+        
+        borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74/360)*windowWidth), height: ((26/640)*windowHeight), marginRight: windowHeight/50, }} onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}>
         <Text style={styles.pillText}>
           {this.props.name}
         </Text>
@@ -60,9 +62,6 @@ class ForYouScreen extends Component {
 
   componentDidMount() {
     this.props.getArticles();
-    this.setState(() => ({
-      selectedInterests: [],
-    }));
   }
 
   pillClick = (interest) => {

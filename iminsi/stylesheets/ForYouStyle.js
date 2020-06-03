@@ -16,7 +16,8 @@ export default StyleSheet.create({
     paddingLeft: windowWidth/50,
   },
   pillText: {
-    // fontFamily: 'PlayfairDisplay_400Regular',
+    fontFamily: 'Baskerville',
+    fontWeight: "200",
   },
   contentContainer: {
     display: 'flex',

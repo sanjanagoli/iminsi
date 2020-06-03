@@ -12,6 +12,7 @@ import {
 // import { LinearGradient } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -48,7 +49,8 @@ class HighlightedNews extends Component {
       },
       topBarTitle: {
         paddingLeft: '4%',
-        fontWeight: 'bold',
+        fontFamily: 'Baskerville',
+        fontWeight: "100",
         fontSize: 20,
       },
       scroll: {
@@ -88,6 +90,8 @@ class HighlightedNews extends Component {
       },
       tagsText: {
         fontSize: 10,
+        fontFamily: 'Baskerville',
+        fontWeight: "100",
         color: 'white',
         paddingLeft: '2%'
       },
@@ -101,7 +105,8 @@ class HighlightedNews extends Component {
 
       },
       articleTitle: {
-        fontWeight: 'bold',
+        fontFamily: 'Baskerville',
+        fontWeight: "100",
         fontSize: 20,
         color: 'white',
         width: '100%',
@@ -114,12 +119,14 @@ class HighlightedNews extends Component {
         padding: windowWidth/35,
       },
       newOrg: {
-        fontWeight: 'bold',
+        fontFamily: 'Baskerville',
+        fontWeight: "100",
         fontSize: 15,
         color: 'white',
       },
       date: {
-        fontWeight: 'bold',
+        fontFamily: 'Baskerville',
+        fontWeight: "100",
         fontSize: 15,
         color: 'white',
       },
@@ -134,7 +141,7 @@ class HighlightedNews extends Component {
         <View style={styles.seperator} />
         <View style={styles.topBar}>
           <Text style={styles.topBarTitle}> {this.props.title} </Text>
-          <Button title="Read More" color='grey' onPress={() => { this.props.navTrigger(); }} />
+          <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '25%', height: '150%',}} onPress={() => { this.props.navTrigger(); }}><AntDesign name="arrowright" size={30} color="black" /></TouchableOpacity>
         </View>
         <View style={styles.seperator} />
         <ScrollView
