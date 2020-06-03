@@ -134,11 +134,12 @@ class VerifiedScreen extends Component {
     // eslint-disable-next-line prefer-destructuring
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={{flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
+        {/* <View style={{flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
           <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
           <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
           <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
-        </View>
+        </View>*/}
+        
 
         {this.props.articles.map((article) => {
           return (
