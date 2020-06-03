@@ -9,6 +9,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import VerifiedScreen from '../screens/VerifiedScreen';
 import SignupScreen from '../screens/Signup/SignupScreen';
 import SigninScreen from '../screens/Signup/SigninScreen';
+import InterestScreen from '../screens/Signup/InterestScreen';
+
 // const AboutTab = (props) => {
 //   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
 // };
@@ -30,6 +32,8 @@ const BottomNavigation = () => {
           <Tab.Screen name="Verified" component={VerifiedScreen} />
           <Tab.Screen name="Sign up" component={SignupScreen} />
           <Tab.Screen name="Sign in" component={SigninScreen} />
+          <Tab.Screen name="InterestScreen" component={InterestScreen} />
+
           {/* <Tab.Screen name="For You" component={AboutTab} />
           <Tab.Screen name="Profile" component={AboutTab} />
           <Tab.Screen name="Verified" component={SearchTab} /> */}

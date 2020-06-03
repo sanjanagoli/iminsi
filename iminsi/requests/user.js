@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-// const URL = 'http://localhost:9090/api/user';
-const URL = 'http://iminsi-api.herokuapp.com/api/user';
+const URL = 'http://localhost:9090/api';
+// const URL = 'http://iminsi-api.herokuapp.com/api/user';
 
 const signUp = (data) => {
   return new Promise((resolve, reject) => {
-    axios.post(`${URL}`, data)
+    axios.post(`${URL}/signUp`, data)
       .then((response) => {
         resolve(response.data.response);
       })
@@ -19,7 +19,7 @@ const signUp = (data) => {
 const signIn = (data) => {
   console.log('inside sign in user - request');
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/${data.id}`)
+    axios.get(`${URL}/signIn`, data)
       .then((response) => {
         resolve(response.data.response);
       })

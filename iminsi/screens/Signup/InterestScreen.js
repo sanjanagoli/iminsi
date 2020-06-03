@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 // import {
 //   Text,
 // } from 'react-native';
-// import { ScrollView } from 'react-native-gesture-handler';
-// import styles from '../../stylesheets/LoginStyle';
-import SignIn from '../../components/onboarding/components/SignIn';
+import onBoardingInterest from '../../components/onboarding/onBoardingInterest';
 
 
-class SigninScreen extends Component {
+class InterestScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +15,7 @@ class SigninScreen extends Component {
 
   render() {
     return (
-      <SignIn />
+      <onBoardingInterest />
     );
   }
 }
@@ -34,4 +32,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapReduxStateToProps, mapDispatchToProps)(SigninScreen);
+export default connect(mapReduxStateToProps, mapDispatchToProps)(InterestScreen);

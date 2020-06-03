@@ -41,7 +41,7 @@ class SignIn extends Component {
 
         <TouchableOpacity>
           {/* Modify the signInUser parameters depending on actions/index.js */}
-          <Text style={styles.buttonText} onPress={() => { signInUser(); }}>
+          <Text style={styles.buttonText} onPress={() => { this.props.signInUser(); }}>
             {' '}
             LOGIN
           </Text>

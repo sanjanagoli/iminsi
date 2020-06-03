@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 // sign up
 import React, { Component } from 'react';
 import {
@@ -15,7 +16,7 @@ class SignUp extends Component {
         <TextInput style={styles.input} placeholder="Password" secureTextEntry />
         {/* Alternatively, the onPress could read as "Next" and navigate to the onboarding survey and the real "Sign Up" happends after onboarding survey */}
         <TouchableOpacity>
-          <Text style={styles.buttonText} onPress={() => { signUpUser(); }}> Sign Up </Text>
+          <Text style={styles.buttonText} onPress={() => { this.props.signUpUser(); }}> Sign Up </Text>
         </TouchableOpacity>
       </View>
     );

@@ -15,6 +15,9 @@ import {
   updateUser,
 } from './user';
 
+import {
+  getInterests,
+} from './interest';
 
 // combine all action types
 const ActionTypes = {};
@@ -39,4 +42,5 @@ export {
   signUpUser,
   signInUser,
   updateUser,
+  getInterests,
 };
