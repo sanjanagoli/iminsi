@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -5,8 +6,6 @@ import {
   ScrollView,
   Text,
   View,
-  Button,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';

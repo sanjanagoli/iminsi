@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import {
   AntDesign, MaterialIcons, MaterialCommunityIcons,
 } from '@expo/vector-icons';

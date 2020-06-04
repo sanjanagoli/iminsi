@@ -137,8 +137,6 @@ class VerifiedScreen extends Component {
           <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
           <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
         </View>
-
-
         {this.props.articles.map((article) => {
           return (
             this.smallArticle(article)
