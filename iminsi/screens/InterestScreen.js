@@ -10,8 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, getInterests } from '../../actions/index';
-
+import { updateUser, getInterests } from '../actions/index';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -55,7 +54,7 @@ class Pill extends Component {
   }
 }
 
-class onBoardingInterest extends Component {
+class onBoardingInterestScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +63,7 @@ class onBoardingInterest extends Component {
   }
 
   componentDidMount() {
-    this.props.getInterests(); // interests instead of articles
+    // this.props.getInterests(); // interests instead of articles
     this.setState(() => ({
       selectedInterests: [],
     }));
@@ -90,23 +89,23 @@ class onBoardingInterest extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.onboardingForm}>
-          {console.log('im hree')}
-          {this.props.interests.map((interest) => {
-            return (
-              <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-            );
-          })}
-        </View>
-        {/* next button */}
+    // <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style={styles.onboardingForm}>
+        <Text style={styles.titleText}>Pick three topics you want to read about </Text>
+        {console.log('im hree')}
+        {this.props.interests.map((interest) => {
+          return (
+            <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
+          );
+        })}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { updateUser(this.props.user.id, this.state.selectedInterests); }} // how put selected interests in store?
+          onPress={() => { updateUser(this.props.user.id, this.state.selectedInterests); }}
         >
-          <Text>Next</Text>
+          <Text style={styles.buttonText}> Next</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
+    // </ScrollView>
     );
   }
 }
@@ -126,13 +125,19 @@ function mapReduxStateToProps(reduxState) {
   };/* reduxState.user */ // the list from database? - how to do on press, send the interests to the user's profile;
 }
 
-export default connect(mapReduxStateToProps, { updateUser, getInterests })(onBoardingInterest);
+export default connect(mapReduxStateToProps, { updateUser, getInterests })(onBoardingInterestScreen);
 
 
 const styles = StyleSheet.create({
+  titleText: {
+    fontSize: 40,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
   onboardingForm: {
     display: 'flex',
-    // flexWrap: true, // check
+    flexWrap: 'wrap', // check
     flexDirection: 'row',
     alignItems: 'center',
     height: windowHeight / 10,
@@ -148,5 +153,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: windowWidth,
     backgroundColor: 'rgb(250,250,250)',
+    paddingHorizontal: 10,
+    flex: 1,
+    margin: 6,
+
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    height: 42,
+    backgroundColor: 'red',
+    borderRadius: 40,
+  },
+  buttonText: {
+    fontSize: 12,
+    color: 'white',
+    fontWeight: 'bold',
+
   },
 });

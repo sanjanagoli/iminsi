@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react/destructuring-assignment */
 // sign up
 import React, { Component } from 'react';
@@ -15,16 +16,16 @@ class SignUp extends Component {
       password: '',
     };
   }
-  
+
   onSignup = () => {
     if (this.state.username != '' && this.state.password != '') {
       const data = {
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
       };
       this.props.signUpUser(data);
     } else {
-      Alert.alert("Required: username and password")
+      Alert.alert('Required: username and password');
     }
   }
 
@@ -32,7 +33,7 @@ class SignUp extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}> Create your Iminsi Account </Text>
-        <TextInput style={styles.input} placeholder="Your Username" onChange={(event) => { this.setState({ username: event.target.value }); }}/>
+        <TextInput style={styles.input} placeholder="Your Username" onChange={(event) => { this.setState({ username: event.target.value }); }} />
         <TextInput style={styles.input} placeholder="Password" onChange={(event) => { this.setState({ password: event.target.value }); }} secureTextEntry />
         {/* Alternatively, the onPress could read as "Next" and navigate to the onboarding survey and the real "Sign Up" happends after onboarding survey */}
         <TouchableOpacity>
