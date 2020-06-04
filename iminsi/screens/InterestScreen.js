@@ -156,6 +156,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flex: 1,
     margin: 6,
+    marginBottom: 5,
+    // marginLeft: 4,
 
   },
   button: {
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '20%',
     height: 42,
-    backgroundColor: 'red',
+    backgroundColor: 'rgb(56, 60, 108)',
     borderRadius: 40,
   },
   buttonText: {
