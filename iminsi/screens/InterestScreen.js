@@ -119,7 +119,7 @@ class InterestScreen extends Component {
               <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth/45, paddingRight: windowWidth/45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
 
                 <View style={smallStoryStyles.container}>
-                  <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+                  <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
                   <View style={smallStoryStyles.titleAndPicture}>
                     <Text style={smallStoryStyles.title}>{article.title}</Text>
                     <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />

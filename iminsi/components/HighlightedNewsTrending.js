@@ -130,7 +130,7 @@ class HighlightedNewsManzi extends Component {
 
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={styles.newsOrganization}>
-                    {article.newsOrganization}
+                    {article.newsOrganization.orgName}
 
                   </Text>
                 </View>

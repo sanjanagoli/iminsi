@@ -76,7 +76,7 @@ class HighlightedNews extends Component {
                       </Text>
 
                       <View style={styles.topContent} /* Bottom */>
-                        <Text style={styles.newsOrg}>{article.newsOrganization}</Text>
+                        <Text style={styles.newsOrg}>{article.newsOrganization.orgName}</Text>
                         <Text style={styles.date}>{this.dateRender(article.date)}</Text>
                       </View>
                     </View>
@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
   },
   newsOrg: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
-    fontSize: 15,
+    fontWeight: "400",
+    fontSize: 20,
     flexWrap: 'wrap',
     color: 'white',
   },
