@@ -4,10 +4,11 @@ import {
   ImageBackground,
   Text,
   View,
+  StyleSheet, Dimensions,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Dimensions } from 'react-native';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
 class HighlightedNewsManzi extends Component {
   fillContent() {
     const { article } = this.props;
-    if (!article.newsOrganization || article.newsOrganization.length === 0) {
-      article.newsOrganization = 'PlaceHolder Times';
+    if (!article.newsOrganization || article.newsOrganization.orgName.length === 0) {
+      article.newsOrganization.orgName = 'PlaceHolder Times';
     }
     if (article.content === undefined || article.content.length === 0) {
       article.content = 'Lorem Ipsum is the single greatest threat. We are not - we are not keeping up with other websites. Lorem Ipsum best not make any more threats to your website. It will be met with fire and fury like the world has never seen. Does everybody know that pig named Lorem Ipsum? An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.';
@@ -130,7 +131,7 @@ class HighlightedNewsManzi extends Component {
 
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                   <Text style={styles.newsOrganization}>
-                    {article.newsOrganization}
+                    {article.newsOrganization.orgName}
 
                   </Text>
                 </View>

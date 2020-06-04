@@ -8,10 +8,11 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 // import { LinearGradient } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Dimensions } from 'react-native';
+
 import { AntDesign, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
@@ -30,20 +31,29 @@ class HighlightedNews extends Component {
   }
 
   dateRender = (dateStr) => {
-    let x = new Date(dateStr);
-    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
   }
 
   render() {
-    
     return (
       <View style={styles.main}>
         <View style={styles.seperator} />
         <View style={styles.topBar}>
-          <Text style={styles.topBarTitle}> {this.props.title} </Text>
-          <TouchableOpacity style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '25%', height: '150%', }} onPress={() => { this.props.navTrigger(); }}><AntDesign name="arrowright" size={30} color="black" /></TouchableOpacity>
+          <Text style={styles.topBarTitle}>
+            {' '}
+            {this.props.title}
+            {' '}
+          </Text>
+          <TouchableOpacity style={{
+            display: 'flex', justifyContent: 'center', alignItems: 'center', width: '25%', height: '150%',
+          }}
+            onPress={() => { this.props.navTrigger(); }}
+          >
+            <AntDesign name="arrowright" size={30} color="black" />
+          </TouchableOpacity>
         </View>
         <View style={styles.seperator} />
         <ScrollView
@@ -52,18 +62,18 @@ class HighlightedNews extends Component {
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={200}
           decelerationRate="fast"
-          alwaysBounceHorizontal={true}
+          alwaysBounceHorizontal
         >
           {this.props.articles.map((article) => {
             return (
-              <TouchableOpacity style={styles.article} key={article.id} onPress={() => { this.props.articleNav(article) }} >
-                <ImageBackground source={{ url: article.imageURL }} style={{ width: '100%', height: '100%', }} imageStyle={{ width: '100%', }} >
-                  <LinearGradient style={styles.linearGrad} colors={['rgba(0,0,0,0.4)', 'rgba(0,0,0,1)']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} >
+              <TouchableOpacity style={styles.article} key={article.id} onPress={() => { this.props.articleNav(article); }}>
+                <ImageBackground source={{ url: article.imageURL }} style={{ width: '100%', height: '100%' }} imageStyle={{ width: '100%' }}>
+                  <LinearGradient style={styles.linearGrad} colors={['rgba(0,0,0,0.4)', 'rgba(0,0,0,1)']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>
                     <View style={styles.articleContent}>
-                      <View style={styles.bottomContent} /* Bottom */>
+                      <View style={styles.bottomContent}>
                         <View style={styles.tags}>
-                          {/*article.tags.map((tag) => { return <Text key={tag} style={{ fontSize: 15, color: 'white', paddingLeft:'2%'}}>{tag}</Text>})*/}
-                          <Text style={styles.tagsText}>{(article.tags === '')? article.tags : '#NoTags #Tagless'}</Text>
+                          {/* article.tags.map((tag) => { return <Text key={tag} style={{ fontSize: 15, color: 'white', paddingLeft:'2%'}}>{tag}</Text>}) */}
+                          <Text style={styles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
                         </View>
                         <View style={styles.iconContainer}>
                           <MaterialIcons name="verified-user" size={24} color="white" />
@@ -71,12 +81,12 @@ class HighlightedNews extends Component {
                         </View>
                       </View>
 
-                      <Text style={styles.articleTitle} >
+                      <Text style={styles.articleTitle}>
                         {article.title}
                       </Text>
 
-                      <View style={styles.topContent} /* Bottom */>
-                        <Text style={styles.newsOrg}>{article.newsOrganization}</Text>
+                      <View style={styles.topContent}>
+                        <Text style={styles.newsOrg}>{article.newsOrganization.orgName}</Text>
                         <Text style={styles.date}>{this.dateRender(article.date)}</Text>
                       </View>
                     </View>
@@ -89,7 +99,7 @@ class HighlightedNews extends Component {
       </View>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   main: {
@@ -111,7 +121,7 @@ const styles = StyleSheet.create({
   topBarTitle: {
     paddingLeft: '4%',
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 20,
   },
   scroll: {
@@ -135,7 +145,7 @@ const styles = StyleSheet.create({
   articleContent: {
     width: '100%',
     height: '100%',
-    flexDirection: 'column-reverse'
+    flexDirection: 'column-reverse',
   },
   bottomContent: {
     width: '100%',
@@ -147,27 +157,27 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '80%',
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   tagsText: {
     fontSize: 10,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     color: 'white',
-    paddingLeft: '2%'
+    paddingLeft: '2%',
   },
   iconContainer: {
     flexWrap: 'wrap',
     width: '20%',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   icon: {
 
   },
   articleTitle: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 20,
     color: 'white',
     width: '100%',
@@ -181,14 +191,14 @@ const styles = StyleSheet.create({
   },
   newsOrg: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 15,
     flexWrap: 'wrap',
     color: 'white',
   },
   date: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     flexWrap: 'wrap',
     fontSize: 15,
     color: 'white',

@@ -54,14 +54,7 @@ const smallStoryStyles = StyleSheet.create({
   tagsText: {
     fontSize: 10,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
-    color: 'black',
-  },
-  date: {
-    fontFamily: 'Baskerville',
-    fontWeight: "100",
-    flexWrap: 'wrap',
-    fontSize: 15,
+    fontWeight: '100',
     color: 'black',
   },
   titleAndPicture: {
@@ -94,25 +87,27 @@ class VerifiedScreen extends Component {
     this.props.getArticles();
   }
 
-  showArticleDetail(article) {
-    this.props.navigation.navigate('ArticleDetail', { article });
-  }
-
   dateRender = (dateStr) => {
-    let x = new Date(dateStr);
-    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
   }
 
+
   smallArticle = (article) => {
     return (
-      <View key={article.id} >
+      <View key={article.id}>
 
-        <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+        <TouchableOpacity style={{
+          backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+        }}
+          onPress={() => { this.showArticleDetail(article); }}
+          underlayColor="none"
+        >
 
           <View style={smallStoryStyles.container}>
-            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
+            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
             <View style={smallStoryStyles.titleAndPicture}>
               <Text style={smallStoryStyles.title}>{article.title}</Text>
               <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
@@ -129,17 +124,20 @@ class VerifiedScreen extends Component {
     );
   };
 
+  showArticleDetail(article) {
+    this.props.navigation.navigate('ArticleDetail', { article });
+  }
 
   render() {
     // eslint-disable-next-line prefer-destructuring
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {/* <View style={{flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
+        <View style={{ flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
           <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
           <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
           <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
-        </View>*/}
-        
+        </View>
+
 
         {this.props.articles.map((article) => {
           return (

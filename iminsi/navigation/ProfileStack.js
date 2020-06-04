@@ -4,9 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   Text, Image, Dimensions,
 } from 'react-native';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import VerifiedScreen from '../screens/VerifiedScreen';
 import ArticleDetail from '../screens/ArticleDetail';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -15,11 +16,11 @@ const Stack = createStackNavigator();
 
 // nest stack navigator to handle two internal views
 // "name" prop is the name of the route
-const VerifiedScreenTab = () => {
+const ProfileScreenTab = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Verified"
+        name="Profile"
         options={{
           headerTitleAlign: 'left',
           headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
@@ -31,11 +32,12 @@ const VerifiedScreenTab = () => {
           },
           title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Trending</Text>,
         }}
-        component={VerifiedScreen}
+        component={ProfileScreen}
       />
       <Stack.Screen name="ArticleDetail"
         options={({ route }) => ({
           headerTitleAlign: 'center',
+          title: <FontAwesome name="newspaper-o" size={24} color="white" />,
           headerBackTitleStyle: {
             color: 'black',
           },
@@ -54,4 +56,4 @@ const VerifiedScreenTab = () => {
   );
 };
 
-export default VerifiedScreenTab;
+export default ProfileScreenTab;

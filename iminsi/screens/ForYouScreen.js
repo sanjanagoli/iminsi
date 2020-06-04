@@ -23,6 +23,7 @@ class Pill extends Component {
     this.state = {
       clicked: false,
       color: 'rgb(158, 158, 158)',
+      textColor: 'black',
     };
   }
 
@@ -36,6 +37,7 @@ class Pill extends Component {
       this.setState(() => ({
         clicked: true,
         color: 'rgb(56, 60, 108)',
+        textColor: 'black',
       }));
     }
   }
@@ -49,7 +51,12 @@ class Pill extends Component {
         }}
         onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
       >
-        <Text style={styles.pillText}>
+        <Text style={{
+          fontFamily: 'Baskerville',
+          fontWeight: '200',
+          color: this.state.textColor,
+        }}
+        >
           {this.props.name}
         </Text>
       </TouchableOpacity>
@@ -120,9 +127,11 @@ class ForYouScreen extends Component {
             })}
           </ScrollView>
         </View>
-        {this.state.selectedInterests.map((interest) => { return (
-          <HighlightedNews articleNav={(article) => {this.props.navigation.navigate('ArticleDetail', { article });}} navTrigger={() => {this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles })}} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1,-1)} numberOfArticles={this.props.articles.slice(1,-1).length} />
-        );})}
+        {this.state.selectedInterests.map((interest) => {
+          return (
+            <HighlightedNews articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }} navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
+          );
+        })}
       </ScrollView>
     );
   }

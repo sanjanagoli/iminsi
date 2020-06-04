@@ -7,8 +7,8 @@ import HTML from 'react-native-render-html';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { incrementScore, decrementScore } from '../actions/index';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { incrementScore, decrementScore } from '../actions/index';
 
 class ArticleDetail extends Component {
   constructor(props) {

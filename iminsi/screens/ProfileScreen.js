@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -5,10 +7,78 @@ import {
   StyleSheet,
   ImageBackground,
   Image,
+  Dimensions,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { getArticles } from '../actions/index';
-import smallStoryStyles from '../stylesheets/SmallNewsStyle';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const smallStoryStyles = StyleSheet.create({
+
+  title: {
+    fontSize: 16,
+    fontFamily: 'Baskerville',
+    fontWeight: '200',
+    textAlign: 'left',
+    width: '70%',
+    flexWrap: 'wrap',
+  },
+
+  newsOrganization: {
+    fontFamily: 'Baskerville',
+    fontSize: 12,
+  },
+  tags: {
+    color: 'grey',
+    fontSize: 10,
+    fontFamily: 'Baskerville',
+  },
+  pictureDate: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  picture: {
+    backgroundColor: 'black',
+    width: '20%',
+    height: '100%',
+  },
+  date: {
+    fontSize: 12,
+    fontFamily: 'Baskerville',
+  },
+  seperator: {
+    marginVertical: 2,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  tagsText: {
+    fontSize: 10,
+    fontFamily: 'Baskerville',
+    fontWeight: '100',
+    color: 'black',
+  },
+  titleAndPicture: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '70%',
+  },
+  tagDate: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  content: {
+    backgroundColor: '#fff',
+    padding: 30,
+  },
+});
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -16,6 +86,70 @@ class ProfileScreen extends Component {
     this.state = {
       onTrustedSources: true,
     };
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.getArticles();
+  }
+
+  dateRender = (dateStr) => {
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
+  }
+
+  smallArticle = (article) => {
+    return (
+      <View key={article.id}>
+
+        <TouchableOpacity style={{
+          backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+        }}
+          onPress={() => { this.showArticleDetail(article); }}
+          underlayColor="none"
+        >
+
+          <View style={smallStoryStyles.container}>
+            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
+            <View style={smallStoryStyles.titleAndPicture}>
+              <Text style={smallStoryStyles.title}>{article.title}</Text>
+              <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
+            </View>
+            <View style={smallStoryStyles.tagDate}>
+              <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+              <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
+            </View>
+          </View>
+
+        </TouchableOpacity>
+        <View style={smallStoryStyles.seperator} />
+      </View>
+    );
+  };
+
+  showArticleDetail(article) {
+    this.props.navigation.navigate('ArticleDetail', { article });
+  }
+
+  fillInBlanks(article) {
+    if (!article.id) {
+      article.id = article.newsOrganization.orgName;
+    }
+    if (!article.imageURL) {
+      article.imageURL = 'https://pics.me.me/nope-nothing-here-9281424.png';
+    }
+    if (!article.newsOrg.orgName || !article.newsOrganization.orgName) {
+      article.newsOrganization.orgName = 'PlaceHolder Times';
+    }
+
+    if (!article.content) {
+      article.content = 'Lorem Ipsum is the single greatest threat. We are not - we are not keeping up with other websites. Lorem Ipsum best not make any more threats to your website. It will be met with fire and fury like the world has never seen. Does everybody know that pig named Lorem Ipsum? An ‘extremely credible source’ has called my office and told me that Barack Obama’s placeholder text is a fraud.';
+    }
+    if (!article.title) {
+      article.title = 'Article Title';
+    }
   }
 
   flip() {
@@ -29,20 +163,6 @@ class ProfileScreen extends Component {
         onTrustedSources: true,
       });
     }
-  }
-
-  smallArticle(article) {
-    return (
-      <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
-        <View style={smallStoryStyles.container}>
-          <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization}</Text>
-          <View style={smallStoryStyles.titleAndPicture}>
-            <Image style={smallStoryStyles.picture} source={{ url: article.imageURL }} />
-            <Text style={smallStoryStyles.title}>{article.title}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
   }
 
   newsOrgs() {
@@ -122,7 +242,12 @@ class ProfileScreen extends Component {
           <View
             style={styles.line}
           />
-          {this.bookmarked()}
+          {this.props.articles.map((article) => {
+            return (
+              this.smallArticle(article)
+            // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
+            );
+          })}
         </View>
       );
     }
@@ -235,5 +360,6 @@ const styles = StyleSheet.create({
   },
 
 });
+
 
 export default connect(mapReduxStateToProps, mapDispatchToProps)(ProfileScreen);
