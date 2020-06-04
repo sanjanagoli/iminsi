@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
