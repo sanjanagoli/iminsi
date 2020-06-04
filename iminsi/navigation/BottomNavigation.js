@@ -1,35 +1,30 @@
 import React from 'react';
-// import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { connect } from 'react-redux';
-import ForYouScreen from '../screens/ForYouScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import VerifiedScreen from '../screens/VerifiedScreen';
+import {
+  AntDesign, MaterialIcons, MaterialCommunityIcons,
+} from '@expo/vector-icons';
+import ForYouStack from './ForYouStack';
+import ProfileStack from './ProfileStack';
+import VerifiedScreenTab from './VerifiedTab';
 
-// const AboutTab = (props) => {
-//   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>about</Text></View>;
-// };
-
-// const SearchTab = (props) => {
-//   return <View style={{ flex: 1, justifyContent: 'center' }}><Text>Search</Text></View>;
-// };
-
-// const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
   return (
     <>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="For You" component={ForYouScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
-          <Tab.Screen name="Verified" component={VerifiedScreen} />
-          {/* <Tab.Screen name="For You" component={AboutTab} />
-          <Tab.Screen name="Profile" component={AboutTab} />
-          <Tab.Screen name="Verified" component={SearchTab} /> */}
+        <Tab.Navigator screenOptions={({ route }) => ({
+        })}
+          tabBarOptions={{
+            activeTintColor: 'blue',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          <Tab.Screen name="For You" options={{ tabBarIcon: () => { return (<AntDesign name="staro" size={24} color="black" />); } }} component={ForYouStack} />
+          <Tab.Screen name="Profile" options={{ tabBarIcon: () => { return (<MaterialIcons name="person-outline" size={24} color="black" />); } }} component={ProfileStack} />
+          <Tab.Screen name="Verified" options={{ tabBarIcon: () => { return (<MaterialCommunityIcons name="fire" size={24} color="black" />); } }} component={VerifiedScreenTab} />
         </Tab.Navigator>
       </NavigationContainer>
     </>
