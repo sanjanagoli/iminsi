@@ -32,7 +32,7 @@ const signIn = (params) => {
 
 const updateUser = (params) => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/${data.id}`, { params })
+    axios.put(`${URL}/${params.id}`, { params })
       .then((response) => {
         resolve(response.data);
       })

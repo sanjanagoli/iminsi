@@ -14,7 +14,6 @@ const signUpUser = (data) => {
   return (dispatch) => {
     userRequest.signUp(data)
       .then((response) => {
-        console.log(`in action ${response}`);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -24,11 +23,9 @@ const signUpUser = (data) => {
 };
 
 const signInUser = (data) => {
-  console.log('inside sign in user - actions');
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
-        console.log('reached here');
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -36,7 +33,6 @@ const signInUser = (data) => {
       });
   };
 };
-
 
 const updateUser = (data) => {
   return (dispatch) => {
@@ -50,7 +46,7 @@ const updateUser = (data) => {
   };
 };
 
-const getUserInterests = (user) => {
+const getInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
@@ -92,7 +88,7 @@ export {
   signUpUser,
   signInUser,
   updateUser,
-  getUserInterests,
+  getInterests,
   getOrganizations,
   getUserArticles,
 };
