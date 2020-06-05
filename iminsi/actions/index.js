@@ -19,6 +19,9 @@ import {
   getUserArticles
 } from './user';
 
+import {
+  getInterests,
+} from './interest';
 
 // combine all action types
 const ActionTypes = {};
@@ -44,6 +47,9 @@ export {
   signInUser,
   updateUser,
   getInterests,
+<<<<<<< HEAD
   getOrganizations,
   getUserArticles
+=======
+>>>>>>> onboarding
 };

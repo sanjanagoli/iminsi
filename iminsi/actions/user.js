@@ -14,6 +14,7 @@ const signUpUser = (data) => {
   return (dispatch) => {
     userRequest.signUp(data)
       .then((response) => {
+        console.log(`in action ${response}` );
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -23,6 +24,7 @@ const signUpUser = (data) => {
 };
 
 const signInUser = (data) => {
+  console.log('inside sign in user - actions');
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
@@ -33,6 +35,7 @@ const signInUser = (data) => {
       });
   };
 };
+
 
 const updateUser = (data) => {
   return (dispatch) => {
@@ -46,6 +49,7 @@ const updateUser = (data) => {
   };
 };
 
+<<<<<<< HEAD
 const getInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
@@ -83,6 +87,8 @@ const getUserArticles = (user) => {
 };
 
 
+=======
+>>>>>>> onboarding
 export {
   ActionTypes,
   signUpUser,
