@@ -82,5 +82,5 @@ export {
   updateUser,
   getInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
 };
