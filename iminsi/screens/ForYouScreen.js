@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getArticles } from '../actions/index';
+import { getArticles, getUserInterests } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
 
@@ -73,7 +73,8 @@ class ForYouScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.getArticles();
+    // this.props.getArticles();
+    // this.props.getUserInterests();
   }
 
   pillClick = (interest) => {
@@ -109,47 +110,46 @@ class ForYouScreen extends Component {
           {JSON.stringify(this.props.articles)}
         </Text>
     */
-    return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.topBar}>
-          <ScrollView
-            horizontal
-            contentContainerStyle={styles.scroll}
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={200}
-            decelerationRate="fast"
-            alwaysBounceHorizontal
-          >
-            {this.props.user.interests.map((interest) => {
-              return (
-                <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-              );
-            })}
-          </ScrollView>
-        </View>
-        {this.state.selectedInterests.map((interest) => {
-          return (
-            <HighlightedNews articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }} navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
-          );
-        })}
-      </ScrollView>
-    );
+    if (!this.props.user) {
+      console.log('hello');
+      return (
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.topBar}>
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.scroll}
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={200}
+              decelerationRate="fast"
+              alwaysBounceHorizontal
+            >
+              {this.props.user.interests.map((interest) => {
+                return (
+                  <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
+                );
+              })}
+            </ScrollView>
+          </View>
+          {this.state.selectedInterests.map((interest) => {
+            return (
+              <HighlightedNews articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }} navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
+            );
+          })}
+        </ScrollView>
+      );
+    } else {
+      console.log('for you', this.props.user.password);
+      return (
+        <Text>Loading</Text>
+      );
+    }
   }
 }
 
 function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
-    user: {
-      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-      ],
-    }/* reduxState.user.user */,
+    user: reduxState.user,
   };
 }
 
@@ -157,6 +157,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getArticles: () => {
       dispatch(getArticles());
+    },
+    getUserInterests: () => {
+      dispatch(getUserInterests());
     },
   };
 };

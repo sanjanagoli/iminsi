@@ -1,4 +1,4 @@
-import * as articleRequest from '../requests/article';
+import * as articleRequest from '../requests/article-request';
 
 const ActionTypes = {
   GET_ARTICLES: 'GET_ARTICLES',

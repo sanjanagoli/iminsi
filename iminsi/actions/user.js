@@ -1,4 +1,4 @@
-import * as userRequest from '../requests/user';
+import * as userRequest from '../requests/user-request';
 
 const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
@@ -14,6 +14,7 @@ const signUpUser = (data) => {
   return (dispatch) => {
     userRequest.signUp(data)
       .then((response) => {
+        // console.log('in singupuser action', response);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -26,7 +27,8 @@ const signInUser = (data) => {
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
-        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
+        console.log(`response in action ${JSON.stringify(response.user)}`);
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response.user });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -46,10 +48,11 @@ const updateUser = (data) => {
   };
 };
 
-const getInterests = (user) => {
+const getUserInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
+        // console.log('interests action response', response);
         dispatch({ type: ActionTypes.GET_INTERESTS, payload: response.data });
       })
       .catch((error) => {
@@ -88,7 +91,7 @@ export {
   signUpUser,
   signInUser,
   updateUser,
-  getInterests,
+  getUserInterests,
   getOrganizations,
   getUserArticles,
 };

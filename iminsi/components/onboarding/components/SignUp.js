@@ -15,16 +15,17 @@ class SignUp extends Component {
       password: '',
     };
   }
-  
+
   onSignup = () => {
-    if (this.state.username != '' && this.state.password != '') {
+    if (this.state.username !== '' && this.state.password !== '') {
       const data = {
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
       };
+      // console.log(data);
       this.props.signUpUser(data);
     } else {
-      Alert.alert("Required: username and password")
+      Alert.alert('Required: username and password');
     }
   }
 
@@ -32,8 +33,8 @@ class SignUp extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}> Create your Iminsi Account </Text>
-        <TextInput style={styles.input} placeholder="Your Username" onChange={(event) => { this.setState({ username: event.target.value }); }}/>
-        <TextInput style={styles.input} placeholder="Password" onChange={(event) => { this.setState({ password: event.target.value }); }} secureTextEntry />
+        <TextInput style={styles.input} placeholder="Your Username" autoCapitalize="none" onChangeText={(text) => { this.setState({ username: text }); }} />
+        <TextInput style={styles.input} placeholder="Password" autoCapitalize="none" onChangeText={(text) => { this.setState({ password: text }); }} secureTextEntry />
         {/* Alternatively, the onPress could read as "Next" and navigate to the onboarding survey and the real "Sign Up" happends after onboarding survey */}
         <TouchableOpacity>
           <Text style={styles.buttonText} onPress={() => { this.onSignup(); }}> Sign Up </Text>

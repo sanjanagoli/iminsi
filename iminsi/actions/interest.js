@@ -1,4 +1,4 @@
-import * as interestsRequest from '../requests/interest';
+import * as interestsRequest from '../requests/interest-request';
 
 
 const ActionTypes = {

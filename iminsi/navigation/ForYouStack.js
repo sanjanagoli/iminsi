@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
-  Dimensions, Text, Image, TouchableOpacity,
+  Dimensions, Text,
 } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { getArticles } from '../actions/index';
@@ -11,7 +11,7 @@ import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
 import ArticleDetail from '../screens/ArticleDetail';
 
-const windowWidth = Dimensions.get('window').width;
+// const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Stack = createStackNavigator();

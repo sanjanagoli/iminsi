@@ -17,11 +17,10 @@ const signUp = (params) => {
 
 
 const signIn = (params) => {
-  console.log('inside sign in user - request');
   return new Promise((resolve, reject) => {
     axios.post(`${URL}/signin`, params)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         resolve(response.data);
       })
       .catch((error) => {
