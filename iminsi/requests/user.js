@@ -1,38 +1,40 @@
 import axios from 'axios';
 
-// const URL = 'http://localhost:9090/api/user';
-const URL = 'http://iminsi-api.herokuapp.com/api/user';
+const URL = 'http://localhost:9090/api';
+// const URL = 'http://iminsi-api.herokuapp.com/api/user';
 
-const signUp = (data) => {
+const signUp = (params) => {
   return new Promise((resolve, reject) => {
-    axios.post(`${URL}`, data)
+    axios.post(`${URL}/signup`, params)
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
 
 
-const signIn = (data) => {
+const signIn = (params) => {
+  console.log('inside sign in user - request');
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/${data.id}`)
+    axios.post(`${URL}/signin`, params)
       .then((response) => {
-        resolve(response.data.response);
+        console.log(response);
+        resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
 
-const updateUser = (data) => {
+const updateUser = (params) => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/${data.id}`, { data })
+    axios.put(`${URL}/${data.id}`, { params })
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error.response.data);
@@ -44,7 +46,7 @@ const getInterests = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/${user.id}/profileInterests`, { user })
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error.response.data);
@@ -56,7 +58,7 @@ const getOrganizations = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/${user.id}/trustedSources`, { user })
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error.response.data);
@@ -68,10 +70,11 @@ const getUserArticles = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/${user.id}/profileArticles`, { user })
       .then((response) => {
-        resolve(response.data.response);
+        resolve(response.data);
+        resolve(response);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };

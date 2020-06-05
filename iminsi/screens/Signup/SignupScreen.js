@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../../stylesheets/LoginStyle';
+import SignUp from '../../components/onboarding/components/SignUp';
+
 
 class SignupScreen extends Component {
   constructor(props) {
@@ -15,9 +17,7 @@ class SignupScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>Profile page</Text>
-      </ScrollView>
+      <SignUp />
     );
   }
 }
