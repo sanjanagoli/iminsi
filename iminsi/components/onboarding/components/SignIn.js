@@ -60,7 +60,13 @@ class SignIn extends Component {
   }
 }
 
-export default connect(null, { signInUser })(SignIn);
+function mapReduxStateToProps(reduxState) {
+  return {
+    currentUser: reduxState.user.currentUser,
+  };
+}
+
+export default connect(mapReduxStateToProps, { signInUser })(SignIn);
 
 const styles = StyleSheet.create({
   container: {

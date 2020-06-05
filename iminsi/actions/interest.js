@@ -10,7 +10,7 @@ const getInterests = () => {
   return (dispatch) => {
     interestsRequest.getInterests()
       .then((response) => {
-        dispatch({ type: ActionTypes.GET_INTERESTS, payload: { data: response } });
+        dispatch({ type: ActionTypes.GET_INTERESTS, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.DATABASE_ERROR, payload: error });

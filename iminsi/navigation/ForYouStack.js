@@ -10,6 +10,7 @@ import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
 import ArticleDetail from '../screens/ArticleDetail';
+import LoginStack from './LoginStack';
 
 // const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -71,7 +72,12 @@ class ForYouStack extends Component {
           })}
           component={ArticleDetail}
         />
+        <Stack.Screen name="Login"
+          component={LoginStack}
+        />
       </Stack.Navigator>
+
+
     );
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
@@ -9,7 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getArticles, getUserInterests } from '../actions/index';
+import { getArticles, getInterests } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
 
@@ -73,7 +75,8 @@ class ForYouScreen extends Component {
   }
 
   componentDidMount() {
-    // this.props.getArticles();
+    this.props.getArticles();
+    this.props.getInterests();
     // this.props.getUserInterests();
   }
 
@@ -99,6 +102,14 @@ class ForYouScreen extends Component {
     }
   }
 
+  capitalizeTag = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  getArticlesForInterest = (interest) => {
+    console.log(interest.articles);
+    return this.props.articles;
+  }
 
   render() {
     // eslint-disable-next-line prefer-destructuring
@@ -110,7 +121,8 @@ class ForYouScreen extends Component {
           {JSON.stringify(this.props.articles)}
         </Text>
     */
-    if (!this.props.user) {
+    console.log('testing', JSON.stringify(this.props.allInterests.length));
+    if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
       console.log('hello');
       return (
         <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -123,24 +135,32 @@ class ForYouScreen extends Component {
               decelerationRate="fast"
               alwaysBounceHorizontal
             >
-              {this.props.user.interests.map((interest) => {
+              {this.props.currentUser.interests.map((interest) => {
                 return (
-                  <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
+                  <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
                 );
               })}
             </ScrollView>
           </View>
           {this.state.selectedInterests.map((interest) => {
             return (
-              <HighlightedNews articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }} navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
+              <HighlightedNews
+                articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
+                navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
+                title={this.capitalizeTag(interest.interestName)}
+                key={interest.interestName}
+                articles={interest.articles.slice(1, -1)}
+                numberOfArticles={interest.articles.slice(1, -1).length}
+              />
             );
           })}
         </ScrollView>
       );
     } else {
-      console.log('for you', this.props.user.password);
+      // console.log('for you', this.props.currentUser);
+      this.props.navigation.navigate('Sign In');
       return (
-        <Text>Loading</Text>
+        <Text>Loading...</Text>
       );
     }
   }
@@ -149,7 +169,8 @@ class ForYouScreen extends Component {
 function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
-    user: reduxState.user,
+    currentUser: reduxState.user.currentUser,
+    allInterests: reduxState.interest.interests,
   };
 }
 
@@ -158,8 +179,11 @@ const mapDispatchToProps = (dispatch) => {
     getArticles: () => {
       dispatch(getArticles());
     },
-    getUserInterests: () => {
-      dispatch(getUserInterests());
+    // getUserInterests: () => {
+    //   dispatch(getUserInterests());
+    // },
+    getInterests: () => {
+      dispatch(getInterests());
     },
   };
 };

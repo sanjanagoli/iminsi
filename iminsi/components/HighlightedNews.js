@@ -66,7 +66,7 @@ class HighlightedNews extends Component {
           {this.props.articles.map((article) => {
             return (
               <TouchableOpacity style={styles.article} key={article.id} onPress={() => { this.props.articleNav(article); }}>
-                <ImageBackground source={{ url: article.imageURL }} style={{ width: '100%', height: '100%' }} imageStyle={{ width: '100%' }}>
+                <ImageBackground source={{ url: article.imageURL || 'https://kanna-info.com/wp-content/uploads/2015/09/map_africa1.png' }} style={{ width: '100%', height: '100%' }} imageStyle={{ width: '100%' }}>
                   <LinearGradient style={styles.linearGrad} colors={['rgba(0,0,0,0.4)', 'rgba(0,0,0,1)']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}>
                     <View style={styles.articleContent}>
                       <View style={styles.bottomContent}>

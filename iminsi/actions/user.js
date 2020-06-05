@@ -27,7 +27,7 @@ const signInUser = (data) => {
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
-        console.log(`response in action ${JSON.stringify(response.user)}`);
+        // console.log(`response in action ${JSON.stringify(response.user)}`);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.user });
       })
       .catch((error) => {
