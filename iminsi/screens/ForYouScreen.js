@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable eqeqeq */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
@@ -9,7 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getArticles } from '../actions/index';
+import { getArticles, getInterests } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
 
@@ -74,6 +76,8 @@ class ForYouScreen extends Component {
 
   componentDidMount() {
     this.props.getArticles();
+    this.props.getInterests();
+    // this.props.getUserInterests();
   }
 
   pillClick = (interest) => {
@@ -89,7 +93,7 @@ class ForYouScreen extends Component {
         x++;
       }
     });
-    if (x == 0) {
+    if (x === 0) {
       // ADDS TO IT from top
       newStateArray.unshift(interest);
       this.setState(() => ({
@@ -98,6 +102,14 @@ class ForYouScreen extends Component {
     }
   }
 
+  capitalizeTag = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  getArticlesForInterest = (interest) => {
+    console.log(interest.articles);
+    return this.props.articles;
+  }
 
   render() {
     // eslint-disable-next-line prefer-destructuring
@@ -109,47 +121,56 @@ class ForYouScreen extends Component {
           {JSON.stringify(this.props.articles)}
         </Text>
     */
-    return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.topBar}>
-          <ScrollView
-            horizontal
-            contentContainerStyle={styles.scroll}
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={200}
-            decelerationRate="fast"
-            alwaysBounceHorizontal
-          >
-            {this.props.user.interests.map((interest) => {
-              return (
-                <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-              );
-            })}
-          </ScrollView>
-        </View>
-        {this.state.selectedInterests.map((interest) => {
-          return (
-            <HighlightedNews articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }} navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: this.props.articles }); }} title={interest.interestName} key={interest.interestName} articles={this.props.articles.slice(1, -1)} numberOfArticles={this.props.articles.slice(1, -1).length} />
-          );
-        })}
-      </ScrollView>
-    );
+    console.log('testing', JSON.stringify(this.props.allInterests.length));
+    if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
+      console.log('hello');
+      return (
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.topBar}>
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.scroll}
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={200}
+              decelerationRate="fast"
+              alwaysBounceHorizontal
+            >
+              {this.props.currentUser.interests.map((interest) => {
+                return (
+                  <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
+                );
+              })}
+            </ScrollView>
+          </View>
+          {this.state.selectedInterests.map((interest) => {
+            return (
+              <HighlightedNews
+                articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
+                navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
+                title={this.capitalizeTag(interest.interestName)}
+                key={interest.interestName}
+                articles={interest.articles.slice(1, -1)}
+                numberOfArticles={interest.articles.slice(1, -1).length}
+              />
+            );
+          })}
+        </ScrollView>
+      );
+    } else {
+      // console.log('for you', this.props.currentUser);
+      this.props.navigation.navigate('Sign In');
+      return (
+        <Text>Loading...</Text>
+      );
+    }
   }
 }
 
 function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
-    user: {
-      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-        { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
-      ],
-    }/* reduxState.user.user */,
+    currentUser: reduxState.user.currentUser,
+    allInterests: reduxState.interest.interests,
   };
 }
 
@@ -157,6 +178,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getArticles: () => {
       dispatch(getArticles());
+    },
+    // getUserInterests: () => {
+    //   dispatch(getUserInterests());
+    // },
+    getInterests: () => {
+      dispatch(getInterests());
     },
   };
 };

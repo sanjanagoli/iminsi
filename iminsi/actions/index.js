@@ -6,6 +6,7 @@ import {
   getArticles,
   incrementScore,
   decrementScore,
+  getVerifiedArticles,
 } from './article';
 
 import {
@@ -13,10 +14,14 @@ import {
   signUpUser,
   signInUser,
   updateUser,
+  getUserInterests,
+  getOrganizations,
+  getUserArticles,
 } from './user';
 
-
-
+import {
+  getInterests,
+} from './interest';
 
 // combine all action types
 const ActionTypes = {};
@@ -41,4 +46,9 @@ export {
   signUpUser,
   signInUser,
   updateUser,
+  getUserInterests,
+  getOrganizations,
+  getUserArticles,
+  getVerifiedArticles,
+  getInterests,
 };
