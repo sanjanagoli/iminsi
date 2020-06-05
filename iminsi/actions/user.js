@@ -7,7 +7,7 @@ const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
   GET_INTERESTS: 'GET_INTERESTS',
   GET_ORGS: 'GET_ORGS',
-  GET_USER_ARTICLES: 'GET_USER_ARTICLES'
+  GET_USER_ARTICLES: 'GET_USER_ARTICLES',
 };
 
 const signUpUser = (data) => {
@@ -90,5 +90,5 @@ export {
   updateUser,
   getInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
 };

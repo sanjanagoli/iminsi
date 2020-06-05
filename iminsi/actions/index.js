@@ -6,7 +6,7 @@ import {
   getArticles,
   incrementScore,
   decrementScore,
-  getArticles
+  getVerifiedArticles,
 } from './article';
 
 import {
@@ -16,7 +16,7 @@ import {
   updateUser,
   getInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
 } from './user';
 
 
@@ -45,5 +45,6 @@ export {
   updateUser,
   getInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
+  getVerifiedArticles,
 };
