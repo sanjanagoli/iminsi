@@ -6,7 +6,7 @@ import {
   getArticles,
   incrementScore,
   decrementScore,
-  getArticles
+  getVerifiedArticles,
 } from './article';
 
 import {
@@ -14,9 +14,9 @@ import {
   signUpUser,
   signInUser,
   updateUser,
-  getInterests,
+  getUserInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
 } from './user';
 
 import {
@@ -46,10 +46,9 @@ export {
   signUpUser,
   signInUser,
   updateUser,
-  getInterests,
-<<<<<<< HEAD
+  getUserInterests,
   getOrganizations,
-  getUserArticles
-=======
->>>>>>> onboarding
+  getUserArticles,
+  getVerifiedArticles,
+  getInterests,
 };

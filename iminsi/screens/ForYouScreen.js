@@ -89,7 +89,7 @@ class ForYouScreen extends Component {
         x++;
       }
     });
-    if (x == 0) {
+    if (x === 0) {
       // ADDS TO IT from top
       newStateArray.unshift(interest);
       this.setState(() => ({

@@ -6,6 +6,7 @@ const ActionTypes = {
   API_ERROR: 'API_ERROR',
   INCREMENT_SCORE: 'INCREMENT_SCORE',
   DECREMENT_SCORE: 'DECREMENT_SCORE',
+  GET_VERIFIED: 'GET_VERIFIED',
 };
 
 
@@ -60,6 +61,17 @@ const decrementScore = (articleID) => {
   };
 };
 
+const getVerifiedArticles = () => {
+  return (dispatch) => {
+    articleRequest.getVerifiedArticles()
+      .then((response) => {
+        dispatch({ type: ActionTypes.GET_VERIFIED, payload: { data: response } });
+      })
+      .catch((error) => {
+        dispatch({ type: ActionTypes.API_ERROR, payload: error });
+      });
+  };
+};
 
 export {
   ActionTypes,
@@ -67,4 +79,5 @@ export {
   getArticles,
   incrementScore,
   decrementScore,
+  getVerifiedArticles,
 };

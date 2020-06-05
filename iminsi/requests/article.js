@@ -15,7 +15,6 @@ const getAllArticles = () => {
   });
 };
 
-
 const getArticle = (articleID) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/${articleID}`)
@@ -41,9 +40,22 @@ const updateArticleScore = (articleID, score) => {
   });
 };
 
+const getVerifiedArticles = () => {
+  return new Promise((resolve, reject) => {
+    axios.put(`${URL}/verified`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
 
 export {
   getAllArticles,
   getArticle,
   updateArticleScore,
+  getVerifiedArticles,
 };

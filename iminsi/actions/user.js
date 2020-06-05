@@ -7,14 +7,14 @@ const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
   GET_INTERESTS: 'GET_INTERESTS',
   GET_ORGS: 'GET_ORGS',
-  GET_USER_ARTICLES: 'GET_USER_ARTICLES'
+  GET_USER_ARTICLES: 'GET_USER_ARTICLES',
 };
 
 const signUpUser = (data) => {
   return (dispatch) => {
     userRequest.signUp(data)
       .then((response) => {
-        console.log(`in action ${response}` );
+        console.log(`in action ${response}`);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -28,6 +28,7 @@ const signInUser = (data) => {
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
+        console.log('reached here');
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
@@ -49,8 +50,7 @@ const updateUser = (data) => {
   };
 };
 
-<<<<<<< HEAD
-const getInterests = (user) => {
+const getUserInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
@@ -87,14 +87,12 @@ const getUserArticles = (user) => {
 };
 
 
-=======
->>>>>>> onboarding
 export {
   ActionTypes,
   signUpUser,
   signInUser,
   updateUser,
-  getInterests,
+  getUserInterests,
   getOrganizations,
-  getUserArticles
+  getUserArticles,
 };

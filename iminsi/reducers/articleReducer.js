@@ -4,6 +4,7 @@ import { ActionTypes } from '../actions/index';
 const initialState = {
   articles: [],
   currArticle: {},
+  verified: [],
 };
 
 const ArticleReducer = (state = initialState, action) => {
@@ -13,6 +14,10 @@ const ArticleReducer = (state = initialState, action) => {
         articles: action.payload.data,
       });
       // return { ...state, articles: action.payload.data };
+    case ActionTypes.GET_VERIFIED:
+      return Object.assign({}, state, {
+        verified: action.payload.data,
+      });
     case ActionTypes.GET_ARTICLE:
       return { ...state, currArticle: action.payload.data };
     case ActionTypes.INCREMENT_SCORE || ActionTypes.DECREMENT_SCORE:
