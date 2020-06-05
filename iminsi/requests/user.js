@@ -40,8 +40,47 @@ const updateUser = (data) => {
   });
 };
 
+const getInterests = (user) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL}/${user.id}/profileInterests`, { user })
+      .then((response) => {
+        resolve(response.data.response);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
+const getOrganizations = (user) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL}/${user.id}/trustedSources`, { user })
+      .then((response) => {
+        resolve(response.data.response);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
+const getUserArticles = (user) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL}/${user.id}/profileArticles`, { user })
+      .then((response) => {
+        resolve(response.data.response);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
 export {
   signUp,
   signIn,
   updateUser,
+  getInterests,
+  getOrganizations,
+  getUserArticles
 };
