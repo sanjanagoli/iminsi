@@ -1,11 +1,13 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/destructuring-assignment */
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert,
+  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { signUpUser } from '../../../actions/user';
+import { Autocomplete } from 'react-native-autocomplete-input';
+import { signUpUser, getAvailableCountries } from '../../../actions/user';
 
 class SignUp extends Component {
   constructor(props) {
@@ -13,7 +15,12 @@ class SignUp extends Component {
     this.state = {
       username: '',
       password: '',
+      country: '',
     };
+  }
+
+  componentDidMount() {
+    this.props.getAvailableCountries();
   }
 
   onSignup = () => {
@@ -21,6 +28,7 @@ class SignUp extends Component {
       const data = {
         username: this.state.username,
         password: this.state.password,
+        country: this.state.country,
       };
       // console.log(data);
       this.props.signUpUser(data);
@@ -29,34 +37,161 @@ class SignUp extends Component {
     }
   }
 
+  renderCountries = () => {
+    if (this.props.allCountries) {
+      const data = this.props.allCountries;
+      return (
+        <Autocomplete
+          data={data}
+          defaultValue={this.state.country}
+          onChangeText={(text) => this.setState({ country: text })}
+          renderItem={({ item, i }) => (
+            <TouchableOpacity onPress={() => this.setState({ country: item })}>
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      );
+    }
+  }
+
   render() {
+    console.log('here', this.props.allCountries);
     return (
       <View style={styles.container}>
-        <Text style={styles.header}> Create your Iminsi Account </Text>
-        <TextInput style={styles.input} placeholder="Your Username" autoCapitalize="none" onChangeText={(text) => { this.setState({ username: text }); }} />
-        <TextInput style={styles.input} placeholder="Password" autoCapitalize="none" onChangeText={(text) => { this.setState({ password: text }); }} secureTextEntry />
-        {/* Alternatively, the onPress could read as "Next" and navigate to the onboarding survey and the real "Sign Up" happends after onboarding survey */}
-        <TouchableOpacity>
-          <Text style={styles.buttonText} onPress={() => { this.onSignup(); }}> Sign Up </Text>
-        </TouchableOpacity>
+        <Text style={styles.header}> Sign up </Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Username"
+            autoCapitalize="none"
+            style={styles.userInput}
+            onChangeText={(text) => { this.setState({ username: text }); }}
+          />
+
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            autoCapitalize="none"
+            style={styles.userInput}
+            onChangeText={(text) => { this.setState({ password: text }); }}
+          />
+          {this.renderCountries()}
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
+            <Text style={styles.buttonText}>
+              Next
+              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
+            <Text style={styles.buttonText}>
+              Sign in
+              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* <TouchableOpacity style={styles.underlineButton}>
+
+          <Text style={styles.underlineButtonText}>
+            {' '}
+            Click here to sign up instead
+          </Text>
+        </TouchableOpacity> */}
+
       </View>
     );
   }
 }
 
-export default connect(null, { signUpUser })(SignUp);
+function mapReduxStateToProps(reduxState) {
+  return {
+    allCountries: reduxState.user.availableCountries,
+  };
+}
 
-// to do: add more styles as we see fit
+export default connect(mapReduxStateToProps, { signUpUser, getAvailableCountries })(SignUp);
+
 const styles = StyleSheet.create({
   container: {
     padding: 30,
+    justifyContent: 'center',
   },
-
+  inputContainer: {
+    marginTop: Dimensions.get('screen').height * 0.05,
+  },
   header: {
-    fontSize: 24,
+    fontSize: 40,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: Dimensions.get('screen').height * 0.1,
+  },
+  userInput: {
+    margin: 15,
+    paddingHorizontal: '4%',
+    height: '17%',
+    borderColor: 'rgb(56, 60, 108)',
+    borderWidth: 1,
   },
 
-  input: {},
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    // width: windowWidth,
+    backgroundColor: 'rgb(250,250,250)',
+    paddingHorizontal: 10,
+    flex: 1,
+    margin: 6,
+    marginBottom: 5,
+    // marginLeft: 4,
 
-  buttonText: {},
+  },
+  button: {
+    // display: 'flex',
+    // justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    // paddingHorizontal: '10%',
+    height: 50,
+    width: '30%',
+    // marginTop: '-10%',
+    backgroundColor: '#383C6C',
+    borderRadius: 5,
+    // position: 'absolute',
+    // bottom: 20,
+  },
+  buttonText: {
+    fontSize: 14,
+    color: 'white',
+    fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 15,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  underlineButtonText: {
+    fontSize: 12,
+    color: 'black',
+    position: 'absolute',
+    bottom: 5,
+  },
+  underlineButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    height: 42,
+    textDecorationLine: 'underline',
+    borderRadius: 40,
+    position: 'absolute',
+    bottom: 5,
+  },
 });

@@ -17,6 +17,7 @@ import {
   getUserInterests,
   getOrganizations,
   getUserArticles,
+  getAvailableCountries,
 } from './user';
 
 import {
@@ -51,4 +52,5 @@ export {
   getUserArticles,
   getVerifiedArticles,
   getInterests,
+  getAvailableCountries,
 };

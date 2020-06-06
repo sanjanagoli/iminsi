@@ -31,7 +31,7 @@ const signIn = (params) => {
 
 const updateUser = (params) => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/${params.id}`, { params })
+    axios.put(`${URL}/user/${params.id}`, { params })
       .then((response) => {
         resolve(response.data);
       })
@@ -43,7 +43,7 @@ const updateUser = (params) => {
 
 const getInterests = (user) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/${user.id}/profileInterests`, { user })
+    axios.get(`${URL}/user/${user.id}/profileInterests`)
       .then((response) => {
         resolve(response.data);
       })
@@ -55,7 +55,7 @@ const getInterests = (user) => {
 
 const getOrganizations = (user) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/${user.id}/trustedSources`, { user })
+    axios.get(`${URL}/user/${user.id}/trustedSources`)
       .then((response) => {
         resolve(response.data);
       })
@@ -67,10 +67,21 @@ const getOrganizations = (user) => {
 
 const getUserArticles = (user) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/${user.id}/profileArticles`, { user })
+    axios.get(`${URL}/user/${user.id}/profileArticles`)
       .then((response) => {
         resolve(response.data);
-        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+const getAvailableCountries = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL}/resources/countries`)
+      .then((response) => {
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error);
@@ -85,4 +96,5 @@ export {
   getInterests,
   getOrganizations,
   getUserArticles,
+  getAvailableCountries,
 };
