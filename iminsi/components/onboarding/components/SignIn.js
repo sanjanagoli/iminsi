@@ -5,12 +5,14 @@
 /* eslint-disable react/prefer-stateless-function */
 // sign in
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
 import {
   StyleSheet, View, TextInput, TouchableOpacity, Text, Alert,
 } from 'react-native';
 // eslint-disable-next-line no-unused-vars
 import { connect } from 'react-redux';
 import { signInUser } from '../../../actions/user';
+import 'fontsource-roboto';
 
 class SignIn extends Component {
   constructor(props) {
@@ -37,26 +39,36 @@ class SignIn extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}> Sign In to your Iminsi Account </Text>
-        <TextInput
-          placeholder="username"
-          // placeholderTextColor="rgba(255,255,255,0.2)"
-          style={styles.input}
-          onChange={(event) => { this.setState({ username: event.target.value }); }}
-        />
+        <Text style={styles.header}> Sign in </Text>
+        <div>
+          <TextField id="standard-basic"
+            label="Username"
+            onChange={(event) => { this.setState({ username: event.target.value }); }}
+          />
 
-        <TextInput
-          placeholder="password"
-          style={styles.input}
-          secureTextEntry
-          onChange={(event) => { this.setState({ password: event.target.value }); }}
-        />
+          <TextField id="standard-basic"
+            label="Password"
+            type="password"
+            onChange={(event) => { this.setState({ password: event.target.value }); }}
+          />
+        </div>
 
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+
           {/* Modify the signInUser parameters depending on actions/index.js */}
           <Text style={styles.buttonText} onPress={() => { this.onSignin(); }}>
             {' '}
-            LOGIN
+            Sign in
+            {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.underlineButton}>
+
+          {/* Modify the signInUser parameters depending on actions/index.js */}
+          <Text style={styles.underlineButtonText}>
+            {' '}
+            Click here to sign up instead
           </Text>
         </TouchableOpacity>
 
@@ -73,10 +85,63 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    fontSize: 24,
+    fontSize: 40,
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 
   input: {},
 
-  buttonText: {},
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    // width: windowWidth,
+    backgroundColor: 'rgb(250,250,250)',
+    paddingHorizontal: 10,
+    flex: 1,
+    margin: 6,
+    marginBottom: 5,
+    // marginLeft: 4,
+
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    height: 42,
+    backgroundColor: 'rgb(56, 60, 108)',
+    borderRadius: 5,
+    position: 'absolute',
+    bottom: 20,
+  },
+  buttonText: {
+    fontSize: 14,
+    color: 'white',
+    fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 15,
+  },
+  underlineButtonText: {
+    fontSize: 12,
+    color: 'black',
+    position: 'absolute',
+    bottom: 5,
+  },
+  underlineButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    height: 42,
+    textDecorationLine: 'underline',
+    borderRadius: 40,
+    position: 'absolute',
+    bottom: 5,
+  },
 });

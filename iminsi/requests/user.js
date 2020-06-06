@@ -23,6 +23,7 @@ const signIn = (params) => {
       .then((response) => {
         console.log(response);
         resolve(response.data);
+        // allow user to navigate to the next page
       })
       .catch((error) => {
         reject(error);
@@ -32,7 +33,7 @@ const signIn = (params) => {
 
 const updateUser = (params) => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/${data.id}`, { params })
+    axios.put(`${URL}/${params.id}`, { params }) // is it params.id? where can i see the content of params
       .then((response) => {
         resolve(response);
       })

@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { updateUser, getInterests } from '../actions/index';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -63,7 +63,7 @@ class onBoardingInterestScreen extends Component {
   }
 
   componentDidMount() {
-    // this.props.getInterests(); // interests instead of articles
+    // this.props.getInterests(); // get interests from database
     this.setState(() => ({
       selectedInterests: [],
     }));
@@ -88,44 +88,59 @@ class onBoardingInterestScreen extends Component {
 
 
   render() {
-    return (
-    // <ScrollView contentContainerStyle={styles.contentContainer}>
-      <View style={styles.onboardingForm}>
-        <Text style={styles.titleText}>Pick three topics you want to read about </Text>
-        {console.log('im hree')}
-        {this.props.interests.map((interest) => {
-          return (
-            <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-          );
-        })}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => { updateUser(this.props.user.id, this.state.selectedInterests); }}
-        >
-          <Text style={styles.buttonText}> Next</Text>
-        </TouchableOpacity>
-      </View>
-    // </ScrollView>
-    );
+    if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
+      return (
+        <View style={styles.onboardingForm}>
+          <Text style={styles.titleText}>Pick three topics you want to read about </Text>
+          {this.props.allInterests.map((interest) => { // allInterests rather than user interests
+            return (
+              <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} /> // onclick adds to selected Interests
+            );
+          })}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => { updateUser(this.props.currentUser.id, this.state.selectedInterests); }} // ? do I need currentUser.id
+          >
+            <Text style={styles.buttonText}> Next</Text>
+            {/* navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <Text>Loading...</Text>
+      ); // should the else be error?
+    }
   }
 }
 
 function mapReduxStateToProps(reduxState) {
   return {
-    // interests: reduxState.interests
+    allInterests: reduxState.interest.interests,
+    currentUser: reduxState.user.currentUser,
 
-    interests: [{ interestName: 'Politics' },
-      { interestName: 'Sports' },
-      { interestName: 'International' },
-      { interestName: 'Health' },
-      { interestName: 'Economics' },
-      { interestName: 'Stocks' },
-      { interestName: 'Fashion' },
-    ],
-  };/* reduxState.user */ // the list from database? - how to do on press, send the interests to the user's profile;
+
+    // interests: [{ interestName: 'Politics' },
+    //   { interestName: 'Sports' },
+    //   { interestName: 'International' },
+    //   { interestName: 'Health' },
+    //   { interestName: 'Economics' },
+    //   { interestName: 'Stocks' },
+    //   { interestName: 'Fashion' },
+    // ],
+  };
 }
-
-export default connect(mapReduxStateToProps, { updateUser, getInterests })(onBoardingInterestScreen);
+const mapDispatchToProps = (dispatch) => { // ?
+  return {
+    updateUser: () => {
+      dispatch(updateUser());
+    },
+    getInterests: () => {
+      dispatch(getInterests());
+    },
+  };
+};
+export default connect(mapReduxStateToProps, mapDispatchToProps)(onBoardingInterestScreen);
 
 
 const styles = StyleSheet.create({
