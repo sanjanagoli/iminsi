@@ -130,21 +130,30 @@ class VerifiedScreen extends Component {
 
   render() {
     // eslint-disable-next-line prefer-destructuring
-    return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={{ flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
-          <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
-          <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
-          <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
-        </View>
-        {this.props.articles.map((article) => {
-          return (
-            this.smallArticle(article)
-            // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
-          );
-        })}
-      </ScrollView>
-    );
+    if (this.props.articles !== undefined && this.props.articles !== null) {
+      return (
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={{ flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
+            {console.log('here in highlighted')}
+            {console.log(this.props.article)}
+            <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
+            <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
+            <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
+          </View>
+          {this.props.articles.map((article) => {
+            return (
+              this.smallArticle(article)
+              // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
+            );
+          })}
+        </ScrollView>
+      );
+    } else {
+      console.log('im in the else');
+      return (
+        <Text>Loading...</Text>
+      );
+    }
   }
 }
 
