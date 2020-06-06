@@ -10,7 +10,9 @@ import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
 import ArticleDetail from '../screens/ArticleDetail';
-import LoginStack from './LoginStack';
+// import LoginStack from './LoginStack';
+import SignupScreen from '../screens/Signup/SignupScreen';
+import SigninScreen from '../screens/Signup/SigninScreen';
 
 // const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -72,8 +74,36 @@ class ForYouStack extends Component {
           })}
           component={ArticleDetail}
         />
-        <Stack.Screen name="Login"
-          component={LoginStack}
+        <Stack.Screen name="Sign In"
+          options={{
+            headerTitleAlign: 'left',
+            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 35,
+              color: 'black',
+            },
+            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>For You</Text>,
+          }}
+          component={SigninScreen}
+        />
+        <Stack.Screen name="Sign Up"
+          options={({ route }) => ({
+            headerTitleAlign: 'center',
+            headerBackTitle: <AntDesign name="arrowleft" size={30} color="black" />,
+            headerBackTitleStyle: {
+              color: 'black',
+            },
+            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 35,
+              color: 'black',
+            },
+          })}
+          component={SignupScreen}
         />
       </Stack.Navigator>
 

@@ -8,6 +8,7 @@ const ActionTypes = {
   GET_INTERESTS: 'GET_INTERESTS',
   GET_ORGS: 'GET_ORGS',
   GET_USER_ARTICLES: 'GET_USER_ARTICLES',
+  GET_COUNTRIES: 'GET_COUNTRIES',
 };
 
 const signUpUser = (data) => {
@@ -85,6 +86,19 @@ const getUserArticles = (user) => {
   };
 };
 
+const getAvailableCountries = () => {
+  console.log('in this method');
+  return (dispatch) => {
+    userRequest.getAvailableCountries()
+      .then((response) => {
+        console.log('in user.js', response);
+        dispatch({ type: ActionTypes.GET_COUNTRIES, payload: response });
+      })
+      .catch((error) => {
+        dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
+      });
+  };
+};
 
 export {
   ActionTypes,
@@ -94,4 +108,5 @@ export {
   getUserInterests,
   getOrganizations,
   getUserArticles,
+  getAvailableCountries,
 };
