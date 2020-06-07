@@ -66,6 +66,13 @@ const styles = StyleSheet.create({
 });
 
 class HighlightedNewsManzi extends Component {
+  dateRender = (dateStr) => {
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return (`${months[x.getMonth()]} ${dates[x.getDate()]} ${x.getFullYear()}`);
+  }
+
   fillContent() {
     const { article } = this.props;
     if (!article.newsOrganization || article.newsOrganization.orgName.length === 0) {
@@ -121,10 +128,11 @@ class HighlightedNewsManzi extends Component {
             >
 
               <View style={styles.TitleTagsOrganization}>
-                <Text style={styles.date}>
+                <Text style={styles.date}>{this.dateRender(article.date)}</Text>
+                {/* <Text style={styles.date}>
                   {article.date}
 
-                </Text>
+                </Text> */}
                 <Text style={styles.title}>
                   {article.title}
                 </Text>
@@ -138,7 +146,7 @@ class HighlightedNewsManzi extends Component {
               </View>
             </LinearGradient>
           </ImageBackground>
-          {this.bulletPoint(article.content)}
+          {this.bulletPoint(article.summary)}
         </View>
       </TouchableOpacity>
     );

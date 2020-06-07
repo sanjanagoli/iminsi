@@ -6,15 +6,14 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions, StyleSheet,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getArticles } from '../actions/index';
-import { Dimensions } from 'react-native';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-import { StyleSheet } from 'react-native';
 
 const smallStoryStyles = StyleSheet.create({
 
@@ -53,18 +52,18 @@ const smallStoryStyles = StyleSheet.create({
   },
   seperator: {
     marginVertical: 2,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    // borderBottomColor: '#737373',
+    // borderBottomWidth: StyleSheet.hairlineWidth,
   },
   tagsText: {
     fontSize: 10,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     color: 'black',
   },
   date: {
     fontFamily: 'Baskerville',
-    fontWeight: "100",
+    fontWeight: '100',
     flexWrap: 'wrap',
     fontSize: 15,
     color: 'black',
@@ -94,9 +93,9 @@ class InterestScreen extends Component {
   }
 
   dateRender = (dateStr) => {
-    let x = new Date(dateStr);
-    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
   }
 
@@ -111,12 +110,18 @@ class InterestScreen extends Component {
         justifyContent: 'flex-start',
         width: windowWidth,
         backgroundColor: 'white',
-      }}>
+      }}
+      >
         {this.props.route.params.articles.map((article) => {
           return (
-            <View  key={article.id} >
-             
-              <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth/45, paddingRight: windowWidth/45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+            <View key={article.id}>
+
+              <TouchableOpacity style={{
+                backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+              }}
+                onPress={() => { this.showArticleDetail(article); }}
+                underlayColor="none"
+              >
 
                 <View style={smallStoryStyles.container}>
                   <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
@@ -145,13 +150,13 @@ function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
     user: {
-      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
+      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
       ],
     }/* reduxState.user.user */,
   };

@@ -52,8 +52,8 @@ const smallStoryStyles = StyleSheet.create({
   },
   seperator: {
     marginVertical: 2,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    // borderBottomColor: '#737373',
+    // borderBottomWidth: StyleSheet.hairlineWidth,
   },
   tagsText: {
     fontSize: 10,
