@@ -67,17 +67,17 @@ class VerifiedScreen extends Component {
   render() {
     // eslint-disable-next-line prefer-destructuring
     // replace with verified articles later
-    if (this.props.articles !== undefined && this.props.articles !== null && this.props.articles.length >= 3) {
+    if (this.props.verifiedArticles !== undefined && this.props.verifiedArticles !== null && this.props.verifiedArticles.length >= 3) {
       return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={{ flexDirection: 'column', width: windowWidth, height: windowHeight * 2 }}>
             {console.log('here in highlighted')}
-            {console.log(this.props.articles)}
-            <HighlightedNewsTrending key={this.props.articles[0].id} h={0.9} article={this.props.articles[0]} navigation={this.props.navigation} />
-            <HighlightedNewsTrending key={this.props.articles[1].id} h={0.7} article={this.props.articles[1]} navigation={this.props.navigation} />
-            <HighlightedNewsTrending key={this.props.articles[2].id} h={0.4} article={this.props.articles[2]} navigation={this.props.navigation} />
+            {console.log(this.props.verifiedArticles)}
+            <HighlightedNewsTrending key={this.props.verifiedArticles[0].id} h={0.9} article={this.props.verifiedArticles[0]} navigation={this.props.navigation} />
+            <HighlightedNewsTrending key={this.props.verifiedArticles[1].id} h={0.7} article={this.props.verifiedArticles[1]} navigation={this.props.navigation} />
+            <HighlightedNewsTrending key={this.props.verifiedArticles[2].id} h={0.4} article={this.props.verifiedArticles[2]} navigation={this.props.navigation} />
           </View>
-          {this.props.articles.map((article) => {
+          {this.props.verifiedArticles.map((article) => {
             return (
               this.smallArticle(article)
               // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
