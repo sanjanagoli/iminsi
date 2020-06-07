@@ -33,7 +33,10 @@ class SignUp extends Component {
       // console.log(data);
       this.props.signUpUser(data);
     } else {
-      Alert.alert('Required: username and password');
+      Alert.alert('Warning!',  'Both username and password must be provided',
+      [{text: 'OK', onPress: () => console.log('OK pressed')}]
+      
+      );
     }
   }
 
@@ -62,6 +65,7 @@ class SignUp extends Component {
         <Text style={styles.header}> Sign up </Text>
         <View style={styles.inputContainer}>
           <TextInput
+            value = {this.state.username}
             placeholder="Username"
             autoCapitalize="none"
             style={styles.userInput}
@@ -69,6 +73,7 @@ class SignUp extends Component {
           />
 
           <TextInput
+            value = {this.state.password}
             placeholder="Password"
             secureTextEntry
             autoCapitalize="none"

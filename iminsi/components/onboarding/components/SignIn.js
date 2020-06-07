@@ -32,7 +32,10 @@ class SignIn extends Component {
       this.props.signInUser(data);
       this.setState({ username: '', password: '' });
     } else {
-      Alert.alert('Required: username and password');
+      Alert.alert('Warning!',  'Both username and password must be provided',
+      [{text: 'OK', onPress: () => console.log('OK pressed')}]
+      
+      );
     }
   }
 
@@ -42,6 +45,7 @@ class SignIn extends Component {
         <Text style={styles.header}> Sign in </Text>
         <View style={styles.inputContainer}>
           <TextInput
+            value = {this.state.username}
             placeholder="Username"
             autoCapitalize="none"
             style={styles.userInput}
@@ -49,6 +53,7 @@ class SignIn extends Component {
           />
 
           <TextInput
+            value = {this.state.password}
             placeholder="Password"
             secureTextEntry
             autoCapitalize="none"
@@ -64,7 +69,7 @@ class SignIn extends Component {
               {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
 
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> 
           <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
             <Text style={styles.buttonText}>
               Sign up
