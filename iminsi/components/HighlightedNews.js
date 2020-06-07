@@ -72,7 +72,7 @@ class HighlightedNews extends Component {
                       <View style={styles.bottomContent}>
                         <View style={styles.tags}>
                           {/* article.tags.map((tag) => { return <Text key={tag} style={{ fontSize: 15, color: 'white', paddingLeft:'2%'}}>{tag}</Text>}) */}
-                          <Text style={styles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+                          <Text style={styles.tagsText}>{(article.tags === '') ? article.tags : '#Africa'}</Text>
                         </View>
                         <View style={styles.iconContainer}>
                           <MaterialIcons name="verified-user" size={24} color="white" />

@@ -84,18 +84,20 @@ class HighlightedNewsManzi extends Component {
   }
 
   bulletPoint(text) {
-    const twoBulletPoints = text.split('. ', 3);
+    console.log('all the text');
+    console.log(text);
+    const cleanedtext = text.split('[');
 
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
-          <Text>{'\u2022'}</Text>
-          <Text style={{ flex: 1, paddingLeft: 5 }}>{twoBulletPoints[0]}</Text>
+          <Text style={{ marginLeft: 15, paddingTop: 10 }}>{'\u2022'}</Text>
+          <Text style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>{cleanedtext[0]}</Text>
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        {/* <View style={{ flexDirection: 'row' }}>
           <Text>{'\u2022'}</Text>
-          <Text style={{ flex: 1, paddingLeft: 5 }}>{twoBulletPoints[1]}</Text>
-        </View>
+          <Text style={{ flex: 1, paddingLeft: 5 }}>{bullettext[1]}</Text>
+        </View> */}
       </View>
     );
   }
@@ -129,10 +131,6 @@ class HighlightedNewsManzi extends Component {
 
               <View style={styles.TitleTagsOrganization}>
                 <Text style={styles.date}>{this.dateRender(article.date)}</Text>
-                {/* <Text style={styles.date}>
-                  {article.date}
-
-                </Text> */}
                 <Text style={styles.title}>
                   {article.title}
                 </Text>
