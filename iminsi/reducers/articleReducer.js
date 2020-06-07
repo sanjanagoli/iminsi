@@ -2,9 +2,9 @@
 import { ActionTypes } from '../actions/index';
 
 const initialState = {
-  articles: [],
-  currArticle: {},
-  verified: [],
+  articles: null,
+  currArticle: null,
+  verified: null,
 };
 
 const ArticleReducer = (state = initialState, action) => {

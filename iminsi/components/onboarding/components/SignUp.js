@@ -38,6 +38,7 @@ class SignUp extends Component {
   }
 
   renderCountries = () => {
+    console.log(this.props.allCountries);
     if (this.props.allCountries) {
       const data = this.props.allCountries;
       return (
@@ -51,6 +52,10 @@ class SignUp extends Component {
             </TouchableOpacity>
           )}
         />
+      );
+    } else {
+      return (
+        <View />
       );
     }
   }
@@ -75,11 +80,11 @@ class SignUp extends Component {
             style={styles.userInput}
             onChangeText={(text) => { this.setState({ password: text }); }}
           />
-          {this.renderCountries()}
+          {/* {this.renderCountries()} */}
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
+          <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
             <Text style={styles.buttonText}>
               Next
               {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}

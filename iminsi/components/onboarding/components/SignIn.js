@@ -24,16 +24,18 @@ class SignIn extends Component {
   }
 
   onSignin = () => {
+    console.log('in sigin', this.state.username, this.state.password);
     if (this.state.username != '' && this.state.password != '') {
       const data = {
         username: this.state.username,
         password: this.state.password,
       };
       this.props.signInUser(data);
-      this.setState({ username: '', password: '' });
+      // should navigate you to desire page after this!!! (either for you or verified)
     } else {
       Alert.alert('Required: username and password');
     }
+    this.setState({ username: '', password: '' });
   }
 
   render() {
@@ -45,6 +47,7 @@ class SignIn extends Component {
             placeholder="Username"
             autoCapitalize="none"
             style={styles.userInput}
+            value={this.state.username}
             onChangeText={(text) => { this.setState({ username: text }); }}
           />
 
@@ -53,6 +56,7 @@ class SignIn extends Component {
             secureTextEntry
             autoCapitalize="none"
             style={styles.userInput}
+            value={this.state.password}
             onChangeText={(text) => { this.setState({ password: text }); }}
           />
         </View>

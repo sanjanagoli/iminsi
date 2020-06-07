@@ -62,6 +62,7 @@ const decrementScore = (articleID) => {
 };
 
 const getVerifiedArticles = () => {
+  console.log('reached verified articles');
   return (dispatch) => {
     articleRequest.getVerifiedArticles()
       .then((response) => {

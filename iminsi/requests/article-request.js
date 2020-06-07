@@ -4,13 +4,15 @@ const URL = 'http://localhost:9090/api/article';
 // const URL = 'http://iminsi-api.herokuapp.com/api/article';
 
 const getAllArticles = () => {
+  console.log('in getallarticles');
   return new Promise((resolve, reject) => {
     axios.get(`${URL}`)
       .then((response) => {
+        console.log('insideeeee');
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
@@ -22,7 +24,7 @@ const getArticle = (articleID) => {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response);
+        reject(error);
       });
   });
 };
@@ -35,19 +37,20 @@ const updateArticleScore = (articleID, score) => {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
 
 const getVerifiedArticles = () => {
+  console.log(' in verified artcies');
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/verified`)
+    axios.get(`${URL}/verified`)
       .then((response) => {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
