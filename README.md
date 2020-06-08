@@ -2,8 +2,6 @@
 
 ![Team Photo](./pic.png)
 
-TODO: short project description, some sample screenshots or mockups
-
 ## Architecture
 
 Backend: https://github.com/dartmouth-cs52-20S/project-api-iminsi
@@ -24,3 +22,4 @@ Enter your expo credentials <br />
 Meriem Fouad, Sanjana Goli, Abubakar Kasule, Rohith Mandavilli, Bryan Manzi, Katrina Yu <br />
 
 ## Acknowledgments
+We'd like to thank Tim for all of his guidance and for being such a great instructor in CS52!
