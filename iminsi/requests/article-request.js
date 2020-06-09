@@ -29,12 +29,17 @@ const getArticle = (articleID) => {
 
 
 const updateArticleScore = (articleID, score) => {
+  console.log("in article request")
+  console.log(articleID);
+
   return new Promise((resolve, reject) => {
     axios.put(`${URL}/${articleID}`, { score })
       .then((response) => {
         resolve(response.data);
       })
       .catch((error) => {
+        console.log("The error is")
+        console.log(error)
         reject(error.response.data);
       });
   });

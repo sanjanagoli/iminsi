@@ -113,7 +113,7 @@ class ForYouScreen extends Component {
 
   render() {
     if (this.props.userLoaded) {
-      if (this.props.currentUser.interests!= undefined) {
+      if (this.props.currentUser.interests != undefined) {
         return (
           <ScrollView contentContainerStyle={styles.contentContainer}>
             <View style={styles.topBar}>
@@ -130,6 +130,22 @@ class ForYouScreen extends Component {
                     <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
                   );
                 })}
+                <TouchableOpacity key="addInterests"
+                  style={{
+                    borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(158, 158, 158)', width: ((74 / 360) * windowWidth), height: ((26 / 640) * windowHeight), marginRight: windowHeight / 50,
+                  }}
+                  onPress={() => { this.props.navigation.navigate("Interest Adder") }}
+                >
+                  <Text style={{
+                    fontFamily: 'Baskerville',
+                    fontWeight: '900',
+                    fontSize: 24,
+                    color: "black",
+                  }}
+                  >
+                    +
+                  </Text>
+                </TouchableOpacity>
               </ScrollView>
             </View>
             {this.state.selectedInterests.map((interest) => {
@@ -154,7 +170,7 @@ class ForYouScreen extends Component {
               style={{
                 marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
               }}
-              onPress={() => {this.props.navigation.navigate("On Boarding");}}
+              onPress={() => { this.props.navigation.navigate("On Boarding"); }}
             >
               <Text style={{
                 fontFamily: 'Baskerville',

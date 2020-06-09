@@ -44,6 +44,13 @@ const signInUser = (data, nav, path) => {
   };
 };
 
+const signOut = (data, nav, path) => {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.DEAUTH_USER});
+    nav.navigate(path);
+  };
+};
+
 const updateUser = (data) => {
   return (dispatch) => {
     userRequest.updateUser(data)
@@ -55,6 +62,8 @@ const updateUser = (data) => {
       });
   };
 };
+
+
 
 const getUserInterests = (user) => {
   return (dispatch) => {
@@ -176,4 +185,5 @@ export {
   toggleWebView,
   addUserOrganizations,
   addInterests,
+  signOut,
 };

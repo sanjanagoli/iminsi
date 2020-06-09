@@ -22,6 +22,7 @@ class SignUp extends Component {
       username: '',
       password: '',
       country: '',
+      failed: false,
     };
   }
 
@@ -37,7 +38,9 @@ class SignUp extends Component {
         country: this.state.country,
       };
       this.props.signUpUser(data, this.props.navigation, "On Boarding");
-      this.setState({ username: '', password: '', country: '' });
+      if (! this.props.loaded){
+        this.setState({failed: true})
+      }
     } else {
       Alert.alert('Required: username and password');
     }
@@ -67,6 +70,7 @@ class SignUp extends Component {
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={styles.container}
       >
+        {this.state.failed && <Text style={{color:"red", fontSize: 15}}>Please enter a different Username!</Text>}
         <TextInput
           placeholder="Username"
           autoCapitalize="none"
@@ -108,6 +112,7 @@ function mapReduxStateToProps(reduxState) {
     allCountries: reduxState.user.availableCountries,
     interests: reduxState.interest.interests,
     currentUser: reduxState.user.currentUser,
+    loaded: reduxState.user.loaded,
   };
 }
 
