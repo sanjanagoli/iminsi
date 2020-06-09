@@ -42,7 +42,10 @@ class SignUp extends Component {
         this.setState({failed: true})
       }
     } else {
-      Alert.alert('Required: username and password');
+      Alert.alert('Warning!',  'Both username and password must be provided',
+      [{text: 'OK', onPress: () => console.log('OK pressed')}]
+      
+      );
     }
   }
 
@@ -102,7 +105,6 @@ class SignUp extends Component {
                 </Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     );
   }
 }

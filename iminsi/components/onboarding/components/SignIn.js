@@ -30,14 +30,11 @@ class SignIn extends Component {
       this.props.signInUser(data, this.props.navigation, this.props.route.params.parent);
 
       this.setState({ username: '', password: '' });
-    }
-    // else if()
-
-    else {
-      Alert.alert('Warning!', 'Both username and password must be provided',
-        [{ text: 'OK', onPress: () => { this.setState({ username: '', password: '' }); } }])
-
-      // this.forceUpdate();
+    } else {
+      Alert.alert('Warning!',  'Both username and password must be provided',
+      [{text: 'OK', onPress: () => console.log('OK pressed')}]
+      
+      );
     }
   }
 
@@ -56,6 +53,7 @@ class SignIn extends Component {
           style={styles.container}
         >
           <TextInput
+            value = {this.state.username}
             placeholder="Username"
             autoCapitalize="none"
             style={styles.userInput}
@@ -63,6 +61,7 @@ class SignIn extends Component {
           />
 
           <TextInput
+            value = {this.state.password}
             placeholder="Password"
             secureTextEntry
             autoCapitalize="none"
@@ -73,7 +72,16 @@ class SignIn extends Component {
           <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
             <Text style={styles.buttonText}>
               Sign in
-              </Text>
+
+              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+
+            </Text>
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
+            <Text style={styles.buttonText}>
+              Sign up
+              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+            </Text>
           </TouchableOpacity>
           <Text>Don't have an account?</Text>
           <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style={{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
