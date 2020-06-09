@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, signUpUser, getAvailableCountries, addInterests } from '../actions/user';
+import { updateUser, signUpUser, getAvailableCountries, addInterests, getUserInterests } from '../actions/user';
 import { getInterests } from '../actions/interest';
 
 
@@ -126,7 +126,7 @@ class InterestAdder extends Component {
             style={{
               marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
             }}
-            onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.navigation.navigate("For You") }}
+            onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.getUserInterests(this.props.currentUser); this.props.navigation.navigate("For You") }}
           >
             <Text style={{
               fontFamily: 'Baskerville',
@@ -154,7 +154,7 @@ function mapReduxStateToProps(reduxState) {
 }
 
 
-export default connect(mapReduxStateToProps, { addInterests, updateUser, getInterests, signUpUser, getAvailableCountries })(InterestAdder);
+export default connect(mapReduxStateToProps, { addInterests, updateUser, getInterests, signUpUser, getAvailableCountries, getUserInterests })(InterestAdder);
 
 
 const stylesTwo = StyleSheet.create({

@@ -41,9 +41,11 @@ const updateUser = (params) => {
 };
 
 const getInterests = (user) => {
+  console.log(user.id);
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/user/${user.id}/profileInterests`)
       .then((response) => {
+        
         resolve(response.data);
       })
       .catch((error) => {
@@ -56,6 +58,7 @@ const addInterests = (user, interests) => {
   return new Promise((resolve, reject) => {
     axios.post(`${URL}/user/${user.id}/profileInterests`, { article: interests } )
       .then((response) => {
+        
         resolve(response.data);
       })
       .catch((error) => {
@@ -107,6 +110,7 @@ const addUserArticles = (user, article) => {
     
     axios.post(`${URL}/user/${user.id}/profileArticles`, { article })
       .then((response) => {
+        
         resolve(response.data);
       })
       .catch((error) => {
@@ -136,6 +140,7 @@ const removeUserArticles = (user, article) => {
   return new Promise((resolve, reject) => {
     axios.delete(`${URL}/user/${user.id}/profileArticles`, { data: { article } })
       .then((response) => {
+        
         resolve(response.data);
       })
       .catch((error) => {

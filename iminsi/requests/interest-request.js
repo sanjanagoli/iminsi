@@ -7,6 +7,7 @@ const getInterests = () => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}`)
       .then((response) => {
+        
         resolve(response.data);
       })
       .catch((error) => {

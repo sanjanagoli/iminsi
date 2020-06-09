@@ -141,15 +141,14 @@ class ArticleDetail extends Component {
       userRatedArticle: true,
     });
 
-    // if (score > 0){
-      // const { route } = this.props;
-      // const creatingOrgId  = route.params.article.newsOrganization;
-      // const userID = route.params.userID;
-      // const orgObjectArray = [creatingOrgId]
-      // console.log("object Array")
-      // console.log(orgObjectArray)
-      // this.props.addUserOrganizations(userID, orgObjectArray);
-    // }
+    if (score > 0){
+      if (this.props.loaded){
+        const { route } = this.props;
+      const creatingOrgId  = route.params.article.newsOrganization.id;
+      const orgObjectArray = [creatingOrgId]
+      this.props.addUserOrganizations(this.props.currentUser.id, orgObjectArray);
+      }
+    }
     this.props.incrementScore(id, score);
   }
 
@@ -255,7 +254,20 @@ class ArticleDetail extends Component {
 function mapReduxStateToProps(reduxState) {
   return {
     webView: reduxState.user.webView,
+    loaded: reduxState.user.loaded,
+    currentUser: reduxState.user.currentUser,
   };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    incrementScore: (id, score) => {
+      dispatch(incrementScore(id, score));
+    },
+    addUserOrganizations: (userid, organizationid) => {
+      dispatch(addUserOrganizations(userid, organizationid));
+    },
+  }
 }
 
 
