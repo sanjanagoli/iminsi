@@ -6,8 +6,9 @@ import {
   StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Autocomplete } from 'react-native-autocomplete-input';
-import { signUpUser, getAvailableCountries } from '../../../actions/user';
+import Autocomplete from 'react-native-autocomplete-input';
+import { signUpUser, getAvailableCountries, getUserInterests } from '../../../actions/user';
+import InterestScreen from '../onBoardingInterest';
 
 class SignUp extends Component {
   constructor(props) {
@@ -30,8 +31,7 @@ class SignUp extends Component {
         password: this.state.password,
         country: this.state.country,
       };
-      // console.log(data);
-      this.props.signUpUser(data);
+      this.props.signUpUser(data, this.props.navigation, 'On Boarding');
     } else {
       Alert.alert('Required: username and password');
     }
@@ -56,11 +56,8 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log('here', this.props.allCountries);
     return (
       <View style={styles.container}>
-        <Text style={styles.header}> Sign up </Text>
-        <View style={styles.inputContainer}>
           <TextInput
             placeholder="Username"
             autoCapitalize="none"
@@ -75,32 +72,11 @@ class SignUp extends Component {
             style={styles.userInput}
             onChangeText={(text) => { this.setState({ password: text }); }}
           />
-          {this.renderCountries()}
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
-            <Text style={styles.buttonText}>
-              Next
-              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
-
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
-            <Text style={styles.buttonText}>
-              Sign in
-              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/* <TouchableOpacity style={styles.underlineButton}>
-
-          <Text style={styles.underlineButtonText}>
-            {' '}
-            Click here to sign up instead
-          </Text>
-        </TouchableOpacity> */}
-
+        <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
+              <Text style={styles.buttonText}>
+                Next
+              </Text>
+            </TouchableOpacity>
       </View>
     );
   }
@@ -116,8 +92,9 @@ export default connect(mapReduxStateToProps, { signUpUser, getAvailableCountries
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
     justifyContent: 'center',
+    flex: 1,
+    alignItems: "center",
   },
   inputContainer: {
     marginTop: Dimensions.get('screen').height * 0.05,
@@ -132,9 +109,11 @@ const styles = StyleSheet.create({
   userInput: {
     margin: 15,
     paddingHorizontal: '4%',
-    height: '17%',
+    height: '10%',
+    borderRadius: 10,
     borderColor: 'rgb(56, 60, 108)',
     borderWidth: 1,
+    width: '70%'
   },
 
   contentContainer: {

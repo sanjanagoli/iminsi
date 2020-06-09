@@ -9,13 +9,15 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
-import ArticleDetail from '../screens/ArticleDetail';
-// import LoginStack from './LoginStack';
-import SignupScreen from '../screens/Signup/SignupScreen';
-import SigninScreen from '../screens/Signup/SigninScreen';
+
+
 
 // const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+const capitalizeTag = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 const Stack = createStackNavigator();
 
@@ -28,7 +30,7 @@ class ForYouStack extends Component {
           options={{
             headerTitleAlign: 'left',
             headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-            headerTintColor: '#fff',
+            headerTintColor: 'rgb(56, 60, 108)',
             headerTitleStyle: {
               fontWeight: '200',
               fontSize: 35,
@@ -40,14 +42,14 @@ class ForYouStack extends Component {
         />
         <Stack.Screen name="Interest Screen"
           options={({ route }) => ({
-            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>{route.params.name}</Text>,
+            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>{capitalizeTag(route.params.name)}</Text>,
             headerTitleAlign: 'center',
-            headerBackTitle: <AntDesign name="arrowleft" size={30} color="black" />,
+            headerBackTitle: null,
             headerBackTitleStyle: {
-              color: 'black',
+              color: 'rgb(56, 60, 108)',
             },
             headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-            headerTintColor: '#fff',
+            headerTintColor: 'rgb(56, 60, 108)',
             headerTitleStyle: {
               fontWeight: '200',
               fontSize: 35,
@@ -55,55 +57,6 @@ class ForYouStack extends Component {
             },
           })}
           component={InterestScreen}
-        />
-        <Stack.Screen name="ArticleDetail"
-          options={({ route }) => ({
-            headerTitleAlign: 'center',
-            headerBackTitleStyle: {
-              color: 'black',
-            },
-            headerStyle: { backgroundColor: 'rgba(0,0,45,0.8)', height: ((71 / 640) * windowHeight) },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: '200',
-              fontSize: 35,
-              color: 'black',
-            },
-            title: <Text style={{ fontFamily: 'Baskerville', color: 'black' }}>Article</Text>,
-            headerRight: () => { return (<FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />); },
-          })}
-          component={ArticleDetail}
-        />
-        <Stack.Screen name="Sign In"
-          options={{
-            headerTitleAlign: 'left',
-            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: '200',
-              fontSize: 35,
-              color: 'black',
-            },
-            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>For You</Text>,
-          }}
-          component={SigninScreen}
-        />
-        <Stack.Screen name="Sign Up"
-          options={({ route }) => ({
-            headerTitleAlign: 'center',
-            headerBackTitle: <AntDesign name="arrowleft" size={30} color="black" />,
-            headerBackTitleStyle: {
-              color: 'black',
-            },
-            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: '200',
-              fontSize: 35,
-              color: 'black',
-            },
-          })}
-          component={SignupScreen}
         />
       </Stack.Navigator>
 

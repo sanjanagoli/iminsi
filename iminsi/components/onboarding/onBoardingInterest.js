@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, getInterests } from '../../actions/index';
+import { updateUser, getUserInterests } from '../../actions/index';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -64,7 +64,7 @@ class onBoardingInterest extends Component {
   }
 
   componentDidMount() {
-    this.props.getInterests(); // interests instead of articles
+    this.props.getUserInterests(); // interests instead of articles
     this.setState(() => ({
       selectedInterests: [],
     }));
@@ -87,19 +87,19 @@ class onBoardingInterest extends Component {
     }
   }
 
+  
+
 
   render() {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.onboardingForm}>
-          {console.log('im hree')}
           {this.props.interests.map((interest) => {
             return (
               <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
             );
           })}
         </View>
-        {/* next button */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => { updateUser(this.props.user.id, this.state.selectedInterests); }} // how put selected interests in store?
@@ -111,22 +111,17 @@ class onBoardingInterest extends Component {
   }
 }
 
-function mapReduxStateToProps(reduxState) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    // interests: reduxState.interests
+    getUserInterests: () => {
+      dispatch(getUserInterests());
+    },
+    
 
-    interests: [{ interestName: 'Politics' },
-      { interestName: 'Sports' },
-      { interestName: 'International' },
-      { interestName: 'Health' },
-      { interestName: 'Economics' },
-      { interestName: 'Stocks' },
-      { interestName: 'Fashion' },
-    ],
-  };/* reduxState.user */ // the list from database? - how to do on press, send the interests to the user's profile;
-}
+  }
+};
 
-export default connect(mapReduxStateToProps, { updateUser, getInterests })(onBoardingInterest);
+export default connect(null, mapDispatchToProps )(onBoardingInterest);
 
 
 const styles = StyleSheet.create({
@@ -141,7 +136,7 @@ const styles = StyleSheet.create({
     paddingLeft: windowWidth / 50,
   },
   pillText: {
-    // fontFamily: 'PlayfairDisplay_400Regular',
+    fontFamily: 'Baskerville',
   },
   contentContainer: {
     display: 'flex',

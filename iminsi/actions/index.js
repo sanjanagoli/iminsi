@@ -18,6 +18,9 @@ import {
   getOrganizations,
   getUserArticles,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
+  toggleWebView,
 } from './user';
 
 import {
@@ -53,4 +56,7 @@ export {
   getVerifiedArticles,
   getInterests,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
+  toggleWebView,
 };

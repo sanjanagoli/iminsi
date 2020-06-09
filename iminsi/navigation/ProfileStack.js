@@ -30,7 +30,7 @@ const ProfileScreenTab = () => {
             fontSize: 35,
             color: 'black',
           },
-          title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Trending</Text>,
+          title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Profile</Text>,
         }}
         component={ProfileScreen}
       />
@@ -48,6 +48,7 @@ const ProfileScreenTab = () => {
             fontSize: 35,
             color: 'black',
           },
+          title: <FontAwesome name="newspaper-o" size={24} color="white" />,
           headerRight: () => { return (<FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />); },
         })}
         component={ArticleDetail}

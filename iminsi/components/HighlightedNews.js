@@ -33,13 +33,13 @@ class HighlightedNews extends Component {
     const x = new Date(dateStr);
     const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
+    return (`${months[x.getMonth()]} ${dates[x.getDate()]} ${x.getFullYear()}`);
   }
 
   render() {
     return (
       <View style={styles.main}>
-        <View style={styles.seperator} />
+        {/*<View style={styles.seperator} />*/}
         <View style={styles.topBar}>
           <Text style={styles.topBarTitle}>
             {' '}
@@ -54,7 +54,7 @@ class HighlightedNews extends Component {
             <AntDesign name="arrowright" size={30} color="black" />
           </TouchableOpacity>
         </View>
-        <View style={styles.seperator} />
+        {/*<View style={styles.seperator} />*/}
         <ScrollView
           horizontal
           contentContainerStyle={styles.scroll}
@@ -72,11 +72,21 @@ class HighlightedNews extends Component {
                       <View style={styles.bottomContent}>
                         <View style={styles.tags}>
                           {/* article.tags.map((tag) => { return <Text key={tag} style={{ fontSize: 15, color: 'white', paddingLeft:'2%'}}>{tag}</Text>}) */}
-                          <Text style={styles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+                          <Text style={styles.tagsText}>{(article.tags === '') ? article.tags : '#Africa'}</Text>
                         </View>
                         <View style={styles.iconContainer}>
-                          <MaterialIcons name="verified-user" size={24} color="white" />
-                          <FontAwesome name="bookmark-o" size={24} color="white" />
+                          {
+                            (article.verified) ?
+                              <MaterialIcons name="verified-user" size={24} color="white" />
+                              :
+                              <View />
+                          }
+                          {
+                            (this.props.bookmarked.includes(article.id)) ?
+                              <FontAwesome name="bookmark" size={24} color="white" />
+                              :
+                              <FontAwesome name="bookmark-o" size={24} color="white" />
+                          }
                         </View>
                       </View>
 
@@ -104,6 +114,7 @@ const styles = StyleSheet.create({
   main: {
     height: (windowHeight * 0.35),
     width: windowWidth,
+    backgroundColor: 'rgb(248,248,248)',
   },
   seperator: {
     marginVertical: 8,
@@ -112,10 +123,13 @@ const styles = StyleSheet.create({
   },
   topBar: {
     width: '100%',
-    height: '15%',
+    height: '25%',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+    backgroundColor: 'rgb(256,256,256)',
+    marginTop: 5,
+    marginBottom: 5,
   },
   topBarTitle: {
     paddingLeft: '4%',
@@ -129,6 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingLeft: (windowWidth * 0.02),
+
   },
   article: {
     width: (windowWidth * 0.8),

@@ -65,7 +65,7 @@ const getVerifiedArticles = () => {
   return (dispatch) => {
     articleRequest.getVerifiedArticles()
       .then((response) => {
-        dispatch({ type: ActionTypes.GET_VERIFIED, payload: { data: response } });
+        dispatch({ type: ActionTypes.GET_VERIFIED, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.API_ERROR, payload: error });

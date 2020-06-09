@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:9090/api/article';
-// const URL = 'http://iminsi-api.herokuapp.com/api/article';
+//const URL = 'http://localhost:9090/api/article';
+const URL = 'http://iminsi-api.herokuapp.com/api/article';
 
 const getAllArticles = () => {
   return new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ const updateArticleScore = (articleID, score) => {
 
 const getVerifiedArticles = () => {
   return new Promise((resolve, reject) => {
-    axios.put(`${URL}/verified`)
+    axios.get(`${URL}/verified`)
       .then((response) => {
         resolve(response.data);
       })

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:9090/api/interest';
-// const URL = 'http://iminsi-api.herokuapp.com/api/interest';
+//const URL = 'http://localhost:9090/api/interest';
+const URL = 'http://iminsi-api.herokuapp.com/api/interest';
 
 const getInterests = () => {
   return new Promise((resolve, reject) => {

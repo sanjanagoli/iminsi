@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:9090/api';
-// const URL = 'http://iminsi-api.herokuapp.com/api/user';
+// const URL = 'http://localhost:9090/api';
+const URL = 'http://iminsi-api.herokuapp.com/api';
 
 const signUp = (params) => {
   return new Promise((resolve, reject) => {
@@ -20,7 +20,6 @@ const signIn = (params) => {
   return new Promise((resolve, reject) => {
     axios.post(`${URL}/signin`, params)
       .then((response) => {
-        // console.log(response);
         resolve(response.data);
       })
       .catch((error) => {
@@ -55,7 +54,7 @@ const getInterests = (user) => {
 
 const getOrganizations = (user) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/user/${user.id}/trustedSources`)
+    axios.get(`${URL}/user/${user._id}/trustedSources`)
       .then((response) => {
         resolve(response.data);
       })
@@ -67,7 +66,8 @@ const getOrganizations = (user) => {
 
 const getUserArticles = (user) => {
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/user/${user.id}/profileArticles`)
+    
+    axios.get(`${URL}/user/${user.__id}/profileArticles`)
       .then((response) => {
         resolve(response.data);
       })
@@ -89,6 +89,31 @@ const getAvailableCountries = () => {
   });
 };
 
+const addUserArticles = (user, article) => {
+  return new Promise((resolve, reject) => {
+    
+    axios.post(`${URL}/user/${user.id}/profileArticles`, { article })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+const removeUserArticles = (user, article) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(`${URL}/user/${user.id}/profileArticles`, { data: { article } })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export {
   signUp,
   signIn,
@@ -97,4 +122,6 @@ export {
   getOrganizations,
   getUserArticles,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
 };

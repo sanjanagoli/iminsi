@@ -9,30 +9,36 @@ const ActionTypes = {
   GET_ORGS: 'GET_ORGS',
   GET_USER_ARTICLES: 'GET_USER_ARTICLES',
   GET_COUNTRIES: 'GET_COUNTRIES',
+  ADD_USER_ARTICLES: 'ADD_USER_ARTICLES',
+  DEL_USER_ARTICLES: 'DEL_USER_ARTICLES',
+  TOGGLE_WEB: 'TOGGLE_WEB',
 };
 
-const signUpUser = (data) => {
+const signUpUser = (data, nav, path) => {
   return (dispatch) => {
-    userRequest.signUp(data)
+    userRequest.signUp(data, nav, path)
       .then((response) => {
-        // console.log('in singupuser action', response);
+        console.log('in singupuser action', response);
+        nav.navigate("On Boarding");
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
       })
       .catch((error) => {
+        console.log("Sign up failed");
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
       });
   };
 };
 
-const signInUser = (data) => {
+const signInUser = (data, nav, path) => {
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
-        // console.log(`response in action ${JSON.stringify(response.user)}`);
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.user });
+        nav.navigate(path);
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
+        console.log("Sign in failed");
       });
   };
 };
@@ -66,7 +72,7 @@ const getOrganizations = (user) => {
   return (dispatch) => {
     userRequest.getOrganizations(user)
       .then((response) => {
-        dispatch({ type: ActionTypes.GET_ORGS, payload: response.data });
+        dispatch({ type: ActionTypes.GET_ORGS, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -87,16 +93,44 @@ const getUserArticles = (user) => {
 };
 
 const getAvailableCountries = () => {
-  console.log('in this method');
   return (dispatch) => {
     userRequest.getAvailableCountries()
       .then((response) => {
-        console.log('in user.js', response);
         dispatch({ type: ActionTypes.GET_COUNTRIES, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
       });
+  };
+};
+
+const addUserArticles = (user, article) => {
+  return (dispatch) => {
+    userRequest.addUserArticles(user, article)
+      .then((response) => {
+        dispatch({ type: ActionTypes.ADD_USER_ARTICLES, payload: response.data });
+      })
+      .catch((error) => {
+        dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
+      });
+  };
+};
+
+const removeUserArticles = (user, article) => {
+  return (dispatch) => {
+    userRequest.removeUserArticles(user, article)
+      .then((response) => {
+        dispatch({ type: ActionTypes.DEL_USER_ARTICLES, payload: response.data });
+      })
+      .catch((error) => {
+        dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
+      });
+  };
+};
+
+const toggleWebView = () => {
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.TOGGLE_WEB});
   };
 };
 
@@ -109,4 +143,7 @@ export {
   getOrganizations,
   getUserArticles,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
+  toggleWebView,
 };
