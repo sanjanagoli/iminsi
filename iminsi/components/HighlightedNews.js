@@ -64,6 +64,12 @@ class HighlightedNews extends Component {
           alwaysBounceHorizontal
         >
           {this.props.articles.map((article) => {
+            let booked = false;
+            this.props.bookmarked.forEach((art) => {
+              if (art.id === article.id) {
+                booked = true;
+              }
+            });
             return (
               <TouchableOpacity style={styles.article} key={article.id} onPress={() => { this.props.articleNav(article); }}>
                 <ImageBackground source={{ url: article.imageURL || 'https://kanna-info.com/wp-content/uploads/2015/09/map_africa1.png' }} style={{ width: '100%', height: '100%' }} imageStyle={{ width: '100%' }}>
@@ -82,7 +88,7 @@ class HighlightedNews extends Component {
                               <View />
                           }
                           {
-                            (this.props.bookmarked.includes(article.id)) ?
+                            (booked) ?
                               <FontAwesome name="bookmark" size={24} color="white" />
                               :
                               <FontAwesome name="bookmark-o" size={24} color="white" />

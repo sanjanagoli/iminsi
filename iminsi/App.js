@@ -88,24 +88,7 @@ export default function App(props) {
               })}
               component={SignupScreen}
             />
-            <Stack.Screen name="On Boarding"
-              options={({ route }) => ({
-                headerTitleAlign: 'center',
-                headerBackTitle: null,
-                headerBackTitleStyle: {
-                  color: 'rgb(56, 60, 108)',
-                },
-                headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-                headerTintColor: 'rgb(56, 60, 108)',
-                headerTitleStyle: {
-                  fontWeight: '200',
-                  fontSize: 35,
-                  color: 'black',
-                },
-                title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add some Interests</Text>,
-              })}
-              component={onBoardingInterest}
-            />
+            
           </Stack.Navigator>
         </NavigationContainer>
       </>

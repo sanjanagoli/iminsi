@@ -12,6 +12,8 @@ import WebView from 'react-native-webview';
 import HTML from 'react-native-render-html';
 import { connect } from 'react-redux';
 import { incrementScore, decrementScore } from '../actions/index';
+import Emoji from 'react-native-emoji';
+import { AntDesign } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,19 +38,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   question: {
     fontWeight: '600',
+    paddingLeft: 20,
     fontSize: 15,
-    borderTopWidth: 20,
-    borderTopColor: 'red',
-  },
-
-  line: {
-    borderBottomColor: 'lightgrey',
-    borderBottomWidth: 1,
-    width: '70%',
-    alignSelf: 'center',
+    width: 110,
+    color: 'white',
   },
 
   picture: {
@@ -86,6 +83,16 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingRight: 25,
   },
+  reliable: {
+    position: "absolute",
+    width: '100%',
+    backgroundColor: 'rgb(56, 60, 108)',
+    borderTopRightRadius: 20,
+    bottom: windowHeight/2,
+    alignContent: "center",
+    flex: 1,
+    height: 60,
+  }
 });
 
 class ArticleDetail extends Component {
@@ -142,35 +149,21 @@ class ArticleDetail extends Component {
       );
     }
     return (
-      <View>
-        <View
-          style={styles.line}
-        />
-        <Text style={styles.question}>How reliable is this Article?</Text>
+      <View style={styles.reliable}>
         <View style={styles.horizontal}>
-          <Button
-            title="-2"
-            onPress={() => this.updateScoreDecrease(-2, id)}
-          />
-          <Button
-            title="-1"
-            onPress={() => this.updateScoreDecrease(-2, id)}
-          />
-          <Button
-            title="0"
-          />
-          <Button
-            title="1"
-            onPress={() => this.updateScoreIncrease(1, id)}
-          />
-          <Button
-            title="2"
-            onPress={() => this.updateScoreIncrease(2, id)}
-          />
+          <AntDesign name="left" size={24} color="white" />
+          <Text style={styles.question}>Do you trust this Article?</Text>
+          <Emoji name="rage" style={{fontSize: 30}} 
+            onPress={() => this.updateScoreDecrease(-2, id)}/>
+          <Emoji name="angry" style={{fontSize: 30}} 
+            onPress={() => this.updateScoreDecrease(-1, id)} />
+          <Emoji name="neutral_face" style={{fontSize: 30}} 
+          onPress={() => this.updateScoreDecrease(0, id)}/>
+          <Emoji name="grinning" style={{fontSize: 30}} 
+            onPress={() => this.updateScoreDecrease(1, id)}/>
+          <Emoji name="innocent" style={{fontSize: 30}} 
+            onPress={() => this.updateScoreDecrease(2, id)}/>
         </View>
-        <View
-          style={styles.line}
-        />
       </View>
     );
   }
@@ -185,25 +178,19 @@ class ArticleDetail extends Component {
     if (this.props.webView) {
       return (
         <View style={{ flex: 1 }}>
-          <WebView
-            onLoad={() => this.hideSpinner()}
-            style={{ flex: 1 }}
-            source={{ uri: article.urlSource }}
+            <WebView
+              onLoad={() => this.hideSpinner()}
+              style={{ flex: 1 }}
+              source={{ uri: article.urlSource }}
           />
+          {this.ArticleReliable(article.id)}
           {this.state.visible && (
             <ActivityIndicator
-              style={{ position: "absolute", top: windowHeight / 2, left: windowWidth / 2.7 }}
+              style={{ position: "absolute", top: windowHeight / 2, left: windowWidth / 2 }}
               size="large"
             />
           )}
         </View>
-
-        // <WebView
-        //   source={{ uri: article.urlSource }}
-        //   originWhitelist ={['*']}
-        //   automaticallyAdjustContentInsets={false}
-        //   // onShouldStartLoadWithRequest={this.filterRequest}
-        // />
       );
     } else {
       return (

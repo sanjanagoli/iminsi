@@ -166,15 +166,13 @@ class ProfileScreen extends Component {
   }
 
   newsOrgs() {
-    const profileArticles = this.props.currentUser.profileArticles;
-    const trustedSources = this.props.trustedSources;
-    const hardCodedTrustedSources = ['The New Times', 'The Guardian', 'Africa News', 'Igihe News', 'CNBC Africa']
-
+    // const profileArticles = this.props.currentUser.profileArticles;
+    const trustedSources = this.props.currentUser.trustedOrganizations;
     return (
-      hardCodedTrustedSources.map((newsOrgname) => {
+      trustedSources.map((newsOrgname) => {
         return (
-          <View key={newsOrgname} style={styles.tile}>
-            <Text style={styles.newsOrg}>{newsOrgname}</Text>
+          <View key={newsOrgname.organization.id} style={styles.tile}>
+            <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
           </View>
         );
       })
@@ -182,9 +180,9 @@ class ProfileScreen extends Component {
   }
 
   bookmarked() {
-    const { articles } = this.props;
+    const profileArticles = this.props.currentUser.profileArticles;
     return (
-      articles.map((article) => {
+      profileArticles.map((article) => {
         return (
           this.smallArticle(article)
         );
@@ -225,11 +223,7 @@ class ProfileScreen extends Component {
           <View
             style={styles.line}
           />
-          {this.props.articles.map((article) => {
-            return (
-              this.smallArticle(article)
-            );
-          })}
+          {this.bookmarked()}
         </View>
       );
     }
@@ -239,12 +233,17 @@ class ProfileScreen extends Component {
     if (this.props.userLoaded) {
       this.props.getUserArticles(this.props.currentUser);
       this.props.getOrganizations(this.props.currentUser);
+
       return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.pictureBackground}>
-            <Text style={styles.toggleElementActive}>
-              {this.props.currentUser.username}
+            <Text style={styles.username}>
+              Hi, {this.props.currentUser.username}
             </Text>
+            <Text style={styles.username}>
+              {this.props.currentUser.country}
+            </Text>
+
           </View>
           {this.bottomScreen()}
         </ScrollView>
@@ -294,7 +293,6 @@ function mapReduxStateToProps(reduxState) {
     articles: reduxState.article.articles,
     currentUser: reduxState.user.currentUser,
     userLoaded: reduxState.user.loaded,
-    trustedSources: reduxState.user.organizations,
   };
 }
 
@@ -332,7 +330,7 @@ const styles = StyleSheet.create({
   },
   pictureBackground: {
     width: '100%',
-    height: 100,
+    height: 180,
     flex: 1,
     flexWrap: 'wrap',
     alignContent: 'center',
@@ -364,6 +362,10 @@ const styles = StyleSheet.create({
     width: 150,
     paddingLeft: 25,
   },
+  username: {
+    fontFamily: 'Baskerville',
+    fontSize: 30,
+  },
   line: {
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
@@ -378,7 +380,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tile: {
-    backgroundColor: '#383C6C',
+    // backgroundColor: '#383C6C',
+    borderColor: '#383C6C',
+    borderTopWidth: 10,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderRadius: 10,
     width: 150,
     height: 150,
     marginLeft: 10,
@@ -388,7 +396,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   newsOrg: {
-    color: 'white',
+    color: '#383C6C',
     fontFamily: 'Baskerville',
     fontWeight: 'bold',
     fontSize: 16,

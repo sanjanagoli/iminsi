@@ -10,7 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, getUserInterests } from '../../actions/index';
+import { updateUser, signUpUser, getAvailableCountries } from '../../actions/user';
+import { getInterests } from '../../actions/interest';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -47,7 +48,7 @@ class Pill extends Component {
         }}
         onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
       >
-        <Text style={styles.pillText}>
+        <Text style={stylesTwo.pillText}>
           {this.props.name}
         </Text>
       </TouchableOpacity>
@@ -64,7 +65,7 @@ class onBoardingInterest extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserInterests(); // interests instead of articles
+    this.props.getInterests(); // interests instead of articles
     this.setState(() => ({
       selectedInterests: [],
     }));
@@ -72,13 +73,18 @@ class onBoardingInterest extends Component {
 
   pillClick = (interest) => {
     const newStateArray = this.state.selectedInterests.slice();
-    if (newStateArray.includes(interest)) {
-      // remove it
-      newStateArray.splice(newStateArray.indexOf(interest), 1);
-      this.setState(() => ({
-        selectedInterests: newStateArray,
-      }));
-    } else {
+    let x = 0;
+    this.state.selectedInterests.forEach((int, idx) => {
+      if (int.interestName === interest.interestName) {
+        // remove it
+        newStateArray.splice(idx, 1);
+        this.setState(() => ({
+          selectedInterests: newStateArray,
+        }));
+        x++;
+      }
+    });
+    if (x === 0) {
       // ADDS TO IT from top
       newStateArray.unshift(interest);
       this.setState(() => ({
@@ -92,8 +98,8 @@ class onBoardingInterest extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.onboardingForm}>
+      <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
+        <View style={stylesTwo.onboardingForm}>
           {this.props.interests.map((interest) => {
             return (
               <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
@@ -101,8 +107,8 @@ class onBoardingInterest extends Component {
           })}
         </View>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => { updateUser(this.props.user.id, this.state.selectedInterests); }} // how put selected interests in store?
+          style={stylesTwo.button}
+          onPress={() => { updateUser(this.props.route.params.user.id, this.state.selectedInterests); }} // how put selected interests in store?
         >
           <Text>Next</Text>
         </TouchableOpacity>
@@ -111,20 +117,19 @@ class onBoardingInterest extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+function mapReduxStateToProps(reduxState) {
   return {
-    getUserInterests: () => {
-      dispatch(getUserInterests());
-    },
-    
-
-  }
-};
-
-export default connect(null, mapDispatchToProps )(onBoardingInterest);
+    allCountries: reduxState.user.availableCountries,
+    interests: reduxState.interest.interests,
+    currentUser: reduxState.user.currentUser,
+  };
+}
 
 
-const styles = StyleSheet.create({
+export default connect(mapReduxStateToProps, { updateUser, getInterests, signUpUser, getAvailableCountries } )(onBoardingInterest);
+
+
+const stylesTwo = StyleSheet.create({
   onboardingForm: {
     display: 'flex',
     // flexWrap: true, // check

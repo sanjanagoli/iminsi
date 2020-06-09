@@ -7,8 +7,108 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
-import { signUpUser, getAvailableCountries, getUserInterests } from '../../../actions/user';
-import InterestScreen from '../onBoardingInterest';
+import { updateUser, signUpUser, getAvailableCountries } from '../../../actions/user';
+import { getInterests } from '../../../actions/interest';
+import { ScrollView } from 'react-native-gesture-handler';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+class Pill extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false,
+      color: 'rgb(158, 158, 158)',
+    };
+  }
+
+  colorFlip = () => {
+    if (this.state.clicked) {
+      this.setState(() => ({
+        clicked: false,
+        color: 'rgb(158, 158, 158)',
+      }));
+    } else {
+      this.setState(() => ({
+        clicked: true,
+        color: 'rgb(56, 60, 108)',
+      }));
+    }
+  }
+
+  render() {
+    return (
+      <TouchableOpacity key={this.props.name}
+        style={{
+          borderRadius: '5%', justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74 / 360) * windowWidth), height: ((26 / 640) * windowHeight), marginRight: windowHeight / 50,
+        }}
+        onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
+      >
+        <Text style={stylesTwo.pillText}>
+          {this.props.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+};
+
+class OnBoardingInterest extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedInterests: [],
+    };
+  }
+
+  componentDidMount() {
+     // interests instead of articles
+    this.setState(() => ({
+      selectedInterests: [],
+    }));
+  }
+
+  pillClick = (interest) => {
+    const newStateArray = this.state.selectedInterests.slice();
+    if (newStateArray.includes(interest)) {
+      // remove it
+      newStateArray.splice(newStateArray.indexOf(interest), 1);
+      this.setState(() => ({
+        selectedInterests: newStateArray,
+      }));
+    } else {
+      // ADDS TO IT from top
+      newStateArray.unshift(interest);
+      this.setState(() => ({
+        selectedInterests: newStateArray,
+      }));
+    }
+  }
+
+
+
+
+  render() {
+    return (
+      <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
+        <View style={stylesTwo.onboardingForm}>
+          {this.props.props.interests.map((interest) => {
+            return (
+              <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
+            );
+          })}
+        </View>
+        <TouchableOpacity
+          style={stylesTwo.button}
+          onPress={() => { updateUser(this.props.props.currentUser.id, this.state.selectedInterests); }} // how put selected interests in store?
+        >
+          <Text>Next</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    );
+  }
+};
+
 
 class SignUp extends Component {
   constructor(props) {
@@ -17,11 +117,12 @@ class SignUp extends Component {
       username: '',
       password: '',
       country: '',
+      phaseOne: true,
     };
   }
 
   componentDidMount() {
-    this.props.getAvailableCountries();
+    this.props.getInterests();
   }
 
   onSignup = () => {
@@ -31,7 +132,8 @@ class SignUp extends Component {
         password: this.state.password,
         country: this.state.country,
       };
-      this.props.signUpUser(data, this.props.navigation, 'On Boarding');
+      this.props.signUpUser(data);
+      this.setState({ username: '', password: '', country: '', phaseOne: false });
     } else {
       Alert.alert('Required: username and password');
     }
@@ -56,8 +158,9 @@ class SignUp extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
+    if (this.state.phaseOne) {
+      return (
+        <View style={styles.container}>
           <TextInput
             placeholder="Username"
             autoCapitalize="none"
@@ -72,23 +175,29 @@ class SignUp extends Component {
             style={styles.userInput}
             onChangeText={(text) => { this.setState({ password: text }); }}
           />
-        <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
-              <Text style={styles.buttonText}>
-                Next
-              </Text>
-            </TouchableOpacity>
-      </View>
-    );
+          <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
+            <Text style={styles.buttonText}>
+              Next
+                </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      console.log("ce", this.props.interests);
+      return (<OnBoardingInterest props={this.props} />);
+    }
   }
 }
 
 function mapReduxStateToProps(reduxState) {
   return {
     allCountries: reduxState.user.availableCountries,
+    interests: reduxState.interest.interests,
+    currentUser: reduxState.user.currentUser,
   };
 }
 
-export default connect(mapReduxStateToProps, { signUpUser, getAvailableCountries })(SignUp);
+export default connect(mapReduxStateToProps, { updateUser, getInterests, signUpUser, getAvailableCountries })(SignUp);
 
 const styles = StyleSheet.create({
   container: {
@@ -172,5 +281,27 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     position: 'absolute',
     bottom: 5,
+  },
+});
+
+const stylesTwo = StyleSheet.create({
+  onboardingForm: {
+    display: 'flex',
+    // flexWrap: true, // check
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: windowHeight / 10,
+  },
+  scroll: {
+    paddingLeft: windowWidth / 50,
+  },
+  pillText: {
+    fontFamily: 'Baskerville',
+  },
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    width: windowWidth,
+    backgroundColor: 'rgb(250,250,250)',
   },
 });

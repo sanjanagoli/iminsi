@@ -10,31 +10,38 @@ class Bookmark extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookmarked: null,
+      bookmarked: false,
     };
   }
 
   componentDidMount() {
-    this.setState({bookmarked: (this.props.currentUser.profileArticles.includes(this.props.article.id))})
+
+    this.props.currentUser.profileArticles.forEach((art) => {
+      if (art.id === this.props.article.id) {
+        this.setState({ bookmarked: true });
+      }
+    });
+
+
   }
 
   handleClick = () => {
-    if(this.state.bookmarked){
+    if (this.state.bookmarked) {
       this.props.removeUserArticles(this.props.currentUser, this.props.article);
     } else {
       this.props.addUserArticles(this.props.currentUser, this.props.article);
     }
-    this.setState((prev) => ( { bookmarked : !prev.bookmarked } ));
+    this.setState((prev) => ({ bookmarked: !prev.bookmarked }));
   }
 
   render() {
     return (
       <TouchableOpacity onPress={this.handleClick}>
         {
-          (this.state.bookmarked)?
-          <FontAwesome name="bookmark" style={{ marginRight: 25 }} size={24} color="white" />
-          :
-          <FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />
+          (this.state.bookmarked) ?
+            <FontAwesome name="bookmark" style={{ marginRight: 25 }} size={24} color="white" />
+            :
+            <FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />
         }
       </TouchableOpacity>
 

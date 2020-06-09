@@ -9,7 +9,7 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
-
+import onBoardingInterest from '../components/onboarding/onBoardingInterest';
 
 
 // const windowWidth = Dimensions.get('window').width;
@@ -57,6 +57,24 @@ class ForYouStack extends Component {
             },
           })}
           component={InterestScreen}
+        />
+        <Stack.Screen name="On Boarding"
+          options={({ route }) => ({
+            headerTitleAlign: 'center',
+            headerBackTitle: null,
+            headerBackTitleStyle: {
+              color: 'rgb(56, 60, 108)',
+            },
+            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
+            headerTintColor: 'rgb(56, 60, 108)',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 35,
+              color: 'black',
+            },
+            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add some Interests</Text>,
+          })}
+          component={onBoardingInterest}
         />
       </Stack.Navigator>
 

@@ -78,7 +78,7 @@ class ForYouScreen extends Component {
   componentDidMount() {
     /// this.props.getArticles();
     // this.props.getInterests();
-    
+
   }
 
   pillClick = (interest) => {
@@ -112,41 +112,77 @@ class ForYouScreen extends Component {
   }
 
   render() {
-    if(this.props.userLoaded && this.props.currentUser.interests.length != 0){
-    // if (this.props.userLoaded) {
-      return (
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <View style={styles.topBar}>
-            <ScrollView
-              horizontal
-              contentContainerStyle={styles.scroll}
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={200}
-              decelerationRate="fast"
-              alwaysBounceHorizontal
+    if (this.props.userLoaded) {
+      if (this.props.currentUser.interests.length > 5) {
+        return (
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            <View style={styles.topBar}>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.scroll}
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={200}
+                decelerationRate="fast"
+                alwaysBounceHorizontal
+              >
+                {this.props.currentUser.interests.map((interest) => {
+                  return (
+                    <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
+                  );
+                })}
+              </ScrollView>
+            </View>
+            {this.state.selectedInterests.map((interest) => {
+              return (
+                <HighlightedNews
+                  articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
+                  navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
+                  title={this.capitalizeTag(interest.interestName)}
+                  key={interest.interestName}
+                  articles={interest.articles.slice()}
+                  numberOfArticles={interest.articles.slice().length}
+                  bookmarked={this.props.currentUser.profileArticles}
+                />
+              );
+            })}
+          </ScrollView>
+        );
+      } else {
+        return (
+          <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+            <Text style={{
+              fontFamily: 'Baskerville',
+              fontWeight: '300',
+              color: 'rgb(56, 60, 108)',
+              fontSize: 30,
+              textAlign: 'center',
+              paddingTop: '15%',
+              paddingBottom: '5%',
+            }}
             >
-              {this.props.currentUser.interests.map((interest) => {
-                return (
-                  <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
-                );
-              })}
-            </ScrollView>
+              Welcome to Iminsi!  {"\n"}What do you want to read about?
+              </Text>
+            <TouchableOpacity key={this.props.name}
+              style={{
+                marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+              }}
+              onPress={() => { this.props.navigation.navigate("On Boarding", { parent: 'For You' }); }}
+            >
+              <Text style={{
+                fontFamily: 'Baskerville',
+                fontWeight: '200',
+                fontSize: 20,
+                color: 'white',
+              }}
+              >
+                Add Interests
+              </Text>
+            </TouchableOpacity>
           </View>
-          {this.state.selectedInterests.map((interest) => {
-            return (
-              <HighlightedNews
-                articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
-                navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
-                title={this.capitalizeTag(interest.interestName)}
-                key={interest.interestName}
-                articles={interest.articles.slice(1, -1)}
-                numberOfArticles={interest.articles.slice(1, -1).length}
-                bookmarked={this.props.currentUser.profileArticles}
-              />
-            );
-          })}
-        </ScrollView>
-      );
+
+        );
+      }
+
     } else {
       return (
         <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >

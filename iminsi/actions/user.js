@@ -14,13 +14,12 @@ const ActionTypes = {
   TOGGLE_WEB: 'TOGGLE_WEB',
 };
 
-const signUpUser = (data, nav, path) => {
+const signUpUser = (data) => {
   return (dispatch) => {
-    userRequest.signUp(data, nav, path)
+    userRequest.signUp(data)
       .then((response) => {
-        console.log('in singupuser action', response);
-        nav.navigate("On Boarding");
-        dispatch({ type: ActionTypes.AUTH_USER, payload: response.data });
+        dispatch({ type: ActionTypes.AUTH_USER, payload: response });
+        
       })
       .catch((error) => {
         console.log("Sign up failed");
