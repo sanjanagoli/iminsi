@@ -113,7 +113,7 @@ class ForYouScreen extends Component {
 
   render() {
     if (this.props.userLoaded) {
-      if (this.props.currentUser.interests.length > 5) {
+      if (this.props.currentUser.interests!= undefined) {
         return (
           <ScrollView contentContainerStyle={styles.contentContainer}>
             <View style={styles.topBar}>
@@ -150,23 +150,11 @@ class ForYouScreen extends Component {
       } else {
         return (
           <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
-            <Text style={{
-              fontFamily: 'Baskerville',
-              fontWeight: '300',
-              color: 'rgb(56, 60, 108)',
-              fontSize: 30,
-              textAlign: 'center',
-              paddingTop: '15%',
-              paddingBottom: '5%',
-            }}
-            >
-              Welcome to Iminsi!  {"\n"}What do you want to read about?
-              </Text>
             <TouchableOpacity key={this.props.name}
               style={{
                 marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
               }}
-              onPress={() => { this.props.navigation.navigate("On Boarding", { parent: 'For You' }); }}
+              onPress={() => {this.props.navigation.navigate("On Boarding");}}
             >
               <Text style={{
                 fontFamily: 'Baskerville',
@@ -175,7 +163,7 @@ class ForYouScreen extends Component {
                 color: 'white',
               }}
               >
-                Add Interests
+                Refresh
               </Text>
             </TouchableOpacity>
           </View>

@@ -37,13 +37,17 @@ const getArticles = () => {
   };
 };
 
-const incrementScore = (articleID) => {
+const incrementScore = (articleID, change) => {
+  console.log(articleID)
+  console.log(change)
   return (dispatch) => {
-    articleRequest.updateArticleScore(articleID, INCREMENT)
+    articleRequest.updateArticleScore(articleID, change)
       .then((response) => {
         dispatch({ type: ActionTypes.GET_ARTICLES, payload: { data: response } });
       })
       .catch((error) => {
+        console.log("failed to increment")
+        
         dispatch({ type: ActionTypes.API_ERROR, payload: error });
       });
   };

@@ -10,7 +10,7 @@ import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
 import onBoardingInterest from '../components/onboarding/onBoardingInterest';
-
+import InterestAdder from '../components/AddInterests';
 
 // const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -61,7 +61,7 @@ class ForYouStack extends Component {
         <Stack.Screen name="On Boarding"
           options={({ route }) => ({
             headerTitleAlign: 'center',
-            headerBackTitle: null,
+            headerBack: null,
             headerBackTitleStyle: {
               color: 'rgb(56, 60, 108)',
             },
@@ -72,9 +72,27 @@ class ForYouStack extends Component {
               fontSize: 35,
               color: 'black',
             },
-            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add some Interests</Text>,
+            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add Interests</Text>,
           })}
           component={onBoardingInterest}
+        />
+        <Stack.Screen name="Interest Adder"
+          options={({ route }) => ({
+            headerTitleAlign: 'center',
+            headerBack: null,
+            headerBackTitleStyle: {
+              color: 'rgb(56, 60, 108)',
+            },
+            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
+            headerTintColor: 'rgb(56, 60, 108)',
+            headerTitleStyle: {
+              fontWeight: '200',
+              fontSize: 35,
+              color: 'black',
+            },
+            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add Interests</Text>,
+          })}
+          component={InterestAdder}
         />
       </Stack.Navigator>
 

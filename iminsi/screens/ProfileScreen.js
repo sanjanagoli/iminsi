@@ -130,7 +130,8 @@ class ProfileScreen extends Component {
   };
 
   showArticleDetail(article) {
-    this.props.navigation.navigate('ArticleDetail', { article });
+    const userID  = this.props.currentUser.id
+    this.props.navigation.navigate('ArticleDetail', { article, userID });
   }
 
   fillInBlanks(article) {
@@ -239,6 +240,7 @@ class ProfileScreen extends Component {
           <View style={styles.pictureBackground}>
             <Text style={styles.username}>
               Hi, {this.props.currentUser.username}
+      {"\n"}Not much to do here!
             </Text>
             <Text style={styles.username}>
               {this.props.currentUser.country}

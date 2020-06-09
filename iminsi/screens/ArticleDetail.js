@@ -11,7 +11,7 @@ import {
 import WebView from 'react-native-webview';
 import HTML from 'react-native-render-html';
 import { connect } from 'react-redux';
-import { incrementScore, decrementScore } from '../actions/index';
+import { incrementScore, addUserOrganizations } from '../actions/index';
 import Emoji from 'react-native-emoji';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -28,16 +28,14 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    width: '90%',
     alignContent: 'center',
-    paddingLeft: '10%',
     paddingBottom: '10%',
   },
 
   horizontal: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: "flex-start",
     alignItems: 'center',
   },
   question: {
@@ -85,14 +83,37 @@ const styles = StyleSheet.create({
   },
   reliable: {
     position: "absolute",
-    width: '100%',
+    width: '90%',
     backgroundColor: 'rgb(56, 60, 108)',
-    borderTopRightRadius: 20,
-    bottom: windowHeight/2,
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    top: windowHeight/2,
     alignContent: "center",
     flex: 1,
     height: 60,
-  }
+    marginLeft: '10%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+  },
+  arrow: {
+    position: "absolute",
+    width: '3%',
+    backgroundColor: 'rgb(56, 60, 108)',
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    top: windowHeight/2,
+    justifyContent: "center",
+    right: 0,
+    flex: 1,
+    height: 60,
+    marginLeft: '10%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+  },
 });
 
 class ArticleDetail extends Component {
@@ -102,6 +123,7 @@ class ArticleDetail extends Component {
       visible: true,
       htmlContent: '',
       userRatedArticle: false,
+      poll: false,
     }
   }
 
@@ -114,30 +136,32 @@ class ArticleDetail extends Component {
     console.log('Hide Spinner');
     this.setState(() => ({ ...this.state, visible: false }));
   }
-  // example of destructuring, the below is equivalent to props.route.params.video
-  //   filterRequest = (request) => {
-  //     return !request.url.includes("ad");
-  // };
 
   updateScoreIncrease(score, id) {
     this.setState({
       userRatedArticle: true,
     });
-    let i = 0;
-    while (i < score) {
-      this.props.incrementScore(score, id);
-      i += 1;
-    }
+
+    // if (score > 0){
+    //   const { route } = this.props;
+    //   const creatingOrgId  = route.params.article.newsOrganization;
+    //   const userID = route.params.userID;
+    //   const orgObject = {id: creatingOrgId}
+    //   const orgObjectArray = [orgObject]
+    //   console.log("object Array")
+    //   console.log(orgObjectArray)
+    //   this.props.addUserOrganizations(userID, orgObjectArray);
+    // }
+    console.log("FUCKFUCKF")
+    this.props.incrementScore(id, score);
   }
 
-  updateScoreDecrease(score, id) {
-    this.setState({
-      userRatedArticle: true,
-    });
-    let i = 0;
-    while (i > score) {
-      this.props.incrementScore(score, id);
-      i -= 1;
+  readPoll(){
+    if (this.state.poll){
+      this.setState({poll: false});
+    }
+    else{
+      this.setState({poll: true});
     }
   }
 
@@ -145,27 +169,41 @@ class ArticleDetail extends Component {
     const { userRatedArticle } = this.state;
     if (userRatedArticle) {
       return (
-        <Text>Thanks!</Text>
+        <View style={styles.arrow}>
+          <AntDesign name="check" size={30} color="white" style={{marginLeft: 10}}/>
+      </View>
       );
     }
-    return (
-      <View style={styles.reliable}>
-        <View style={styles.horizontal}>
-          <AntDesign name="left" size={24} color="white" />
-          <Text style={styles.question}>Do you trust this Article?</Text>
-          <Emoji name="rage" style={{fontSize: 30}} 
-            onPress={() => this.updateScoreDecrease(-2, id)}/>
-          <Emoji name="angry" style={{fontSize: 30}} 
-            onPress={() => this.updateScoreDecrease(-1, id)} />
-          <Emoji name="neutral_face" style={{fontSize: 30}} 
-          onPress={() => this.updateScoreDecrease(0, id)}/>
-          <Emoji name="grinning" style={{fontSize: 30}} 
-            onPress={() => this.updateScoreDecrease(1, id)}/>
-          <Emoji name="innocent" style={{fontSize: 30}} 
-            onPress={() => this.updateScoreDecrease(2, id)}/>
+
+    else if (!userRatedArticle && this.state.poll){
+      return (
+        <View style={styles.reliable}>
+          <View style={styles.horizontal}>
+            <AntDesign name="right" size={30} color="white" onPress={() => this.readPoll()} style={{marginLeft: 10}}/>
+            <Text style={styles.question}>Do you trust this Article?</Text>
+            <View style={{justifyContent: "space-between", flexDirection: "row", width: '60%'}}>
+              <Emoji name="rage" style={{fontSize: 30}} 
+                onPress={() => this.updateScoreIncrease(-2, id)}/>
+              <Emoji name="angry" style={{fontSize: 30}} 
+                onPress={() => this.updateScoreIncrease(-1, id)} />
+              <Emoji name="neutral_face" style={{fontSize: 30}} 
+              onPress={() => this.updateScoreIncrease(0, id)}/>
+              <Emoji name="grinning" style={{fontSize: 30}} 
+                onPress={() => this.updateScoreIncrease(1, id)}/>
+              <Emoji name="innocent" style={{fontSize: 30}} 
+                onPress={() => this.updateScoreIncrease(2, id)}/>
+            </View>
+          </View>
         </View>
+      );
+    }
+    else{
+      return (
+      <View style={styles.arrow}>
+          <AntDesign name="left" size={30} color="white" onPress={() => this.readPoll()}/>
       </View>
-    );
+      );
+    }
   }
 
   showVerified() {
@@ -194,22 +232,24 @@ class ArticleDetail extends Component {
       );
     } else {
       return (
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.text}>
-            <Text style={styles.title}>{article.title}</Text>
-            <HTML html={article.content} imagesMaxWidth={Dimensions.get('window').width} />
-            <Text style={{margin: 50}}>
-              Score is
-            {' '}
-              {article.score}
-              {' '}
-            </Text>
-            {this.ArticleReliable(article.id)}
-          </View>
-        </ScrollView>
+        <View>
+          
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}> 
+            <View style={styles.text}>
+              <Text style={styles.title}>{article.title}</Text>
+              <Text>
+                Score is
+                {' '}
+                {article.score}
+                {' '}
+              </Text>
+              <HTML html={article.content} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{width: '90%', marginLeft: '5%', marginRight: '5%'}}/>
+            </View>
+          </ScrollView>
+          {this.ArticleReliable(article.id)}
+        </View>
       );
     }
-
   }
 
 };
@@ -226,40 +266,13 @@ const mapDispatchToProps = (dispatch) => {
     incrementScore: () => {
       dispatch(incrementScore());
     },
-    decrementScore: () => {
-      dispatch(decrementScore());
-    },
+    addUserOrganizations: () => {
+      dispatch(addUserOrganizations());
+    }
   };
 };
 
 export default connect(mapReduxStateToProps, mapDispatchToProps)(ArticleDetail);
 
-// /* eslint-disable react/destructuring-assignment */
-
-
-// class ArticleDetail extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       
-//     };
-//   }
-
-
-
-
-
-//   render() {
-//     const { route } = this.props;
-//     const { article } = route.params;
-
-//   }
-// }
-
-
-
-
-// // export default connect(mapReduxStateToProps, mapDispatchToProps)(ArticleDetail);
-// export default connect(null, mapDispatchToProps)(ArticleDetail);
 
 

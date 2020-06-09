@@ -3,7 +3,7 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions,
+  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
@@ -14,101 +14,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-class Pill extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clicked: false,
-      color: 'rgb(158, 158, 158)',
-    };
-  }
-
-  colorFlip = () => {
-    if (this.state.clicked) {
-      this.setState(() => ({
-        clicked: false,
-        color: 'rgb(158, 158, 158)',
-      }));
-    } else {
-      this.setState(() => ({
-        clicked: true,
-        color: 'rgb(56, 60, 108)',
-      }));
-    }
-  }
-
-  render() {
-    return (
-      <TouchableOpacity key={this.props.name}
-        style={{
-          borderRadius: '5%', justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74 / 360) * windowWidth), height: ((26 / 640) * windowHeight), marginRight: windowHeight / 50,
-        }}
-        onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
-      >
-        <Text style={stylesTwo.pillText}>
-          {this.props.name}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-};
-
-class OnBoardingInterest extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedInterests: [],
-    };
-  }
-
-  componentDidMount() {
-     // interests instead of articles
-    this.setState(() => ({
-      selectedInterests: [],
-    }));
-  }
-
-  pillClick = (interest) => {
-    const newStateArray = this.state.selectedInterests.slice();
-    if (newStateArray.includes(interest)) {
-      // remove it
-      newStateArray.splice(newStateArray.indexOf(interest), 1);
-      this.setState(() => ({
-        selectedInterests: newStateArray,
-      }));
-    } else {
-      // ADDS TO IT from top
-      newStateArray.unshift(interest);
-      this.setState(() => ({
-        selectedInterests: newStateArray,
-      }));
-    }
-  }
-
-
-
-
-  render() {
-    return (
-      <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
-        <View style={stylesTwo.onboardingForm}>
-          {this.props.props.interests.map((interest) => {
-            return (
-              <Pill key={interest.interestName} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-            );
-          })}
-        </View>
-        <TouchableOpacity
-          style={stylesTwo.button}
-          onPress={() => { updateUser(this.props.props.currentUser.id, this.state.selectedInterests); }} // how put selected interests in store?
-        >
-          <Text>Next</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    );
-  }
-};
-
 
 class SignUp extends Component {
   constructor(props) {
@@ -117,7 +22,6 @@ class SignUp extends Component {
       username: '',
       password: '',
       country: '',
-      phaseOne: true,
     };
   }
 
@@ -132,8 +36,8 @@ class SignUp extends Component {
         password: this.state.password,
         country: this.state.country,
       };
-      this.props.signUpUser(data);
-      this.setState({ username: '', password: '', country: '', phaseOne: false });
+      this.props.signUpUser(data, this.props.navigation, "On Boarding");
+      this.setState({ username: '', password: '', country: '' });
     } else {
       Alert.alert('Required: username and password');
     }
@@ -158,34 +62,44 @@ class SignUp extends Component {
   }
 
   render() {
-    if (this.state.phaseOne) {
-      return (
-        <View style={styles.container}>
-          <TextInput
-            placeholder="Username"
-            autoCapitalize="none"
-            style={styles.userInput}
-            onChangeText={(text) => { this.setState({ username: text }); }}
-          />
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <TextInput
+          placeholder="Username"
+          autoCapitalize="none"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ username: text }); }}
+          showSoftInputOnFocus
+        />
 
-          <TextInput
-            placeholder="Password"
-            secureTextEntry
-            autoCapitalize="none"
-            style={styles.userInput}
-            onChangeText={(text) => { this.setState({ password: text }); }}
-          />
-          <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
-            <Text style={styles.buttonText}>
-              Next
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          autoCapitalize="none"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ password: text }); }}
+          showSoftInputOnFocus
+        />
+
+        <TextInput
+          placeholder="Country"
+          autoCapitalize="words"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ country: text }); }}
+          showSoftInputOnFocus
+        />
+
+        <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
+          <Text style={styles.buttonText}>
+            Next
                 </Text>
-          </TouchableOpacity>
-        </View>
-      );
-    } else {
-      console.log("ce", this.props.interests);
-      return (<OnBoardingInterest props={this.props} />);
-    }
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+
+    );
   }
 }
 
@@ -204,6 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     alignItems: "center",
+    marginTop: 50,
   },
   inputContainer: {
     marginTop: Dimensions.get('screen').height * 0.05,

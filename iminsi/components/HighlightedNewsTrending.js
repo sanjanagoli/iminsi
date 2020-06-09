@@ -34,15 +34,15 @@ const styles = StyleSheet.create({
   //   color: #000;
   // },
   // summary::first-letter {
-    // float:left;
-    // font-weight: bold;
-    // font-size: 60px;
-    // font-size: 6rem;
-    // line-height: 40px;
-    // line-height: 4rem;
-    // height:4rem;
-    // text-transform: uppercase;
-// },
+  // float:left;
+  // font-weight: bold;
+  // font-size: 60px;
+  // font-size: 6rem;
+  // line-height: 40px;
+  // line-height: 4rem;
+  // height:4rem;
+  // text-transform: uppercase;
+  // },
   summary: {
     flex: 1,
     justifyContent: 'center',
@@ -116,15 +116,15 @@ class HighlightedNewsManzi extends Component {
     /*https://stackoverflow.com/questions/44257982/react-native-nested-text-with-differnt-fontsizes-initial-first-letter */
     return (
       <View style={styles.summary}>
-        <Text style={{fontFamily:'Baskerville', fontSize: 18}}>
-    <Text style={[styles.firstLetter]}>{cleanedtext[0][0]}</Text>
+        <Text style={{ fontFamily: 'Baskerville', fontSize: 18 }}>
+          <Text style={[styles.firstLetter]}>{cleanedtext[0][0]}</Text>
           {cleanedtext[0].slice(1, 130)}...</Text>
       </View>
-        // <View style={styles.summary}>
-        //   {/* <Text style={{ marginLeft: 15, paddingTop: 10 }}>{'\u2022'}</Text> */}
-        //   <Text style={[styles.textCommon, styles.firstLetter]}>{cleanedtext[0][0]}</Text>
-        //   <Text style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>{cleanedtext[0].slice(1, cleanedtext[0].length)}</Text>
-        // </View>
+      // <View style={styles.summary}>
+      //   {/* <Text style={{ marginLeft: 15, paddingTop: 10 }}>{'\u2022'}</Text> */}
+      //   <Text style={[styles.textCommon, styles.firstLetter]}>{cleanedtext[0][0]}</Text>
+      //   <Text style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>{cleanedtext[0].slice(1, cleanedtext[0].length)}</Text>
+      // </View>
     );
   }
 
@@ -140,23 +140,23 @@ class HighlightedNewsManzi extends Component {
         <View style={styles.container}
           key={article.id}
         >
-           <Image
+          <Image
             // eslint-disable-next-line global-require
-            source={{ url: article.imageURL }}
+            source={{ url: (article.imageURL == undefined)? 'https://fromhazeleyes.files.wordpress.com/2010/07/africa.jpg': article.imageURL}}
             style={styles.picture}
           >
           </Image>
           <View style={styles.titleTextOrg}>
-          <Text style={styles.title}>
-            {article.title}
-          </Text>
-          {this.bulletPoint(article.summary)}
-          <View style={styles.horizontal}>
-            <Text style={styles.newsOrganization}>
-              {article.newsOrganization.orgName}
+            <Text style={styles.title}>
+              {article.title}
             </Text>
-            <Text style={styles.date}>{this.dateRender(article.date)}</Text>
-          </View>
+            {this.bulletPoint(article.summary)}
+            <View style={styles.horizontal}>
+              <Text style={styles.newsOrganization}>
+                {article.newsOrganization.orgName}
+              </Text>
+              <Text style={styles.date}>{this.dateRender(article.date)}</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>

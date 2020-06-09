@@ -52,6 +52,19 @@ const getInterests = (user) => {
   });
 };
 
+const addInterests = (user, interests) => {
+  return new Promise((resolve, reject) => {
+    axios.post(`${URL}/user/${user.id}/profileInterests`, { article: interests } )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error.response.data);
+      });
+  });
+};
+
 const getOrganizations = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/user/${user._id}/trustedSources`)
@@ -102,6 +115,23 @@ const addUserArticles = (user, article) => {
   });
 };
 
+const addUserOrganizations = (userID, organization) => {
+  return new Promise((resolve, reject) => {
+    
+    axios.post(`${URL}/user/${userID}/trustedSources`, { organization })
+      .then((response) => {
+        console.log('added User Organization')
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log("organization sent was ")
+        console.log(organization)
+        reject(error);
+      });
+  });
+};
+
 const removeUserArticles = (user, article) => {
   return new Promise((resolve, reject) => {
     axios.delete(`${URL}/user/${user.id}/profileArticles`, { data: { article } })
@@ -124,4 +154,6 @@ export {
   getAvailableCountries,
   addUserArticles,
   removeUserArticles,
+  addUserOrganizations,
+  addInterests,
 };

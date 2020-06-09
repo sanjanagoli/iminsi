@@ -5,7 +5,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions,
+  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions, KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { signInUser } from '../../../actions/user';
@@ -28,21 +28,21 @@ class SignIn extends Component {
         password: this.state.password,
       };
       this.props.signInUser(data, this.props.navigation, this.props.route.params.parent);
-      
+
       this.setState({ username: '', password: '' });
-    } 
+    }
     // else if()
 
     else {
-      Alert.alert('Warning!',  'Both username and password must be provided',
-      [{text: 'OK', onPress: () => {this.setState({ username: '', password: '' });}}] )
-      
+      Alert.alert('Warning!', 'Both username and password must be provided',
+        [{ text: 'OK', onPress: () => { this.setState({ username: '', password: '' }); } }])
+
       // this.forceUpdate();
     }
   }
 
   render() {
-    if(this.props.userLoaded){
+    if (this.props.userLoaded) {
       this.props.navigation.navigate(this.props.route.params.parent);
       return (
         <Text>
@@ -51,31 +51,35 @@ class SignIn extends Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-            <TextInput
-              placeholder="Username"
-              autoCapitalize="none"
-              style={styles.userInput}
-              onChangeText={(text) => { this.setState({ username: text }); }}
-            />
-  
-            <TextInput
-              placeholder="Password"
-              secureTextEntry
-              autoCapitalize="none"
-              style={styles.userInput}
-              onChangeText={(text) => { this.setState({ password: text }); }}
-            />
-  
-            <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
-              <Text style={styles.buttonText}>
-                Sign in
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
+          <TextInput
+            placeholder="Username"
+            autoCapitalize="none"
+            style={styles.userInput}
+            onChangeText={(text) => { this.setState({ username: text }); }}
+          />
+
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            autoCapitalize="none"
+            style={styles.userInput}
+            onChangeText={(text) => { this.setState({ password: text }); }}
+          />
+
+          <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
+            <Text style={styles.buttonText}>
+              Sign in
               </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
           <Text>Don't have an account?</Text>
-          <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style = {{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
-  
-        </View>
+          <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style={{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
+
+        </KeyboardAvoidingView>
+
       );
     }
   }

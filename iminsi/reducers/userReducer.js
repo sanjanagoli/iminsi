@@ -20,6 +20,14 @@ const UserReducer = (state = initialState, action) => {
       return { ...state, currentUser: {} };
     case ActionTypes.GET_COUNTRIES:
       return { ...state, availableCountries: action.payload };
+    case ActionTypes.ADD_USER_ARTICLES:
+      return { ...state, currentUser: action.payload };
+    case ActionTypes.ADD_USER_ARTICLES:
+      return { ...state, currentUser: action.payload };
+    case ActionTypes.ADD_INTERESTS:
+      return { ...state, currentUser: action.payload };
+    case ActionTypes.ADD_USER_ORGS:
+      return { ...state, currentUser: action.payload, loaded: true };
     case ActionTypes.TOGGLE_WEB:
       return { ...state, webView: !state.webView };
     case ActionTypes.GET_INTERESTS:
