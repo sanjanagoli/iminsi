@@ -3,15 +3,13 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/prefer-stateless-function */
-// sign in
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions,
+  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions, KeyboardAvoidingView
 } from 'react-native';
-// eslint-disable-next-line no-unused-vars
 import { connect } from 'react-redux';
 import { signInUser } from '../../../actions/user';
-// import 'fontsource-roboto';
+
 
 class SignIn extends Component {
   constructor(props) {
@@ -29,7 +27,8 @@ class SignIn extends Component {
         username: this.state.username,
         password: this.state.password,
       };
-      this.props.signInUser(data);
+      this.props.signInUser(data, this.props.navigation, this.props.route.params.parent);
+
       this.setState({ username: '', password: '' });
     } else {
       Alert.alert('Warning!',  'Both username and password must be provided',
@@ -40,10 +39,19 @@ class SignIn extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}> Sign in </Text>
-        <View style={styles.inputContainer}>
+    if (this.props.userLoaded) {
+      this.props.navigation.navigate(this.props.route.params.parent);
+      return (
+        <Text>
+          BUG ? BUG = FEATURE : NO PROBLEM
+        </Text>
+      );
+    } else {
+      return (
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
           <TextInput
             value = {this.state.username}
             placeholder="Username"
@@ -60,12 +68,11 @@ class SignIn extends Component {
             style={styles.userInput}
             onChangeText={(text) => { this.setState({ password: text }); }}
           />
-        </View>
 
-        <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
             <Text style={styles.buttonText}>
               Sign in
+
               {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
 
             </Text>
@@ -76,26 +83,29 @@ class SignIn extends Component {
               {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
             </Text>
           </TouchableOpacity>
-        </View>
-        {/* <TouchableOpacity style={styles.underlineButton}>
+          <Text>Don't have an account?</Text>
+          <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style={{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
 
-          <Text style={styles.underlineButtonText}>
-            {' '}
-            Click here to sign up instead
-          </Text>
-        </TouchableOpacity> */}
+        </KeyboardAvoidingView>
 
-      </View>
-    );
+      );
+    }
   }
 }
 
-export default connect(null, { signInUser })(SignIn);
+function mapReduxStateToProps(reduxState) {
+  return {
+    userLoaded: reduxState.user.loaded,
+  };
+}
+
+export default connect(mapReduxStateToProps, { signInUser })(SignIn);
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
     justifyContent: 'center',
+    flex: 1,
+    alignItems: "center",
   },
   inputContainer: {
     marginTop: Dimensions.get('screen').height * 0.05,
@@ -110,9 +120,11 @@ const styles = StyleSheet.create({
   userInput: {
     margin: 15,
     paddingHorizontal: '4%',
-    height: '17%',
+    height: '10%',
+    borderRadius: 10,
     borderColor: 'rgb(56, 60, 108)',
     borderWidth: 1,
+    width: '70%'
   },
 
   contentContainer: {
@@ -141,6 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     // position: 'absolute',
     // bottom: 20,
+    marginBottom: 20,
   },
   buttonText: {
     fontSize: 14,

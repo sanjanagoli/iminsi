@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import {
-  ImageBackground,
+  Image,
   Text,
   View,
   StyleSheet, Dimensions,
@@ -17,13 +17,39 @@ const styles = StyleSheet.create({
 
   container: {
     width: windowWidth,
-    height: 0.7 * windowHeight,
-    paddingBottom: 20,
+    height: windowHeight,
+    alignContent: "center",
+  },
+  horizontal: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   picture: {
+    minHeight: '50%',
     width: '100%',
-    height: '100%',
-    backgroundColor: 'black',
+
+  },
+  // summary: {
+  //   color: #000;
+  // },
+  // summary::first-letter {
+  // float:left;
+  // font-weight: bold;
+  // font-size: 60px;
+  // font-size: 6rem;
+  // line-height: 40px;
+  // line-height: 4rem;
+  // height:4rem;
+  // text-transform: uppercase;
+  // },
+  summary: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: 25,
+    paddingRight: 25,
   },
   linearGradient: {
     flex: 1,
@@ -32,40 +58,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: 30,
+    color: 'black',
     fontWeight: '500',
     fontFamily: 'Baskerville',
-    width: 260,
-    paddingBottom: 5,
+    paddingRight: 25,
+    paddingLeft: 25,
   },
   newsOrganization: {
     fontWeight: 'bold',
     fontFamily: 'Baskerville',
     fontSize: 12,
-    color: 'white',
+    color: 'black',
     paddingBottom: 5,
+    paddingLeft: 25,
   },
   tags: {
     fontSize: 10,
     color: 'white',
   },
-  TitleTagsOrganization: {
+  titleTextOrg: {
     width: '100%',
-    height: '100%',
-    flexDirection: 'column-reverse',
-    paddingLeft: 25,
-    paddingBottom: 15,
+    height: '40%',
+    paddingTop: 10,
   },
   date: {
     fontSize: 12,
     fontFamily: 'Baskerville',
-    color: 'white',
+    color: 'black',
     paddingRight: 25,
   },
+  firstLetter: {
+    fontSize: 30,
+  }
 });
 
 class HighlightedNewsManzi extends Component {
+  dateRender = (dateStr) => {
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return (`${months[x.getMonth()]} ${dates[x.getDate()]} ${x.getFullYear()}`);
+  }
+
   fillContent() {
     const { article } = this.props;
     if (!article.newsOrganization || article.newsOrganization.orgName.length === 0) {
@@ -77,19 +112,19 @@ class HighlightedNewsManzi extends Component {
   }
 
   bulletPoint(text) {
-    const twoBulletPoints = text.split('. ', 3);
-
+    const cleanedtext = text.split('[');
+    /*https://stackoverflow.com/questions/44257982/react-native-nested-text-with-differnt-fontsizes-initial-first-letter */
     return (
-      <View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>{'\u2022'}</Text>
-          <Text style={{ flex: 1, paddingLeft: 5 }}>{twoBulletPoints[0]}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>{'\u2022'}</Text>
-          <Text style={{ flex: 1, paddingLeft: 5 }}>{twoBulletPoints[1]}</Text>
-        </View>
+      <View style={styles.summary}>
+        <Text style={{ fontFamily: 'Baskerville', fontSize: 18 }}>
+          <Text style={[styles.firstLetter]}>{cleanedtext[0][0]}</Text>
+          {cleanedtext[0].slice(1, 130)}...</Text>
       </View>
+      // <View style={styles.summary}>
+      //   {/* <Text style={{ marginLeft: 15, paddingTop: 10 }}>{'\u2022'}</Text> */}
+      //   <Text style={[styles.textCommon, styles.firstLetter]}>{cleanedtext[0][0]}</Text>
+      //   <Text style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>{cleanedtext[0].slice(1, cleanedtext[0].length)}</Text>
+      // </View>
     );
   }
 
@@ -101,44 +136,28 @@ class HighlightedNewsManzi extends Component {
     this.fillContent();
     const { article } = this.props;
     return (
-      <TouchableOpacity style={{ height: windowHeight * this.props.h }} key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+      <TouchableOpacity key={article.id} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
         <View style={styles.container}
           key={article.id}
         >
-          <ImageBackground
+          <Image
             // eslint-disable-next-line global-require
-            source={{ url: article.imageURL }}
+            source={{ url: (article.imageURL == undefined)? 'https://fromhazeleyes.files.wordpress.com/2010/07/africa.jpg': article.imageURL}}
             style={styles.picture}
-            imageStyle={{
-              width: '100%', // works only here!
-            }}
           >
-            <LinearGradient
-              style={styles.linearGradient}
-              colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-            >
-
-              <View style={styles.TitleTagsOrganization}>
-                <Text style={styles.date}>
-                  {article.date}
-
-                </Text>
-                <Text style={styles.title}>
-                  {article.title}
-                </Text>
-
-                <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Text style={styles.newsOrganization}>
-                    {article.newsOrganization.orgName}
-
-                  </Text>
-                </View>
-              </View>
-            </LinearGradient>
-          </ImageBackground>
-          {this.bulletPoint(article.content)}
+          </Image>
+          <View style={styles.titleTextOrg}>
+            <Text style={styles.title}>
+              {article.title}
+            </Text>
+            {this.bulletPoint(article.summary)}
+            <View style={styles.horizontal}>
+              <Text style={styles.newsOrganization}>
+                {article.newsOrganization.orgName}
+              </Text>
+              <Text style={styles.date}>{this.dateRender(article.date)}</Text>
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     );

@@ -16,7 +16,7 @@ const ArticleReducer = (state = initialState, action) => {
       // return { ...state, articles: action.payload.data };
     case ActionTypes.GET_VERIFIED:
       return Object.assign({}, state, {
-        verified: action.payload.data,
+        verified: action.payload,
       });
     case ActionTypes.GET_ARTICLE:
       return { ...state, currArticle: action.payload.data };

@@ -3,11 +3,17 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions,
+  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Autocomplete } from 'react-native-autocomplete-input';
-import { signUpUser, getAvailableCountries } from '../../../actions/user';
+import Autocomplete from 'react-native-autocomplete-input';
+import { updateUser, signUpUser, getAvailableCountries } from '../../../actions/user';
+import { getInterests } from '../../../actions/interest';
+import { ScrollView } from 'react-native-gesture-handler';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 class SignUp extends Component {
   constructor(props) {
@@ -20,7 +26,7 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    this.props.getAvailableCountries();
+    this.props.getInterests();
   }
 
   onSignup = () => {
@@ -30,8 +36,8 @@ class SignUp extends Component {
         password: this.state.password,
         country: this.state.country,
       };
-      // console.log(data);
-      this.props.signUpUser(data);
+      this.props.signUpUser(data, this.props.navigation, "On Boarding");
+      this.setState({ username: '', password: '', country: '' });
     } else {
       Alert.alert('Warning!',  'Both username and password must be provided',
       [{text: 'OK', onPress: () => console.log('OK pressed')}]
@@ -59,54 +65,42 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log('here', this.props.allCountries);
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}> Sign up </Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            value = {this.state.username}
-            placeholder="Username"
-            autoCapitalize="none"
-            style={styles.userInput}
-            onChangeText={(text) => { this.setState({ username: text }); }}
-          />
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <TextInput
+          placeholder="Username"
+          autoCapitalize="none"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ username: text }); }}
+          showSoftInputOnFocus
+        />
 
-          <TextInput
-            value = {this.state.password}
-            placeholder="Password"
-            secureTextEntry
-            autoCapitalize="none"
-            style={styles.userInput}
-            onChangeText={(text) => { this.setState({ password: text }); }}
-          />
-          {this.renderCountries()}
-        </View>
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          autoCapitalize="none"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ password: text }); }}
+          showSoftInputOnFocus
+        />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => { this.onSignin(); }}>
-            <Text style={styles.buttonText}>
-              Next
-              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
+        <TextInput
+          placeholder="Country"
+          autoCapitalize="words"
+          style={styles.userInput}
+          onChangeText={(text) => { this.setState({ country: text }); }}
+          showSoftInputOnFocus
+        />
 
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
-            <Text style={styles.buttonText}>
-              Sign in
-              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/* <TouchableOpacity style={styles.underlineButton}>
-
-          <Text style={styles.underlineButtonText}>
-            {' '}
-            Click here to sign up instead
-          </Text>
-        </TouchableOpacity> */}
-
-      </View>
+        <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
+          <Text style={styles.buttonText}>
+            Next
+                </Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -114,15 +108,19 @@ class SignUp extends Component {
 function mapReduxStateToProps(reduxState) {
   return {
     allCountries: reduxState.user.availableCountries,
+    interests: reduxState.interest.interests,
+    currentUser: reduxState.user.currentUser,
   };
 }
 
-export default connect(mapReduxStateToProps, { signUpUser, getAvailableCountries })(SignUp);
+export default connect(mapReduxStateToProps, { updateUser, getInterests, signUpUser, getAvailableCountries })(SignUp);
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
     justifyContent: 'center',
+    flex: 1,
+    alignItems: "center",
+    marginTop: 50,
   },
   inputContainer: {
     marginTop: Dimensions.get('screen').height * 0.05,
@@ -137,9 +135,11 @@ const styles = StyleSheet.create({
   userInput: {
     margin: 15,
     paddingHorizontal: '4%',
-    height: '17%',
+    height: '10%',
+    borderRadius: 10,
     borderColor: 'rgb(56, 60, 108)',
     borderWidth: 1,
+    width: '70%'
   },
 
   contentContainer: {
@@ -198,5 +198,27 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     position: 'absolute',
     bottom: 5,
+  },
+});
+
+const stylesTwo = StyleSheet.create({
+  onboardingForm: {
+    display: 'flex',
+    // flexWrap: true, // check
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: windowHeight / 10,
+  },
+  scroll: {
+    paddingLeft: windowWidth / 50,
+  },
+  pillText: {
+    fontFamily: 'Baskerville',
+  },
+  contentContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    width: windowWidth,
+    backgroundColor: 'rgb(250,250,250)',
   },
 });

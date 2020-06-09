@@ -17,7 +17,12 @@ import {
   getUserInterests,
   getOrganizations,
   getUserArticles,
+  addUserOrganizations,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
+  toggleWebView,
+  addInterests,
 } from './user';
 
 import {
@@ -51,6 +56,11 @@ export {
   getOrganizations,
   getUserArticles,
   getVerifiedArticles,
+  addUserOrganizations,
   getInterests,
   getAvailableCountries,
+  addUserArticles,
+  removeUserArticles,
+  toggleWebView,
+  addInterests,
 };

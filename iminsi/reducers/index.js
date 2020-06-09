@@ -8,7 +8,7 @@ import InterestReducer from './interestReducer';
 const rootReducer = combineReducers({
   article: ArticleReducer,
   user: UserReducer,
-  auth: AuthReducer,
+  // auth: AuthReducer,
   interest: InterestReducer,
 });
 

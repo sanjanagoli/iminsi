@@ -17,7 +17,7 @@ class SignupScreen extends Component {
 
   render() {
     return (
-      <SignUp />
+      <SignUp navigation={this.props.navigation} route={this.props.route} navigation={this.props.navigation}/>
     );
   }
 }

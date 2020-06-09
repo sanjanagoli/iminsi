@@ -9,12 +9,13 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  Button,
+  Image,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { getArticles, getInterests } from '../actions/index';
+import { getArticles, getInterests, getUserArticles } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
-
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -34,12 +35,13 @@ class Pill extends Component {
       this.setState(() => ({
         clicked: false,
         color: 'rgb(158, 158, 158)',
+        textColor: 'black',
       }));
     } else {
       this.setState(() => ({
         clicked: true,
         color: 'rgb(56, 60, 108)',
-        textColor: 'black',
+        textColor: 'white',
       }));
     }
   }
@@ -48,7 +50,6 @@ class Pill extends Component {
     return (
       <TouchableOpacity key={this.props.name}
         style={{
-
           borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: this.state.color, width: ((74 / 360) * windowWidth), height: ((26 / 640) * windowHeight), marginRight: windowHeight / 50,
         }}
         onPress={() => { this.colorFlip(); this.props.pillClick(this.props.interestObj); }}
@@ -75,9 +76,9 @@ class ForYouScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.getArticles();
-    this.props.getInterests();
-    // this.props.getUserInterests();
+    /// this.props.getArticles();
+    // this.props.getInterests();
+
   }
 
   pillClick = (interest) => {
@@ -107,60 +108,103 @@ class ForYouScreen extends Component {
   }
 
   getArticlesForInterest = (interest) => {
-    console.log(interest.articles);
     return this.props.articles;
   }
 
   render() {
-    // eslint-disable-next-line prefer-destructuring
-    /*
-    <Text>
-          {' '}
-          Hello world
-          {' '}
-          {JSON.stringify(this.props.articles)}
-        </Text>
-    */
-    console.log('testing', JSON.stringify(this.props.allInterests.length));
-    if (this.props.currentUser !== undefined && this.props.currentUser !== null) {
-      console.log('hello');
-      return (
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <View style={styles.topBar}>
-            <ScrollView
-              horizontal
-              contentContainerStyle={styles.scroll}
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={200}
-              decelerationRate="fast"
-              alwaysBounceHorizontal
+    if (this.props.userLoaded) {
+      if (this.props.currentUser.interests!= undefined) {
+        return (
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            <View style={styles.topBar}>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.scroll}
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={200}
+                decelerationRate="fast"
+                alwaysBounceHorizontal
+              >
+                {this.props.currentUser.interests.map((interest) => {
+                  return (
+                    <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
+                  );
+                })}
+              </ScrollView>
+            </View>
+            {this.state.selectedInterests.map((interest) => {
+              return (
+                <HighlightedNews
+                  articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
+                  navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
+                  title={this.capitalizeTag(interest.interestName)}
+                  key={interest.interestName}
+                  articles={interest.articles.slice()}
+                  numberOfArticles={interest.articles.slice().length}
+                  bookmarked={this.props.currentUser.profileArticles}
+                />
+              );
+            })}
+          </ScrollView>
+        );
+      } else {
+        return (
+          <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+            <TouchableOpacity key={this.props.name}
+              style={{
+                marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+              }}
+              onPress={() => {this.props.navigation.navigate("On Boarding");}}
             >
-              {this.props.currentUser.interests.map((interest) => {
-                return (
-                  <Pill key={interest.interestName} interestObj={interest} name={this.capitalizeTag(interest.interestName)} pillClick={this.pillClick} />
-                );
-              })}
-            </ScrollView>
+              <Text style={{
+                fontFamily: 'Baskerville',
+                fontWeight: '200',
+                fontSize: 20,
+                color: 'white',
+              }}
+              >
+                Refresh
+              </Text>
+            </TouchableOpacity>
           </View>
-          {this.state.selectedInterests.map((interest) => {
-            return (
-              <HighlightedNews
-                articleNav={(article) => { this.props.navigation.navigate('ArticleDetail', { article }); }}
-                navTrigger={() => { this.props.navigation.navigate('Interest Screen', { name: interest.interestName, articles: interest.articles }); }}
-                title={this.capitalizeTag(interest.interestName)}
-                key={interest.interestName}
-                articles={interest.articles.slice(1, -1)}
-                numberOfArticles={interest.articles.slice(1, -1).length}
-              />
-            );
-          })}
-        </ScrollView>
-      );
+
+        );
+      }
+
     } else {
-      // console.log('for you', this.props.currentUser);
-      this.props.navigation.navigate('Sign In');
       return (
-        <Text>Loading...</Text>
+        <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+          <Text style={{
+            fontFamily: 'Baskerville',
+            fontWeight: '300',
+            color: 'rgb(56, 60, 108)',
+            fontSize: 30,
+            textAlign: 'center',
+            paddingTop: '15%',
+            paddingBottom: '5%',
+          }}
+          >
+            You are not logged in yet.  {"\n"}Please SignIn - SignUp
+            </Text>
+          <TouchableOpacity key={this.props.name}
+            style={{
+
+              marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+            }}
+            onPress={() => { this.props.navigation.navigate('Sign In', { parent: 'For You' }); }}
+          >
+            <Text style={{
+              fontFamily: 'Baskerville',
+              fontWeight: '200',
+              fontSize: 20,
+              color: 'white',
+            }}
+            >
+              SignIn - SignUp
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       );
     }
   }
@@ -170,7 +214,9 @@ function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
     currentUser: reduxState.user.currentUser,
-    allInterests: reduxState.interest.interests,
+    userLoaded: reduxState.user.loaded,
+    allInterests: reduxState.user.interests,
+    bookmarked: reduxState.user.articles,
   };
 }
 
@@ -184,6 +230,9 @@ const mapDispatchToProps = (dispatch) => {
     // },
     getInterests: () => {
       dispatch(getInterests());
+    },
+    getUserArticles: (user) => {
+      dispatch(getUserArticles(user));
     },
   };
 };

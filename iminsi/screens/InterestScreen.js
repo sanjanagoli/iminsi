@@ -16,8 +16,8 @@ const windowHeight = Dimensions.get('window').height;
 
 import { StyleSheet } from 'react-native';
 
-const smallStoryStyles = StyleSheet.create({
 
+const smallStoryStyles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontFamily: 'Baskerville',
@@ -25,10 +25,13 @@ const smallStoryStyles = StyleSheet.create({
     textAlign: 'left',
     width: '70%',
     flexWrap: 'wrap',
+    marginTop: 5,
   },
 
   newsOrganization: {
+    marginTop: 10,
     fontFamily: 'Baskerville',
+    fontWeight: 'bold',
     fontSize: 12,
   },
   tags: {
@@ -53,20 +56,12 @@ const smallStoryStyles = StyleSheet.create({
   },
   seperator: {
     marginVertical: 2,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    padding: 3,
   },
   tagsText: {
     fontSize: 10,
     fontFamily: 'Baskerville',
-    fontWeight: "100",
-    color: 'black',
-  },
-  date: {
-    fontFamily: 'Baskerville',
-    fontWeight: "100",
-    flexWrap: 'wrap',
-    fontSize: 15,
+    fontWeight: '100',
     color: 'black',
   },
   titleAndPicture: {
@@ -114,25 +109,30 @@ class InterestScreen extends Component {
       }}>
         {this.props.route.params.articles.map((article) => {
           return (
-            <View  key={article.id} >
-             
-              <TouchableOpacity style={{ backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth/45, paddingRight: windowWidth/45 }} onPress={() => { this.showArticleDetail(article); }} underlayColor="none">
+            <View key={article.id}>
 
-                <View style={smallStoryStyles.container}>
-                  <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
-                  <View style={smallStoryStyles.titleAndPicture}>
-                    <Text style={smallStoryStyles.title}>{article.title}</Text>
-                    <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
-                  </View>
-                  <View style={smallStoryStyles.tagDate}>
-                    <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
-                    <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
-                  </View>
-                </View>
+        <TouchableOpacity style={{
+          backgroundColor: 'white', width: windowWidth, height: windowHeight / 5, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+        }}
+          onPress={() => { this.showArticleDetail(article); }}
+          underlayColor="none"
+        >
 
-              </TouchableOpacity>
-              <View style={smallStoryStyles.seperator} />
+          <View style={smallStoryStyles.container}>
+            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
+            <View style={smallStoryStyles.titleAndPicture}>
+              <Text style={smallStoryStyles.title}>{article.title}</Text>
+              <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
             </View>
+            <View style={smallStoryStyles.tagDate}>
+              <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+              <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
+            </View>
+          </View>
+
+        </TouchableOpacity>
+        <View style={smallStoryStyles.seperator} />
+      </View>
 
           );
         })}

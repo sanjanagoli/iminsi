@@ -17,7 +17,7 @@ class SigninScreen extends Component {
 
   render() {
     return (
-      <SignIn />
+      <SignIn navigation={this.props.navigation} route={this.props.route}/>
     );
   }
 }

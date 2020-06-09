@@ -10,13 +10,11 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { getArticles } from '../actions/index';
+import { getArticles, getUserArticles, getOrganizations } from '../actions/index';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
 const smallStoryStyles = StyleSheet.create({
-
   title: {
     fontSize: 16,
     fontFamily: 'Baskerville',
@@ -24,10 +22,13 @@ const smallStoryStyles = StyleSheet.create({
     textAlign: 'left',
     width: '70%',
     flexWrap: 'wrap',
+    marginTop: 5,
   },
 
   newsOrganization: {
+    marginTop: 10,
     fontFamily: 'Baskerville',
+    fontWeight: 'bold',
     fontSize: 12,
   },
   tags: {
@@ -52,8 +53,7 @@ const smallStoryStyles = StyleSheet.create({
   },
   seperator: {
     marginVertical: 2,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    padding: 3,
   },
   tagsText: {
     fontSize: 10,
@@ -105,7 +105,7 @@ class ProfileScreen extends Component {
       <View key={article.id}>
 
         <TouchableOpacity style={{
-          backgroundColor: 'white', width: windowWidth, height: windowHeight / 7, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+          backgroundColor: 'white', width: windowWidth, height: windowHeight / 5, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
         }}
           onPress={() => { this.showArticleDetail(article); }}
           underlayColor="none"
@@ -130,7 +130,8 @@ class ProfileScreen extends Component {
   };
 
   showArticleDetail(article) {
-    this.props.navigation.navigate('ArticleDetail', { article });
+    const userID  = this.props.currentUser.id
+    this.props.navigation.navigate('ArticleDetail', { article, userID });
   }
 
   fillInBlanks(article) {
@@ -166,44 +167,25 @@ class ProfileScreen extends Component {
   }
 
   newsOrgs() {
-    // const myorgs = ['Ethiopian Times', 'New Times Rwanda', 'Al Jazeera', 'CNBC Africa', 'Africa News'];
+    // const profileArticles = this.props.currentUser.profileArticles;
+    const trustedSources = this.props.currentUser.trustedOrganizations;
     return (
-      <View>
-        <View style={styles.tiles}>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>New Times Rwanda</Text>
+      trustedSources.map((newsOrgname) => {
+        return (
+          <View key={newsOrgname.organization.id} style={styles.tile}>
+            <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
           </View>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>Ethiopian Times</Text>
-          </View>
-        </View>
-        <View style={styles.tiles}>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>Soft Power Uganda</Text>
-          </View>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>New Vision</Text>
-          </View>
-        </View>
-        <View style={styles.tiles}>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>Africa News</Text>
-          </View>
-          <View style={styles.tile}>
-            <Text style={styles.newsOrg}>CNBC Africa</Text>
-          </View>
-        </View>
-      </View>
+        );
+      })
     );
   }
 
   bookmarked() {
-    const { articles } = this.props;
+    const profileArticles = this.props.currentUser.profileArticles;
     return (
-      articles.map((article) => {
+      profileArticles.map((article) => {
         return (
           this.smallArticle(article)
-          // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
         );
       })
     );
@@ -224,9 +206,9 @@ class ProfileScreen extends Component {
           <View
             style={styles.line}
           />
-          {this.newsOrgs()}
-
-          {/* <View style={styles.tiles} /> */}
+          <View style={styles.tiles}>
+            {this.newsOrgs()}
+          </View>
         </View>
       );
     } else {
@@ -242,36 +224,77 @@ class ProfileScreen extends Component {
           <View
             style={styles.line}
           />
-          {this.props.articles.map((article) => {
-            return (
-              this.smallArticle(article)
-            // <SmallNews key={article.id} title={article.title} tags={article.tags} newsOrganization={article.newsOrganization} imageURL={article.imageURL} date={article.date} />
-            );
-          })}
+          {this.bookmarked()}
         </View>
       );
     }
   }
 
   render() {
-    return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.heading}>Profile</Text>
-        <View style={styles.pictureBackground}>
-          <ImageBackground
-            source={{ url: 'https://i.pinimg.com/474x/a9/db/c3/a9dbc3dc7f47333d554a0c9e1cee8ba0--african-fabric-african-art.jpg' }}
-            style={styles.picture}
-          />
+    if (this.props.userLoaded) {
+      this.props.getUserArticles(this.props.currentUser);
+      this.props.getOrganizations(this.props.currentUser);
+
+      return (
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.pictureBackground}>
+            <Text style={styles.username}>
+              Hi, {this.props.currentUser.username}
+      {"\n"}Not much to do here!
+            </Text>
+            <Text style={styles.username}>
+              {this.props.currentUser.country}
+            </Text>
+
+          </View>
+          {this.bottomScreen()}
+        </ScrollView>
+      );
+    }
+    else {
+      return (
+        <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+          <Text style={{
+            fontFamily: 'Baskerville',
+            fontWeight: '300',
+            color: 'rgb(56, 60, 108)',
+            fontSize: 30,
+            textAlign: 'center',
+            paddingTop: '15%',
+            paddingBottom: '5%',
+          }}
+          >
+            You are not logged in yet.  {"\n"}Please SignIn - SignUp
+            </Text>
+          <TouchableOpacity key={this.props.name}
+            style={{
+
+              marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+            }}
+            onPress={() => { this.props.navigation.navigate('Sign In', { parent: 'Profile' }); }}
+          >
+            <Text style={{
+              fontFamily: 'Baskerville',
+              fontWeight: '200',
+              fontSize: 20,
+              color: 'white',
+            }}
+            >
+              SignIn - SignUp
+            </Text>
+          </TouchableOpacity>
         </View>
-        {this.bottomScreen()}
-      </ScrollView>
-    );
+
+      );
+    }
   }
 }
 
 function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
+    currentUser: reduxState.user.currentUser,
+    userLoaded: reduxState.user.loaded,
   };
 }
 
@@ -279,6 +302,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getArticles: () => {
       dispatch(getArticles());
+    },
+    getUserArticles: (user) => {
+      dispatch(getUserArticles(user));
+    },
+    getOrganizations: (user) => {
+      dispatch(getOrganizations(user));
     },
   };
 };
@@ -303,16 +332,21 @@ const styles = StyleSheet.create({
   },
   pictureBackground: {
     width: '100%',
+    height: 180,
     flex: 1,
     flexWrap: 'wrap',
-    alignContent: 'flex-end',
+    alignContent: 'center',
     paddingBottom: 20,
+    justifyContent: "center",
+    alignItems: 'center',
   },
   toggles: {
     flexDirection: 'row',
     borderBottomColor: 'grey',
     height: 45,
     alignItems: 'center',
+    flex: 1,
+    justifyContent: "space-around",
   },
   toggleElementActive: {
     fontFamily: 'Baskerville',
@@ -330,6 +364,10 @@ const styles = StyleSheet.create({
     width: 150,
     paddingLeft: 25,
   },
+  username: {
+    fontFamily: 'Baskerville',
+    fontSize: 30,
+  },
   line: {
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
@@ -337,26 +375,34 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   tiles: {
-    height: 150,
-    width: 370,
     flex: 1,
+    flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 20,
-    // alignContent: 'center',
+    justifyContent: "center",
   },
   tile: {
-    backgroundColor: '#383C6C',
+    // backgroundColor: '#383C6C',
+    borderColor: '#383C6C',
+    borderTopWidth: 10,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderRadius: 10,
     width: 150,
     height: 150,
-    marginLeft: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   newsOrg: {
-    color: 'white',
+    color: '#383C6C',
     fontFamily: 'Baskerville',
     fontWeight: 'bold',
     fontSize: 16,
+    width: 100,
   },
 
 });

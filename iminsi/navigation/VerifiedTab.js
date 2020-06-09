@@ -7,6 +7,7 @@ import {
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import VerifiedScreen from '../screens/VerifiedScreen';
 import ArticleDetail from '../screens/ArticleDetail';
+import ArticleToggle from '../components/articleToggle';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -34,22 +35,23 @@ const VerifiedScreenTab = () => {
         component={VerifiedScreen}
       />
       <Stack.Screen name="ArticleDetail"
-        options={({ route }) => ({
-          headerTitleAlign: 'center',
-          headerBackTitleStyle: {
-            color: 'black',
-          },
-          headerStyle: { backgroundColor: 'rgba(0,0,45,0.8)', height: ((71 / 640) * windowHeight) },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: '200',
-            fontSize: 35,
-            color: 'black',
-          },
-          headerRight: () => { return (<FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />); },
-        })}
-        component={ArticleDetail}
-      />
+      options={({ route }) => ({
+        headerTitleAlign: 'center',
+        headerBackTitle: null,
+        headerBackTitleStyle: {
+          color: 'white',
+        },
+        headerStyle: { backgroundColor: 'rgba(0,0,45,0.8)', height: ((71 / 640) * windowHeight) },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          // fontWeight: '200',
+          // fontSize: 35,
+          // color: 'black',
+        },
+        headerTitle: () => { return <ArticleToggle /> },
+      })}
+      component={ArticleDetail}
+    />
     </Stack.Navigator>
   );
 };
