@@ -1,6 +1,8 @@
 # Project Name: Iminsi
 
 ![Team Photo](./pic.png)
+![Trending](./trending-iminsi)
+![User](./user-flow (1))
 
 ## Architecture
 
