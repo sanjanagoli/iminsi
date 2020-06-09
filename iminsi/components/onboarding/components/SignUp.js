@@ -39,7 +39,10 @@ class SignUp extends Component {
       this.props.signUpUser(data, this.props.navigation, "On Boarding");
       this.setState({ username: '', password: '', country: '' });
     } else {
-      Alert.alert('Required: username and password');
+      Alert.alert('Warning!',  'Both username and password must be provided',
+      [{text: 'OK', onPress: () => console.log('OK pressed')}]
+      
+      );
     }
   }
 
@@ -98,7 +101,6 @@ class SignUp extends Component {
                 </Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     );
   }
 }
