@@ -133,7 +133,6 @@ class ArticleDetail extends Component {
   }
 
   hideSpinner() {
-    console.log('Hide Spinner');
     this.setState(() => ({ ...this.state, visible: false }));
   }
 
@@ -143,16 +142,14 @@ class ArticleDetail extends Component {
     });
 
     // if (score > 0){
-    //   const { route } = this.props;
-    //   const creatingOrgId  = route.params.article.newsOrganization;
-    //   const userID = route.params.userID;
-    //   const orgObject = {id: creatingOrgId}
-    //   const orgObjectArray = [orgObject]
-    //   console.log("object Array")
-    //   console.log(orgObjectArray)
-    //   this.props.addUserOrganizations(userID, orgObjectArray);
+      // const { route } = this.props;
+      // const creatingOrgId  = route.params.article.newsOrganization;
+      // const userID = route.params.userID;
+      // const orgObjectArray = [creatingOrgId]
+      // console.log("object Array")
+      // console.log(orgObjectArray)
+      // this.props.addUserOrganizations(userID, orgObjectArray);
     // }
-    console.log("FUCKFUCKF")
     this.props.incrementScore(id, score);
   }
 
@@ -261,18 +258,8 @@ function mapReduxStateToProps(reduxState) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    incrementScore: () => {
-      dispatch(incrementScore());
-    },
-    addUserOrganizations: () => {
-      dispatch(addUserOrganizations());
-    }
-  };
-};
 
-export default connect(mapReduxStateToProps, mapDispatchToProps)(ArticleDetail);
+export default connect(mapReduxStateToProps, {incrementScore, addUserOrganizations})(ArticleDetail);
 
 
 

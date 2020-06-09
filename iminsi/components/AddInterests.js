@@ -70,10 +70,6 @@ class InterestAdder extends Component {
 
   componentDidMount() {
     this.props.getInterests(); // interests instead of articles
-    const newStateArray = this.props.route.params.user.interests.slice();
-    this.setState(() => ({
-      selectedInterests: newStateArray,
-    }));
 
   }
 
@@ -99,34 +95,18 @@ class InterestAdder extends Component {
     }
   }
 
-  comp = (interest) => {
-    let x = 0;
-    this.state.selectedInterests.forEach((int, idx) => {
-      if (int.interestName === interest.interestName) {
-        x = 1;
-      }
-    });
-
-    if(x === 0){
-      return (
-        <Pill key={interest.interestName} initColor='rgb(158, 158, 158)' clicked={false} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-      );
-    } else {
-      return (
-        <Pill key={interest.interestName} initColor='rgb(56, 60, 108)' clicked={true} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />
-      );
-    }
-  }
-
 
   render() {
+    // Do not render any interests which we have already seleted 
+    let diff = this.props.interests.filter(({ interestName: name1 }) => !this.props.currentUser.interests.some(({ interestName: name2 }) => name2 === name1));
     return (
       <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
         <View style={stylesTwo.onboardingForm}>
-          {this.props.interests.map((interest) => {
-            
-            
-          })}
+          {
+            diff.map((interest) => {
+              return <Pill key={interest.interestName} initColor='rgb(158, 158, 158)' clicked={false} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />;
+            })
+          }
         </View>
         <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
 
@@ -146,7 +126,7 @@ class InterestAdder extends Component {
             style={{
               marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
             }}
-            onPress={() => { addInterests(this.props.route.params.user.id, this.state.selectedInterests); this.props.navigation.navigate("For You") }}
+            onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.navigation.navigate("For You") }}
           >
             <Text style={{
               fontFamily: 'Baskerville',
@@ -168,6 +148,8 @@ function mapReduxStateToProps(reduxState) {
   return {
     allCountries: reduxState.user.availableCountries,
     interests: reduxState.interest.interests,
+    currentUser: reduxState.user.currentUser,
+
   };
 }
 

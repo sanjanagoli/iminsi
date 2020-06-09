@@ -23,6 +23,7 @@ import {
   removeUserArticles,
   toggleWebView,
   addInterests,
+  signOut,
 } from './user';
 
 import {
@@ -63,4 +64,5 @@ export {
   removeUserArticles,
   toggleWebView,
   addInterests,
+  signOut,
 };

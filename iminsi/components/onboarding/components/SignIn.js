@@ -77,12 +77,6 @@ class SignIn extends Component {
 
             </Text>
           </TouchableOpacity> 
-          <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Sign Up'); }}>
-            <Text style={styles.buttonText}>
-              Sign up
-              {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
-            </Text>
-          </TouchableOpacity>
           <Text>Don't have an account?</Text>
           <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style={{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
 
