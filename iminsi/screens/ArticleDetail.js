@@ -141,15 +141,15 @@ class ArticleDetail extends Component {
       userRatedArticle: true,
     });
 
-    if (score > 0){
-      const { route } = this.props;
-      const creatingOrgId  = route.params.article.newsOrganization;
-      const userID = route.params.userID;
-      const orgObjectArray = [creatingOrgId]
-      console.log("object Array")
-      console.log(orgObjectArray)
-      this.props.addUserOrganizations(userID, orgObjectArray);
-    }
+    // if (score > 0){
+      // const { route } = this.props;
+      // const creatingOrgId  = route.params.article.newsOrganization;
+      // const userID = route.params.userID;
+      // const orgObjectArray = [creatingOrgId]
+      // console.log("object Array")
+      // console.log(orgObjectArray)
+      // this.props.addUserOrganizations(userID, orgObjectArray);
+    // }
     this.props.incrementScore(id, score);
   }
 

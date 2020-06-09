@@ -240,10 +240,10 @@ class ProfileScreen extends Component {
           <View style={styles.pictureBackground}>
             <Text style={styles.username}>
               Hi, {this.props.currentUser.username}
-      {"\n"}Not much to do here!
+              {"\n"}
             </Text>
             <Text style={styles.username}>
-              {this.props.currentUser.country}
+             From: {this.props.currentUser.country}
             </Text>
 
           </View>

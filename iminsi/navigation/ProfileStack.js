@@ -34,7 +34,7 @@ const ProfileScreenTab = (props) => {
             color: 'black',
           },
           title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Profile</Text>,
-          headerRight: () => { return ( (props.userLoaded)?<TouchableOpacity onPress={() => {props.signOut()}}><Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)', marginRight: 20, fontSize: 20 }}>Sign Out</Text></TouchableOpacity>: <View /> );},
+          // headerRight: () => { return ( (props.userLoaded)?<TouchableOpacity onPress={() => {props.signOut()}}><Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)', marginRight: 20, fontSize: 20 }}>Sign Out</Text></TouchableOpacity>: <View /> );},
         }}
         component={ProfileScreen}
       />
