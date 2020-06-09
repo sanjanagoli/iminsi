@@ -2,7 +2,7 @@
 
 ![Team Photo](./pic.png)
 ![Trending](./trending-iminsi.gif)
-![User](./user-flow (1).gif)
+![User](./user-flow%20(1).gif)
 
 ## Architecture
 
