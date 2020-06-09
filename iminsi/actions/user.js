@@ -69,8 +69,8 @@ const getUserInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
-        // console.log('interests action response', response);
-        dispatch({ type: ActionTypes.GET_INTERESTS, payload: response.data });
+        console.log('interests action response', response);
+        dispatch({ type: ActionTypes.GET_INTERESTS, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -132,7 +132,7 @@ const addUserArticles = (user, article) => {
   return (dispatch) => {
     userRequest.addUserArticles(user, article)
       .then((response) => {
-        dispatch({ type: ActionTypes.ADD_USER_ARTICLES, payload: response.user });
+        dispatch({ type: ActionTypes.ADD_USER_ARTICLES, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -144,7 +144,7 @@ const removeUserArticles = (user, article) => {
   return (dispatch) => {
     userRequest.removeUserArticles(user, article)
       .then((response) => {
-        dispatch({ type: ActionTypes.DEL_USER_ARTICLES, payload: response.user });
+        dispatch({ type: ActionTypes.DEL_USER_ARTICLES, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -154,9 +154,10 @@ const removeUserArticles = (user, article) => {
 
 const addInterests = (user, interests) => {
   return (dispatch) => {
-    console.log("started");
+    console.log("starjjkted");
     userRequest.addInterests(user, interests)
       .then((response) => {
+        console.log("started", response);
         dispatch({ type: ActionTypes.ADD_INTERESTS, payload: response });
       })
       .catch((error) => {

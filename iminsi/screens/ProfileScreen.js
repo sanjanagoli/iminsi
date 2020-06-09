@@ -168,7 +168,8 @@ class ProfileScreen extends Component {
 
   newsOrgs() {
     // const profileArticles = this.props.currentUser.profileArticles;
-    const trustedSources = this.props.currentUser.trustedOrganizations;
+    let trustedSources = this.props.currentUser.trustedOrganizations;
+    
     return (
       trustedSources.map((newsOrgname) => {
         return (

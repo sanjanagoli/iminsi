@@ -120,11 +120,6 @@ class HighlightedNewsManzi extends Component {
           <Text style={[styles.firstLetter]}>{cleanedtext[0][0]}</Text>
           {cleanedtext[0].slice(1, 130)}...</Text>
       </View>
-      // <View style={styles.summary}>
-      //   {/* <Text style={{ marginLeft: 15, paddingTop: 10 }}>{'\u2022'}</Text> */}
-      //   <Text style={[styles.textCommon, styles.firstLetter]}>{cleanedtext[0][0]}</Text>
-      //   <Text style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>{cleanedtext[0].slice(1, cleanedtext[0].length)}</Text>
-      // </View>
     );
   }
 
