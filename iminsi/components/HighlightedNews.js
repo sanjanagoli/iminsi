@@ -39,7 +39,7 @@ class HighlightedNews extends Component {
   render() {
     return (
       <View style={styles.main}>
-        {/*<View style={styles.seperator} />*/}
+        {/* <View style={styles.seperator} /> */}
         <View style={styles.topBar}>
           <Text style={styles.topBarTitle}>
             {' '}
@@ -54,7 +54,7 @@ class HighlightedNews extends Component {
             <AntDesign name="arrowright" size={30} color="black" />
           </TouchableOpacity>
         </View>
-        {/*<View style={styles.seperator} />*/}
+        {/* <View style={styles.seperator} /> */}
         <ScrollView
           horizontal
           contentContainerStyle={styles.scroll}
@@ -82,16 +82,14 @@ class HighlightedNews extends Component {
                         </View>
                         <View style={styles.iconContainer}>
                           {
-                            (article.verified) ?
-                              <MaterialIcons name="verified-user" size={24} color="white" />
-                              :
-                              <View />
+                            (article.verified)
+                              ? <MaterialIcons name="verified-user" size={24} color="white" />
+                              : <View />
                           }
                           {
-                            (booked) ?
-                              <FontAwesome name="bookmark" size={24} color="white" />
-                              :
-                              <FontAwesome name="bookmark-o" size={24} color="white" />
+                            (booked)
+                              ? <FontAwesome name="bookmark" size={24} color="white" />
+                              : <FontAwesome name="bookmark-o" size={24} color="white" />
                           }
                         </View>
                       </View>

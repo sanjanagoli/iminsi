@@ -34,6 +34,7 @@ const signInUser = (data, nav, path) => {
   return (dispatch) => {
     userRequest.signIn(data)
       .then((response) => {
+        console.log('sign in successful');
         dispatch({ type: ActionTypes.AUTH_USER, payload: response.user });
         nav.navigate(path);
       })

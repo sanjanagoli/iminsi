@@ -7,7 +7,7 @@ import {
   StyleSheet, Dimensions,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     height: windowHeight,
-    alignContent: "center",
+    alignContent: 'center',
   },
   horizontal: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   picture: {
     minHeight: '50%',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   firstLetter: {
     fontSize: 30,
-  }
+  },
 });
 
 class HighlightedNewsManzi extends Component {
@@ -113,12 +113,15 @@ class HighlightedNewsManzi extends Component {
 
   bulletPoint(text) {
     const cleanedtext = text.split('[');
-    /*https://stackoverflow.com/questions/44257982/react-native-nested-text-with-differnt-fontsizes-initial-first-letter */
+    /* https://stackoverflow.com/questions/44257982/react-native-nested-text-with-differnt-fontsizes-initial-first-letter */
     return (
       <View style={styles.summary}>
         <Text style={{ fontFamily: 'Baskerville', fontSize: 18 }}>
           <Text style={[styles.firstLetter]}>{cleanedtext[0][0]}</Text>
-          {cleanedtext[0].slice(1, 130)}...</Text>
+          {cleanedtext[0].slice(1, 130)}
+          ...
+
+        </Text>
       </View>
     );
   }
@@ -137,10 +140,9 @@ class HighlightedNewsManzi extends Component {
         >
           <Image
             // eslint-disable-next-line global-require
-            source={{ url: (article.imageURL == undefined)? 'https://fromhazeleyes.files.wordpress.com/2010/07/africa.jpg': article.imageURL}}
+            source={{ url: (article.imageURL === undefined) ? 'https://fromhazeleyes.files.wordpress.com/2010/07/africa.jpg' : article.imageURL }}
             style={styles.picture}
-          >
-          </Image>
+          />
           <View style={styles.titleTextOrg}>
             <Text style={styles.title}>
               {article.title}
