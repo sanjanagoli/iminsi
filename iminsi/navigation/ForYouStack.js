@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   Dimensions, Text,
 } from 'react-native';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
+// import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { getArticles } from '../actions/index';
 import ForYouScreen from '../screens/ForYouScreen';
 import InterestScreen from '../screens/InterestScreen';
@@ -17,7 +17,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const capitalizeTag = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
+};
 
 const Stack = createStackNavigator();
 

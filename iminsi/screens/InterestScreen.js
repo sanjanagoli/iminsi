@@ -6,15 +6,17 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions,
+  StyleSheet,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getArticles } from '../actions/index';
-import { Dimensions } from 'react-native';
+// import { Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-import { StyleSheet } from 'react-native';
+// import { StyleSheet } from 'react-native';
 
 
 const smallStoryStyles = StyleSheet.create({
@@ -89,9 +91,9 @@ class InterestScreen extends Component {
   }
 
   dateRender = (dateStr) => {
-    let x = new Date(dateStr);
-    let dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const x = new Date(dateStr);
+    const dates = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return (`${dates[x.getDate()]} of ${months[x.getMonth()]} ${x.getFullYear()}`);
   }
 
@@ -106,33 +108,34 @@ class InterestScreen extends Component {
         justifyContent: 'flex-start',
         width: windowWidth,
         backgroundColor: 'white',
-      }}>
+      }}
+      >
         {this.props.route.params.articles.map((article) => {
           return (
             <View key={article.id}>
 
-        <TouchableOpacity style={{
-          backgroundColor: 'white', width: windowWidth, height: windowHeight / 5, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
-        }}
-          onPress={() => { this.showArticleDetail(article); }}
-          underlayColor="none"
-        >
+              <TouchableOpacity style={{
+                backgroundColor: 'white', width: windowWidth, height: windowHeight / 5, paddingLeft: windowWidth / 45, paddingRight: windowWidth / 45,
+              }}
+                onPress={() => { this.showArticleDetail(article); }}
+                underlayColor="none"
+              >
 
-          <View style={smallStoryStyles.container}>
-            <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
-            <View style={smallStoryStyles.titleAndPicture}>
-              <Text style={smallStoryStyles.title}>{article.title}</Text>
-              <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
-            </View>
-            <View style={smallStoryStyles.tagDate}>
-              <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
-              <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
-            </View>
-          </View>
+                <View style={smallStoryStyles.container}>
+                  <Text style={smallStoryStyles.newsOrganization}>{article.newsOrganization.orgName}</Text>
+                  <View style={smallStoryStyles.titleAndPicture}>
+                    <Text style={smallStoryStyles.title}>{article.title}</Text>
+                    <Image style={smallStoryStyles.picture} source={{ url: ((article.imageURL) ? article.imageURL : 'https://i.stack.imgur.com/y9DpT.jpg') }} />
+                  </View>
+                  <View style={smallStoryStyles.tagDate}>
+                    <Text style={smallStoryStyles.tagsText}>{(article.tags === '') ? article.tags : '#NoTags #Tagless'}</Text>
+                    <Text style={smallStoryStyles.date}>{this.dateRender(article.date)}</Text>
+                  </View>
+                </View>
 
-        </TouchableOpacity>
-        <View style={smallStoryStyles.seperator} />
-      </View>
+              </TouchableOpacity>
+              <View style={smallStoryStyles.seperator} />
+            </View>
 
           );
         })}
@@ -145,13 +148,13 @@ function mapReduxStateToProps(reduxState) {
   return {
     articles: reduxState.article.articles,
     user: {
-      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
-      { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' },] },
+      interests: [{ interestName: 'Politics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Sports', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'International', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Health', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Economics', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Stocks', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
+        { interestName: 'Fashion', articles: [{ date: 'ereerdsfsfs' }, { date: 'ereerdsfsfs' }] },
       ],
     }/* reduxState.user.user */,
   };

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {
   Text, View,
   StyleSheet,
-  ImageBackground,
   Image,
   Dimensions,
 } from 'react-native';
@@ -130,7 +129,7 @@ class ProfileScreen extends Component {
   };
 
   showArticleDetail(article) {
-    const userID  = this.props.currentUser.id
+    const userID = this.props.currentUser.id;
     this.props.navigation.navigate('ArticleDetail', { article, userID });
   }
 
@@ -168,21 +167,24 @@ class ProfileScreen extends Component {
 
   newsOrgs() {
     // const profileArticles = this.props.currentUser.profileArticles;
-    let trustedSources = this.props.currentUser.trustedOrganizations;
-    
-    return (
-      trustedSources.map((newsOrgname) => {
-        return (
-          <View key={newsOrgname.organization.id} style={styles.tile}>
-            <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
-          </View>
-        );
-      })
-    );
+    const trustedSources = this.props.currentUser.trustedOrganizations;
+    if (trustedSources) {
+      return (
+        trustedSources.map((newsOrgname) => {
+          return (
+            <View key={newsOrgname.organization.id} style={styles.tile}>
+              <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
+            </View>
+          );
+        })
+      );
+    } else {
+      return <View />;
+    }
   }
 
   bookmarked() {
-    const profileArticles = this.props.currentUser.profileArticles;
+    const { profileArticles } = this.props.currentUser;
     return (
       profileArticles.map((article) => {
         return (
@@ -240,21 +242,27 @@ class ProfileScreen extends Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.pictureBackground}>
             <Text style={styles.username}>
-              Hi, {this.props.currentUser.username}
-              {"\n"}
+              Hi,
+              {' '}
+              {this.props.currentUser.username}
+              {'\n'}
             </Text>
             <Text style={styles.username}>
-             From: {this.props.currentUser.country}
+              From:
+              {' '}
+              {this.props.currentUser.country}
             </Text>
 
           </View>
           {this.bottomScreen()}
         </ScrollView>
       );
-    }
-    else {
+    } else {
       return (
-        <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+        <View style={{
+          display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight,
+        }}
+        >
           <Text style={{
             fontFamily: 'Baskerville',
             fontWeight: '300',
@@ -265,8 +273,11 @@ class ProfileScreen extends Component {
             paddingBottom: '5%',
           }}
           >
-            You are not logged in yet.  {"\n"}Please SignIn - SignUp
-            </Text>
+            You are not logged in yet.
+            {' '}
+            {'\n'}
+            Please SignIn - SignUp
+          </Text>
           <TouchableOpacity key={this.props.name}
             style={{
 
@@ -338,7 +349,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignContent: 'center',
     paddingBottom: 20,
-    justifyContent: "center",
+    justifyContent: 'center',
     alignItems: 'center',
   },
   toggles: {
@@ -347,7 +358,7 @@ const styles = StyleSheet.create({
     height: 45,
     alignItems: 'center',
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   toggleElementActive: {
     fontFamily: 'Baskerville',
@@ -380,7 +391,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 20,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   tile: {
     // backgroundColor: '#383C6C',

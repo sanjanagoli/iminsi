@@ -21,7 +21,7 @@
     "expo-font": "~8.1.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
-    "react-native": "^0.62.2",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "react-native-autocomplete-input": "^4.2.0",
     "react-native-cheerio": "^1.0.0-rc.4",
     "react-native-emoji": "^1.8.0",

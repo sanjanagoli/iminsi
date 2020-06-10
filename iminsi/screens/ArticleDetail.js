@@ -1,19 +1,20 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import {
-  ActivityIndicator, 
+  ActivityIndicator,
   View,
   Dimensions,
-  ScrollView, 
+  ScrollView,
   StyleSheet,
-  Text, 
-  Button, 
+  Text,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import HTML from 'react-native-render-html';
 import { connect } from 'react-redux';
-import { incrementScore, addUserOrganizations } from '../actions/index';
 import Emoji from 'react-native-emoji';
 import { AntDesign } from '@expo/vector-icons';
+import { incrementScore, addUserOrganizations } from '../actions/index';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   horizontal: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   question: {
@@ -82,29 +83,29 @@ const styles = StyleSheet.create({
     paddingRight: 25,
   },
   reliable: {
-    position: "absolute",
+    position: 'absolute',
     width: '90%',
     backgroundColor: 'rgb(56, 60, 108)',
     borderTopLeftRadius: 40,
     borderBottomLeftRadius: 40,
-    top: windowHeight/2,
-    alignContent: "center",
+    top: windowHeight / 2,
+    alignContent: 'center',
     flex: 1,
     height: 60,
     marginLeft: '10%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
-    shadowRadius: 2,  
+    shadowRadius: 2,
   },
   arrow: {
-    position: "absolute",
+    position: 'absolute',
     width: '3%',
     backgroundColor: 'rgb(56, 60, 108)',
     borderTopLeftRadius: 40,
     borderBottomLeftRadius: 40,
-    top: windowHeight/2,
-    justifyContent: "center",
+    top: windowHeight / 2,
+    justifyContent: 'center',
     right: 0,
     flex: 1,
     height: 60,
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
-    shadowRadius: 2,  
+    shadowRadius: 2,
   },
 });
 
@@ -124,7 +125,7 @@ class ArticleDetail extends Component {
       htmlContent: '',
       userRatedArticle: false,
       poll: false,
-    }
+    };
   }
 
   showSpinner() {
@@ -141,23 +142,22 @@ class ArticleDetail extends Component {
       userRatedArticle: true,
     });
 
-    if (score > 0){
-      if (this.props.loaded){
+    if (score > 0) {
+      if (this.props.loaded) {
         const { route } = this.props;
-      const creatingOrgId  = route.params.article.newsOrganization.id;
-      const orgObjectArray = [creatingOrgId]
-      this.props.addUserOrganizations(this.props.currentUser.id, orgObjectArray);
+        const creatingOrgId = route.params.article.newsOrganization.id;
+        const orgObjectArray = [creatingOrgId];
+        this.props.addUserOrganizations(this.props.currentUser.id, orgObjectArray);
       }
     }
     this.props.incrementScore(id, score);
   }
 
-  readPoll(){
-    if (this.state.poll){
-      this.setState({poll: false});
-    }
-    else{
-      this.setState({poll: true});
+  readPoll() {
+    if (this.state.poll) {
+      this.setState({ poll: false });
+    } else {
+      this.setState({ poll: true });
     }
   }
 
@@ -166,38 +166,45 @@ class ArticleDetail extends Component {
     if (userRatedArticle) {
       return (
         <View style={styles.arrow}>
-          <AntDesign name="check" size={30} color="white" style={{marginLeft: 10}}/>
-      </View>
+          <AntDesign name="check" size={30} color="white" style={{ marginLeft: 10 }} />
+        </View>
       );
-    }
-
-    else if (!userRatedArticle && this.state.poll){
+    } else if (!userRatedArticle && this.state.poll) {
       return (
         <View style={styles.reliable}>
           <View style={styles.horizontal}>
-            <AntDesign name="right" size={30} color="white" onPress={() => this.readPoll()} style={{marginLeft: 10}}/>
+            <AntDesign name="right" size={30} color="white" onPress={() => this.readPoll()} style={{ marginLeft: 10 }} />
             <Text style={styles.question}>Do you trust this Article?</Text>
-            <View style={{justifyContent: "space-between", flexDirection: "row", width: '60%'}}>
-              <Emoji name="rage" style={{fontSize: 30}} 
-                onPress={() => this.updateScoreIncrease(-2, id)}/>
-              <Emoji name="angry" style={{fontSize: 30}} 
-                onPress={() => this.updateScoreIncrease(-1, id)} />
-              <Emoji name="neutral_face" style={{fontSize: 30}} 
-              onPress={() => this.updateScoreIncrease(0, id)}/>
-              <Emoji name="grinning" style={{fontSize: 30}} 
-                onPress={() => this.updateScoreIncrease(1, id)}/>
-              <Emoji name="innocent" style={{fontSize: 30}} 
-                onPress={() => this.updateScoreIncrease(2, id)}/>
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '60%' }}>
+              <Emoji name="rage"
+                style={{ fontSize: 30 }}
+                onPress={() => this.updateScoreIncrease(-2, id)}
+              />
+              <Emoji name="angry"
+                style={{ fontSize: 30 }}
+                onPress={() => this.updateScoreIncrease(-1, id)}
+              />
+              <Emoji name="neutral_face"
+                style={{ fontSize: 30 }}
+                onPress={() => this.updateScoreIncrease(0, id)}
+              />
+              <Emoji name="grinning"
+                style={{ fontSize: 30 }}
+                onPress={() => this.updateScoreIncrease(1, id)}
+              />
+              <Emoji name="innocent"
+                style={{ fontSize: 30 }}
+                onPress={() => this.updateScoreIncrease(2, id)}
+              />
             </View>
           </View>
         </View>
       );
-    }
-    else{
+    } else {
       return (
-      <View style={styles.arrow}>
-          <AntDesign name="left" size={30} color="white" onPress={() => this.readPoll()}/>
-      </View>
+        <View style={styles.arrow}>
+          <AntDesign name="left" size={30} color="white" onPress={() => this.readPoll()} />
+        </View>
       );
     }
   }
@@ -212,15 +219,15 @@ class ArticleDetail extends Component {
     if (this.props.webView) {
       return (
         <View style={{ flex: 1 }}>
-            <WebView
-              onLoad={() => this.hideSpinner()}
-              style={{ flex: 1 }}
-              source={{ uri: article.urlSource }}
+          <WebView
+            onLoad={() => this.hideSpinner()}
+            style={{ flex: 1 }}
+            source={{ uri: article.urlSource }}
           />
           {this.ArticleReliable(article.id)}
           {this.state.visible && (
             <ActivityIndicator
-              style={{ position: "absolute", top: windowHeight / 2, left: windowWidth / 2 }}
+              style={{ position: 'absolute', top: windowHeight / 2, left: windowWidth / 2 }}
               size="large"
             />
           )}
@@ -229,8 +236,8 @@ class ArticleDetail extends Component {
     } else {
       return (
         <View>
-          
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}> 
+
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.text}>
               <Text style={styles.title}>{article.title}</Text>
               <Text>
@@ -239,7 +246,7 @@ class ArticleDetail extends Component {
                 {article.score}
                 {' '}
               </Text>
-              <HTML html={article.content} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{width: '90%', marginLeft: '5%', marginRight: '5%'}}/>
+              <HTML html={article.content} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{ width: '90%', marginLeft: '5%', marginRight: '5%' }} />
             </View>
           </ScrollView>
           {this.ArticleReliable(article.id)}
@@ -247,8 +254,7 @@ class ArticleDetail extends Component {
       );
     }
   }
-
-};
+}
 
 
 function mapReduxStateToProps(reduxState) {
@@ -259,19 +265,16 @@ function mapReduxStateToProps(reduxState) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return{
-    incrementScore: (id, score) => {
-      dispatch(incrementScore(id, score));
-    },
-    addUserOrganizations: (userid, organizationid) => {
-      dispatch(addUserOrganizations(userid, organizationid));
-    },
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     incrementScore: (id, score) => {
+//       dispatch(incrementScore(id, score));
+//     },
+//     addUserOrganizations: (userid, organizationid) => {
+//       dispatch(addUserOrganizations(userid, organizationid));
+//     },
+//   };
+// };
 
 
-export default connect(mapReduxStateToProps, {incrementScore, addUserOrganizations})(ArticleDetail);
-
-
-
+export default connect(mapReduxStateToProps, { incrementScore, addUserOrganizations })(ArticleDetail);

@@ -69,7 +69,7 @@ class VerifiedScreen extends Component {
     // replace with verified articles later
     if (this.props.verifiedArticles !== undefined && this.props.verifiedArticles !== null && this.props.verifiedArticles.length >= 3) {
       return (
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} decelerationRate={0} snapToInterval={windowHeight * 1.02 } >
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} decelerationRate={0} snapToInterval={windowHeight * 1.02}>
           <View style={{ flexDirection: 'column', width: windowWidth }}>
             <HighlightedNewsTrending key={this.props.verifiedArticles[2].id} article={this.props.verifiedArticles[2]} navigation={this.props.navigation} />
             <View style={smallStoryStyles.seperator} />
@@ -88,12 +88,12 @@ class VerifiedScreen extends Component {
       );
     } else {
       return (
-        <View style={{height:'100%', alignItems:'center'}}>
-          <View style={styles.recbox}/>
-          <View style={{height: '5%'}}/>
-          <View style={{height:'30%', backgroundColor:'#E8E8E8', width:'90%'}}/>
-          <View style={{height: '5%'}}/>
-          <View style={{height:'10%', backgroundColor:'#E8E8E8', width:'90%'}}/>
+        <View style={{ height: '100%', alignItems: 'center' }}>
+          <View style={styles.recbox} />
+          <View style={{ height: '5%' }} />
+          <View style={{ height: '30%', backgroundColor: '#E8E8E8', width: '90%' }} />
+          <View style={{ height: '5%' }} />
+          <View style={{ height: '10%', backgroundColor: '#E8E8E8', width: '90%' }} />
         </View>
       );
     }
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '50%',
     backgroundColor: '#E8E8E8',
-  }
+  },
 });
 
 const smallStoryStyles = StyleSheet.create({

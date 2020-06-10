@@ -11,7 +11,7 @@ const ActionTypes = {
 
 
 const DECREMENT = -1;
-const INCREMENT = 1;
+// const INCREMENT = 1;
 
 const getArticle = (articleID) => {
   return (dispatch) => {

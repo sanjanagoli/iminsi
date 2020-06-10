@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import {
@@ -17,7 +18,7 @@ class SigninScreen extends Component {
 
   render() {
     return (
-      <SignIn navigation={this.props.navigation} route={this.props.route}/>
+      <SignIn navigation={this.props.navigation} route={this.props.route} />
     );
   }
 }

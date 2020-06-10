@@ -10,7 +10,7 @@ const getInterests = () => {
   return (dispatch) => {
     interestsRequest.getInterests()
       .then((response) => {
-        
+        console.log('in interest action', response);
         dispatch({ type: ActionTypes.GET_INTERESTS, payload: response });
       })
       .catch((error) => {

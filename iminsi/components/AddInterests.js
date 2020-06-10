@@ -10,7 +10,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, signUpUser, getAvailableCountries, addInterests, getUserInterests } from '../actions/user';
+import {
+  updateUser, signUpUser, getAvailableCountries, addInterests, getUserInterests,
+} from '../actions/user';
 import { getInterests } from '../actions/interest';
 
 
@@ -69,8 +71,13 @@ class InterestAdder extends Component {
   }
 
   componentDidMount() {
+    console.log('in adder compontent did mount');
     this.props.getInterests(); // interests instead of articles
-
+    if (this.props.currentUser != null && this.props.currentUser !== undefined) {
+      if (this.props.currentUser.id !== undefined && this.props.currentUser.id != null) {
+        this.props.getUserInterests(this.props.currentUser);
+      }
+    }
   }
 
   pillClick = (interest) => {
@@ -97,50 +104,64 @@ class InterestAdder extends Component {
 
 
   render() {
-    // Do not render any interests which we have already seleted 
-    let diff = this.props.interests.filter(({ interestName: name1 }) => !this.props.currentUser.interests.some(({ interestName: name2 }) => name2 === name1));
-    return (
-      <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
-        <View style={stylesTwo.onboardingForm}>
-          {
+    // Do not render any interests which we have already seleted
+    console.log('in interest adder', this.props.currentUser.interests.length);
+    console.log('als in adder', this.props.interests);
+    if (this.props.interests == null || this.props.interests === undefined) {
+      return (
+        <View />
+      );
+    } else {
+      let diff = this.props.interests.filter(({ interestName: name1 }) => !this.props.currentUser.interests.some(({ interestName: name2 }) => name2 === name1));
+      if (this.props.userInterests != null && this.props.userInterests !== undefined) {
+        diff = this.props.interests.filter(({ interestName: name1 }) => !this.props.userInterests.some(({ interestName: name2 }) => name2 === name1));
+      }
+      return (
+        <ScrollView contentContainerStyle={stylesTwo.contentContainer}>
+          <View style={stylesTwo.onboardingForm}>
+            {
             diff.map((interest) => {
-              return <Pill key={interest.interestName} initColor='rgb(158, 158, 158)' clicked={false} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />;
+              return <Pill key={interest.interestName} initColor="rgb(158, 158, 158)" clicked={false} interestObj={interest} name={interest.interestName} pillClick={this.pillClick} />;
             })
           }
-        </View>
-        <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
-
-          <Text style={{
-            fontFamily: 'Baskerville',
-            fontWeight: '300',
-            color: 'rgb(56, 60, 108)',
-            fontSize: 30,
-            textAlign: 'center',
-            paddingTop: '15%',
-            paddingBottom: '5%',
+          </View>
+          <View style={{
+            display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight,
           }}
           >
-            Add some new interests
-          </Text>
-          <TouchableOpacity key={this.props.name}
-            style={{
-              marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
-            }}
-            onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.getUserInterests(this.props.currentUser); this.props.navigation.navigate("For You") }}
-          >
+
             <Text style={{
               fontFamily: 'Baskerville',
-              fontWeight: '200',
-              fontSize: 20,
-              color: 'white',
+              fontWeight: '300',
+              color: 'rgb(56, 60, 108)',
+              fontSize: 30,
+              textAlign: 'center',
+              paddingTop: '15%',
+              paddingBottom: '5%',
             }}
             >
-              Next
-          </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    );
+              Add some new interests
+            </Text>
+            <TouchableOpacity key={this.props.name}
+              style={{
+                marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+              }}
+              onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.getUserInterests(this.props.currentUser); this.props.navigation.navigate('For You'); }}
+            >
+              <Text style={{
+                fontFamily: 'Baskerville',
+                fontWeight: '200',
+                fontSize: 20,
+                color: 'white',
+              }}
+              >
+                Next
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 
@@ -149,12 +170,15 @@ function mapReduxStateToProps(reduxState) {
     allCountries: reduxState.user.availableCountries,
     interests: reduxState.interest.interests,
     currentUser: reduxState.user.currentUser,
+    userInterests: reduxState.user.interests,
 
   };
 }
 
 
-export default connect(mapReduxStateToProps, { addInterests, updateUser, getInterests, signUpUser, getAvailableCountries, getUserInterests })(InterestAdder);
+export default connect(mapReduxStateToProps, {
+  addInterests, updateUser, getInterests, signUpUser, getAvailableCountries, getUserInterests,
+})(InterestAdder);
 
 
 const stylesTwo = StyleSheet.create({

@@ -5,7 +5,7 @@ const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   UPDATE_USER: 'UPDATE_USER',
   AUTH_ERROR: 'AUTH_ERROR',
-  GET_INTERESTS: 'GET_INTERESTS',
+  GET_USER_INTERESTS: 'GET_USER_INTERESTS',
   GET_ORGS: 'GET_ORGS',
   GET_USER_ARTICLES: 'GET_USER_ARTICLES',
   GET_COUNTRIES: 'GET_COUNTRIES',
@@ -24,7 +24,7 @@ const signUpUser = (data, nav, path) => {
         nav.navigate(path, { user: response });
       })
       .catch((error) => {
-        console.log("Sign up failed");
+        console.log('Sign up failed');
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
       });
   };
@@ -39,14 +39,14 @@ const signInUser = (data, nav, path) => {
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
-        console.log("Sign in failed");
+        console.log('Sign in failed');
       });
   };
 };
 
 const signOut = (data, nav, path) => {
   return (dispatch) => {
-    dispatch({ type: ActionTypes.DEAUTH_USER});
+    dispatch({ type: ActionTypes.DEAUTH_USER });
     nav.navigate(path);
   };
 };
@@ -64,13 +64,12 @@ const updateUser = (data) => {
 };
 
 
-
 const getUserInterests = (user) => {
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
         console.log('interests action response', response);
-        dispatch({ type: ActionTypes.GET_INTERESTS, payload: response });
+        dispatch({ type: ActionTypes.GET_USER_INTERESTS, payload: response });
       })
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
@@ -118,11 +117,11 @@ const addUserOrganizations = (userID, organization) => {
   return (dispatch) => {
     userRequest.addUserOrganizations(userID, organization)
       .then((response) => {
-        console.log("org added")
+        console.log('org added');
         dispatch({ type: ActionTypes.ADD_USER_ORGS, payload: response });
       })
       .catch((error) => {
-        console.log(organization)
+        console.log(organization);
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
       });
   };
@@ -153,11 +152,12 @@ const removeUserArticles = (user, article) => {
 };
 
 const addInterests = (user, interests) => {
+  console.log('the user object', user);
   return (dispatch) => {
-    console.log("starjjkted");
+    console.log('starjjkted', interests);
     userRequest.addInterests(user, interests)
       .then((response) => {
-        console.log("started", response);
+        console.log('started', response);
         dispatch({ type: ActionTypes.ADD_INTERESTS, payload: response });
       })
       .catch((error) => {

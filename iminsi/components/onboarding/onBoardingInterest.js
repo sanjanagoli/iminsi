@@ -10,7 +10,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { updateUser, signUpUser, getAvailableCountries, addInterests, getUserInterests } from '../../actions/user';
+import {
+  updateUser, signUpUser, getAvailableCountries, addInterests, getUserInterests,
+} from '../../actions/user';
 import { getInterests } from '../../actions/interest';
 
 
@@ -70,6 +72,7 @@ class onBoardingInterest extends Component {
 
   componentDidMount() {
     this.props.getInterests(); // interests instead of articles
+    console.log('this is the current user', this.props.currentUser);
     this.setState(() => ({
       selectedInterests: [],
     }));
@@ -97,8 +100,6 @@ class onBoardingInterest extends Component {
     }
   }
 
-  
-
 
   render() {
     return (
@@ -110,7 +111,10 @@ class onBoardingInterest extends Component {
             );
           })}
         </View>
-        <View style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight }} >
+        <View style={{
+          display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: windowWidth, height: windowHeight,
+        }}
+        >
 
           <Text style={{
             fontFamily: 'Baskerville',
@@ -122,24 +126,27 @@ class onBoardingInterest extends Component {
             paddingBottom: '5%',
           }}
           >
-            Welcome to Iminsi!  {"\n"}What do you want to read about?
+            Welcome to Iminsi!
+            {' '}
+            {'\n'}
+            What do you want to read about?
           </Text>
           <TouchableOpacity key={this.props.name}
-          style={{
-            marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
-          }}
-          onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.getUserInterests(this.props.currentUser); this.props.navigation.navigate("For You") }}
-        >
-          <Text style={{
-            fontFamily: 'Baskerville',
-            fontWeight: '200',
-            fontSize: 20,
-            color: 'white',
-          }}
+            style={{
+              marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
+            }}
+            onPress={() => { this.props.addInterests(this.props.currentUser, this.state.selectedInterests); this.props.getUserInterests(this.props.currentUser); this.props.navigation.navigate('For You'); }}
           >
-            Next
-          </Text>
-        </TouchableOpacity>
+            <Text style={{
+              fontFamily: 'Baskerville',
+              fontWeight: '200',
+              fontSize: 20,
+              color: 'white',
+            }}
+            >
+              Next
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -156,7 +163,9 @@ function mapReduxStateToProps(reduxState) {
 }
 
 
-export default connect(mapReduxStateToProps, { addInterests, updateUser, getInterests, signUpUser, getAvailableCountries, getUserInterests })(onBoardingInterest);
+export default connect(mapReduxStateToProps, {
+  addInterests, updateUser, getInterests, signUpUser, getAvailableCountries, getUserInterests,
+})(onBoardingInterest);
 
 
 const stylesTwo = StyleSheet.create({
