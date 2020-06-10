@@ -42,7 +42,7 @@ const updateUser = (params) => {
 };
 
 const getInterests = (user) => {
-  console.log(user.id);
+  console.log('in the user action for get user interests', user);
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/user/${user.id}/profileInterests`)
       .then((response) => {

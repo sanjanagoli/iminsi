@@ -168,14 +168,28 @@ class ProfileScreen extends Component {
   newsOrgs() {
     // const profileArticles = this.props.currentUser.profileArticles;
     const trustedSources = this.props.currentUser.trustedOrganizations;
-    if (trustedSources) {
+    console.log('here', trustedSources);
+    if (trustedSources != null && trustedSources.length > 0) {
+      let key = 0;
+      const trustedNames = [];
       return (
         trustedSources.map((newsOrgname) => {
-          return (
-            <View key={newsOrgname.organization.id} style={styles.tile}>
-              <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
-            </View>
-          );
+          console.log('id: ', newsOrgname._id);
+          key += 1;
+          const keyChoice = newsOrgname._id || key;
+          if (!trustedNames.includes(newsOrgname.organization.orgName)) {
+            trustedNames.push(newsOrgname.organization.orgName);
+            return (
+              <View key={keyChoice} style={styles.tile}>
+                <Text style={styles.newsOrg}>{newsOrgname.organization.orgName}</Text>
+              </View>
+            );
+          } else {
+            trustedNames.push(newsOrgname.organization.orgName);
+            return (
+              <View key={keyChoice} />
+            );
+          }
         })
       );
     } else {
