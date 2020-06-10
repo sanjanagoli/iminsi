@@ -1,10 +1,11 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import styles from '../../stylesheets/LoginStyle';
+// import {
+//   Text,
+// } from 'react-native';
+// import { ScrollView } from 'react-native-gesture-handler';
+// import styles from '../../stylesheets/LoginStyle';
 import SignUp from '../../components/onboarding/components/SignUp';
 
 
@@ -17,7 +18,7 @@ class SignupScreen extends Component {
 
   render() {
     return (
-      <SignUp navigation={this.props.navigation} route={this.props.route} navigation={this.props.navigation}/>
+      <SignUp navigation={this.props.navigation} route={this.props.route} />
     );
   }
 }

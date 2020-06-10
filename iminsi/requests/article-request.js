@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//const URL = 'http://localhost:9090/api/article';
+// const URL = 'http://localhost:9090/api/article';
 const URL = 'http://iminsi-api.herokuapp.com/api/article';
 
 const getAllArticles = () => {
@@ -29,7 +29,7 @@ const getArticle = (articleID) => {
 
 
 const updateArticleScore = (articleID, score) => {
-  console.log("in article request")
+  console.log('in article request');
   console.log(articleID);
 
   return new Promise((resolve, reject) => {
@@ -38,8 +38,8 @@ const updateArticleScore = (articleID, score) => {
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("The error is")
-        console.log(error)
+        console.log('The error is');
+        console.log(error);
         reject(error.response.data);
       });
   });

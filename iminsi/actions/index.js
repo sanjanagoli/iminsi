@@ -27,12 +27,16 @@ import {
 } from './user';
 
 import {
+  ActionTypes as interestActionTypes,
   getInterests,
 } from './interest';
 
 // combine all action types
 const ActionTypes = {};
 
+Object.keys(interestActionTypes).forEach((key) => {
+  ActionTypes[key] = interestActionTypes[key];
+});
 
 Object.keys(articleActionTypes).forEach((key) => {
   ActionTypes[key] = articleActionTypes[key];

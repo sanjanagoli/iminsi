@@ -7,6 +7,7 @@ const signUp = (params) => {
   return new Promise((resolve, reject) => {
     axios.post(`${URL}/signup`, params)
       .then((response) => {
+        console.log('in user action', response.data);
         resolve(response.data);
       })
       .catch((error) => {
@@ -45,7 +46,6 @@ const getInterests = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/user/${user.id}/profileInterests`)
       .then((response) => {
-        
         resolve(response.data);
       })
       .catch((error) => {
@@ -56,12 +56,13 @@ const getInterests = (user) => {
 
 const addInterests = (user, interests) => {
   return new Promise((resolve, reject) => {
-    axios.post(`${URL}/user/${user.id}/profileInterests`, { article: interests } )
+    console.log('adding interests', user.id);
+    axios.post(`${URL}/user/${user.id}/profileInterests`, { article: interests })
       .then((response) => {
-        
         resolve(response.data);
       })
       .catch((error) => {
+        console.log('in error');
         console.log(error);
         reject(error.response.data);
       });
@@ -82,7 +83,6 @@ const getOrganizations = (user) => {
 
 const getUserArticles = (user) => {
   return new Promise((resolve, reject) => {
-    
     axios.get(`${URL}/user/${user.__id}/profileArticles`)
       .then((response) => {
         resolve(response.data);
@@ -107,10 +107,8 @@ const getAvailableCountries = () => {
 
 const addUserArticles = (user, article) => {
   return new Promise((resolve, reject) => {
-    
     axios.post(`${URL}/user/${user.id}/profileArticles`, { article })
       .then((response) => {
-        
         resolve(response.data);
       })
       .catch((error) => {
@@ -121,16 +119,15 @@ const addUserArticles = (user, article) => {
 
 const addUserOrganizations = (userID, organization) => {
   return new Promise((resolve, reject) => {
-    
     axios.post(`${URL}/user/${userID}/trustedSources`, { organization })
       .then((response) => {
-        console.log('added User Organization')
+        console.log('added User Organization');
         resolve(response.data);
       })
       .catch((error) => {
-        console.log(error)
-        console.log("organization sent was ")
-        console.log(organization)
+        console.log(error);
+        console.log('organization sent was ');
+        console.log(organization);
         reject(error);
       });
   });
@@ -140,7 +137,6 @@ const removeUserArticles = (user, article) => {
   return new Promise((resolve, reject) => {
     axios.delete(`${URL}/user/${user.id}/profileArticles`, { data: { article } })
       .then((response) => {
-        
         resolve(response.data);
       })
       .catch((error) => {

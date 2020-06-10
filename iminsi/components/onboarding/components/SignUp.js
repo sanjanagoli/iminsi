@@ -3,13 +3,13 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView
+  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
+import { ScrollView } from 'react-native-gesture-handler';
 import { updateUser, signUpUser, getAvailableCountries } from '../../../actions/user';
 import { getInterests } from '../../../actions/interest';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -37,15 +37,13 @@ class SignUp extends Component {
         password: this.state.password,
         country: this.state.country,
       };
-      this.props.signUpUser(data, this.props.navigation, "On Boarding");
-      if (! this.props.loaded){
-        this.setState({failed: true})
+      this.props.signUpUser(data, this.props.navigation, 'On Boarding');
+      if (!this.props.loaded) {
+        this.setState({ failed: true });
       }
     } else {
-      Alert.alert('Warning!',  'Both username and password must be provided',
-      [{text: 'OK', onPress: () => console.log('OK pressed')}]
-      
-      );
+      Alert.alert('Warning!', 'Both username and password must be provided',
+        [{ text: 'OK', onPress: () => console.log('OK pressed') }]);
     }
   }
 
@@ -70,10 +68,10 @@ class SignUp extends Component {
   render() {
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        {this.state.failed && <Text style={{color:"red", fontSize: 15}}>Please enter a different Username!</Text>}
+        {this.state.failed && <Text style={{ color: 'red', fontSize: 15 }}>Please enter a different Username!</Text>}
         <TextInput
           placeholder="Username"
           autoCapitalize="none"
@@ -102,7 +100,7 @@ class SignUp extends Component {
         <TouchableOpacity style={styles.button} onPress={() => { this.onSignup(); }}>
           <Text style={styles.buttonText}>
             Next
-                </Text>
+          </Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -118,13 +116,15 @@ function mapReduxStateToProps(reduxState) {
   };
 }
 
-export default connect(mapReduxStateToProps, { updateUser, getInterests, signUpUser, getAvailableCountries })(SignUp);
+export default connect(mapReduxStateToProps, {
+  updateUser, getInterests, signUpUser, getAvailableCountries,
+})(SignUp);
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 50,
   },
   inputContainer: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'rgb(56, 60, 108)',
     borderWidth: 1,
-    width: '70%'
+    width: '70%',
   },
 
   contentContainer: {

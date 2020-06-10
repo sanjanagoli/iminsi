@@ -2,15 +2,15 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 // import Ionicons from 'react-native-vector-icons/FontAwesome';
 import {
-  Text, Image, Dimensions,
+  Text, Dimensions,
 } from 'react-native';
-import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import VerifiedScreen from '../screens/VerifiedScreen';
+import { FontAwesome } from '@expo/vector-icons';
+// import VerifiedScreen from '../screens/VerifiedScreen';
 import ArticleDetail from '../screens/ArticleDetail';
 import ProfileScreen from '../screens/ProfileScreen';
 import onBoardingInterest from '../components/onboarding/onBoardingInterest';
 
-const windowWidth = Dimensions.get('window').width;
+// const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Stack = createStackNavigator();
@@ -54,23 +54,23 @@ const ProfileScreenTab = () => {
         component={ArticleDetail}
       />
       <Stack.Screen name="On Boarding"
-          options={({ route }) => ({
-            headerTitleAlign: 'center',
-            headerBack: null,
-            headerBackTitleStyle: {
-              color: 'rgb(56, 60, 108)',
-            },
-            headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
-            headerTintColor: 'rgb(56, 60, 108)',
-            headerTitleStyle: {
-              fontWeight: '200',
-              fontSize: 35,
-              color: 'black',
-            },
-            title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add Interests</Text>,
-          })}
-          component={onBoardingInterest}
-        />
+        options={({ route }) => ({
+          headerTitleAlign: 'center',
+          headerBack: null,
+          headerBackTitleStyle: {
+            color: 'rgb(56, 60, 108)',
+          },
+          headerStyle: { backgroundColor: 'white', height: ((71 / 640) * windowHeight) },
+          headerTintColor: 'rgb(56, 60, 108)',
+          headerTitleStyle: {
+            fontWeight: '200',
+            fontSize: 35,
+            color: 'black',
+          },
+          title: <Text style={{ fontFamily: 'Baskerville', color: 'rgb(56, 60, 108)' }}>Add Interests</Text>,
+        })}
+        component={onBoardingInterest}
+      />
     </Stack.Navigator>
   );
 };
