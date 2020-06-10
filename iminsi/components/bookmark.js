@@ -1,9 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
-import { addUserArticles, removeUserArticles, } from '../actions/index';
+import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { addUserArticles, removeUserArticles, getArticles } from '../actions/index';
 
 
 class Bookmark extends Component {
@@ -15,14 +15,11 @@ class Bookmark extends Component {
   }
 
   componentDidMount() {
-
     this.props.currentUser.profileArticles.forEach((art) => {
       if (art.id === this.props.article.id) {
         this.setState({ bookmarked: true });
       }
     });
-
-
   }
 
   handleClick = () => {
@@ -38,10 +35,9 @@ class Bookmark extends Component {
     return (
       <TouchableOpacity onPress={this.handleClick}>
         {
-          (this.state.bookmarked) ?
-            <FontAwesome name="bookmark" style={{ marginRight: 25 }} size={24} color="white" />
-            :
-            <FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />
+          (this.state.bookmarked)
+            ? <FontAwesome name="bookmark" style={{ marginRight: 25 }} size={24} color="white" />
+            : <FontAwesome name="bookmark-o" style={{ marginRight: 25 }} size={24} color="white" />
         }
       </TouchableOpacity>
 

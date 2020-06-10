@@ -4,16 +4,16 @@ import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import BottomNavigation from './navigation/BottomNavigation';
 import { createStackNavigator } from '@react-navigation/stack';
-import rootReducer from './reducers/index';
 import { NavigationContainer } from '@react-navigation/native';
-import SignupScreen from './screens/Signup/SignupScreen';
-import SigninScreen from './screens/Signup/SigninScreen';
-import onBoardingInterest from './components/onboarding/onBoardingInterest';
 import {
   Dimensions, Text,
 } from 'react-native';
+import BottomNavigation from './navigation/BottomNavigation';
+import rootReducer from './reducers/index';
+import SignupScreen from './screens/Signup/SignupScreen';
+import SigninScreen from './screens/Signup/SigninScreen';
+// import onBoardingInterest from './components/onboarding/onBoardingInterest';
 import ArticleDetail from './screens/ArticleDetail';
 import Bookmark from './components/bookmark';
 import ArticleToggle from './components/articleToggle';
@@ -26,7 +26,6 @@ const windowHeight = Dimensions.get('window').height;
 
 
 export default function App(props) {
-
   return (
     <Provider store={store}>
       <>
@@ -47,7 +46,7 @@ export default function App(props) {
                   // fontSize: 35,
                   // color: 'black',
                 },
-                headerTitle: () => { return <ArticleToggle /> },
+                headerTitle: () => { return <ArticleToggle />; },
                 headerRight: () => { return (<Bookmark article={route.params.article} />); },
               })}
               component={ArticleDetail}
@@ -88,7 +87,7 @@ export default function App(props) {
               })}
               component={SignupScreen}
             />
-            
+
           </Stack.Navigator>
         </NavigationContainer>
       </>
