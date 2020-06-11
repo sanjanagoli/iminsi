@@ -177,7 +177,7 @@ class ProfileScreen extends Component {
           console.log('id: ', newsOrgname._id);
           key += 1;
           const keyChoice = newsOrgname._id || key;
-          if (!trustedNames.includes(newsOrgname.organization.orgName)) {
+          if (newsOrgname.organization != null && !trustedNames.includes(newsOrgname.organization.orgName)) {
             trustedNames.push(newsOrgname.organization.orgName);
             return (
               <View key={keyChoice} style={styles.tile}>
@@ -185,7 +185,7 @@ class ProfileScreen extends Component {
               </View>
             );
           } else {
-            trustedNames.push(newsOrgname.organization.orgName);
+            // trustedNames.push(newsOrgname.organization.orgName);
             return (
               <View key={keyChoice} />
             );

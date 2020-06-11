@@ -3,11 +3,11 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView,
+  StyleSheet, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
-import { ScrollView } from 'react-native-gesture-handler';
+// import { ScrollView } from 'react-native-gesture-handler';
 import { updateUser, signUpUser, getAvailableCountries } from '../../../actions/user';
 import { getInterests } from '../../../actions/interest';
 
