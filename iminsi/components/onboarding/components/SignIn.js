@@ -5,7 +5,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions, KeyboardAvoidingView
+  StyleSheet, View, TouchableOpacity, Text, Alert, TextInput, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { signInUser } from '../../../actions/user';
@@ -31,10 +31,8 @@ class SignIn extends Component {
 
       this.setState({ username: '', password: '' });
     } else {
-      Alert.alert('Warning!',  'Both username and password must be provided',
-      [{text: 'OK', onPress: () => console.log('OK pressed')}]
-      
-      );
+      Alert.alert('Warning!', 'Both username and password must be provided',
+        [{ text: 'OK', onPress: () => console.log('OK pressed') }]);
     }
   }
 
@@ -49,11 +47,11 @@ class SignIn extends Component {
     } else {
       return (
         <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
           style={styles.container}
         >
           <TextInput
-            value = {this.state.username}
+            value={this.state.username}
             placeholder="Username"
             autoCapitalize="none"
             style={styles.userInput}
@@ -61,7 +59,7 @@ class SignIn extends Component {
           />
 
           <TextInput
-            value = {this.state.password}
+            value={this.state.password}
             placeholder="Password"
             secureTextEntry
             autoCapitalize="none"
@@ -76,7 +74,7 @@ class SignIn extends Component {
               {/* ON PRESS create navTrigger={() => { this.props.navigation.navigate('onboarding Sources Screen', {}); }} what to pass in the params */}
 
             </Text>
-          </TouchableOpacity> 
+          </TouchableOpacity>
           <Text>Don't have an account?</Text>
           <Text onPress={() => { this.props.navigation.navigate('Sign Up', { parent: 'Sign In' }); }} style={{ color: 'rgb(56, 60, 108)', fontSize: 20 }}> Sign Up Now</Text>
 
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   inputContainer: {
     marginTop: Dimensions.get('screen').height * 0.05,
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'rgb(56, 60, 108)',
     borderWidth: 1,
-    width: '70%'
+    width: '70%',
   },
 
   contentContainer: {

@@ -14,6 +14,7 @@ const ActionTypes = {
   TOGGLE_WEB: 'TOGGLE_WEB',
   ADD_USER_ORGS: 'ADD_USER_ORGS',
   ADD_INTERESTS: 'ADD_INTERESTS',
+  ADD_SELECTED_INTEREST: 'ADD_SELECTED_INTEREST',
 };
 
 const signUpUser = (data, nav, path) => {
@@ -45,10 +46,10 @@ const signInUser = (data, nav, path) => {
   };
 };
 
-const signOut = (data, nav, path) => {
+const signOut = (nav, path) => {
   return (dispatch) => {
     dispatch({ type: ActionTypes.DEAUTH_USER });
-    nav.navigate(path);
+    // nav.navigate(path);
   };
 };
 
@@ -66,6 +67,7 @@ const updateUser = (data) => {
 
 
 const getUserInterests = (user) => {
+  console.log('hello word', user);
   return (dispatch) => {
     userRequest.getInterests(user)
       .then((response) => {
@@ -75,6 +77,13 @@ const getUserInterests = (user) => {
       .catch((error) => {
         dispatch({ type: ActionTypes.AUTH_ERROR, payload: error });
       });
+  };
+};
+
+const addSelectedInterest = (interest, interestsArray) => {
+  interestsArray.push(interest);
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.ADD_SELECTED_INTEREST, payload: interestsArray });
   };
 };
 
@@ -186,6 +195,7 @@ export {
   removeUserArticles,
   toggleWebView,
   addUserOrganizations,
+  addSelectedInterest,
   addInterests,
   signOut,
 };

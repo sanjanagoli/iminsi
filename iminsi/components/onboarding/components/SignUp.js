@@ -3,11 +3,11 @@
 // sign up
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView,
+  StyleSheet, TextInput, TouchableOpacity, Text, Alert, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Autocomplete from 'react-native-autocomplete-input';
-import { ScrollView } from 'react-native-gesture-handler';
+// import { ScrollView } from 'react-native-gesture-handler';
 import { updateUser, signUpUser, getAvailableCountries } from '../../../actions/user';
 import { getInterests } from '../../../actions/interest';
 
@@ -206,24 +206,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const stylesTwo = StyleSheet.create({
-  onboardingForm: {
-    display: 'flex',
-    // flexWrap: true, // check
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: windowHeight / 10,
-  },
-  scroll: {
-    paddingLeft: windowWidth / 50,
-  },
-  pillText: {
-    fontFamily: 'Baskerville',
-  },
-  contentContainer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    width: windowWidth,
-    backgroundColor: 'rgb(250,250,250)',
-  },
-});
+// const stylesTwo = StyleSheet.create({
+//   onboardingForm: {
+//     display: 'flex',
+//     // flexWrap: true, // check
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     height: windowHeight / 10,
+//   },
+//   scroll: {
+//     paddingLeft: windowWidth / 50,
+//   },
+//   pillText: {
+//     fontFamily: 'Baskerville',
+//   },
+//   contentContainer: {
+//     display: 'flex',
+//     justifyContent: 'flex-start',
+//     width: windowWidth,
+//     backgroundColor: 'rgb(250,250,250)',
+//   },
+// });

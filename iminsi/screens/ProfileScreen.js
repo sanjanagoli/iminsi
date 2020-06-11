@@ -9,7 +9,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { getArticles, getUserArticles, getOrganizations } from '../actions/index';
+import {
+  getArticles, getUserArticles, getOrganizations, signOut,
+} from '../actions/index';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -177,7 +179,7 @@ class ProfileScreen extends Component {
           console.log('id: ', newsOrgname._id);
           key += 1;
           const keyChoice = newsOrgname._id || key;
-          if (!trustedNames.includes(newsOrgname.organization.orgName)) {
+          if (newsOrgname.organization != null && !trustedNames.includes(newsOrgname.organization.orgName)) {
             trustedNames.push(newsOrgname.organization.orgName);
             return (
               <View key={keyChoice} style={styles.tile}>
@@ -185,7 +187,6 @@ class ProfileScreen extends Component {
               </View>
             );
           } else {
-            trustedNames.push(newsOrgname.organization.orgName);
             return (
               <View key={keyChoice} />
             );
@@ -254,6 +255,34 @@ class ProfileScreen extends Component {
 
       return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={{ left: (0.65 * windowWidth), top: 10 }}>
+            <TouchableOpacity key={this.props.name}
+              style={{
+              // borderWidth: 5, borderColor: 'rgb(56, 60, 108)',
+                marginTop: 30,
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgb(56, 60, 108)',
+                width: (0.25 * windowWidth),
+                height: (0.04 * windowHeight),
+                marginRight: windowHeight / 50,
+                // display: 'flex',
+                // flexDirection: 'flex-end',
+              }}
+              onPress={() => { this.props.signOut(this.props.navigation, 'ProfileScreen'); }}
+            >
+              <Text style={{
+                fontFamily: 'Baskerville',
+                fontWeight: '200',
+                fontSize: 15,
+                color: 'white',
+              }}
+              >
+                Sign out
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.pictureBackground}>
             <Text style={styles.username}>
               Hi,
@@ -266,7 +295,6 @@ class ProfileScreen extends Component {
               {' '}
               {this.props.currentUser.country}
             </Text>
-
           </View>
           {this.bottomScreen()}
         </ScrollView>
@@ -334,6 +362,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getOrganizations: (user) => {
       dispatch(getOrganizations(user));
+    },
+    signOut: (nav, path) => {
+      dispatch(signOut(nav, path));
     },
   };
 };

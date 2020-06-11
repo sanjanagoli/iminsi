@@ -46,10 +46,11 @@ const getInterests = (user) => {
   return new Promise((resolve, reject) => {
     axios.get(`${URL}/user/${user.id}/profileInterests`)
       .then((response) => {
+        console.log('here we are', response);
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };

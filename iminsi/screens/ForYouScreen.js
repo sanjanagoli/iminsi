@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
-  getArticles, getInterests, getUserArticles, getUserInterests,
+  getArticles, getInterests, getUserArticles, getUserInterests, addSelectedInterest,
 } from '../actions/index';
 import styles from '../stylesheets/ForYouStyle';
 import HighlightedNews from '../components/HighlightedNews';
@@ -76,10 +76,16 @@ class ForYouScreen extends Component {
   }
 
   componentDidMount() {
+    // this.setState({
+    //   selectedInterests: [],
+    // });
     // / this.props.getArticles();
     if (this.props.currentUser != null && this.props.currentUser != undefined) {
       if (this.props.currentUser.id != undefined && this.props.currentUser.id != null) {
-        this.props.getUserInterests(this.props.currentUser);
+        console.log('before', this.props.currentUser.id);
+        const userId = this.props.currentUser.id;
+        this.props.getUserInterests(userId);
+        console.log('after');
       }
     }
     this.props.getInterests();
@@ -271,7 +277,12 @@ class ForYouScreen extends Component {
 
               marginTop: 30, borderRadius: 50, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(56, 60, 108)', width: (0.4 * windowWidth), height: (0.1 * windowHeight), marginRight: windowHeight / 50,
             }}
-            onPress={() => { this.props.navigation.navigate('Sign In', { parent: 'For You' }); }}
+            onPress={() => {
+              this.props.navigation.navigate('Sign In', { parent: 'For You' });
+              this.setState({
+                selectedInterests: [],
+              });
+            }}
           >
             <Text style={{
               fontFamily: 'Baskerville',
@@ -295,6 +306,7 @@ function mapReduxStateToProps(reduxState) {
     articles: reduxState.article.articles,
     currentUser: reduxState.user.currentUser,
     userLoaded: reduxState.user.loaded,
+    // selectedInterestProp: reduxState.user.selectedInterests,
     allInterests: reduxState.user.interests,
     interests: reduxState.interest.interests,
     bookmarked: reduxState.user.articles,
@@ -314,6 +326,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getUserArticles: (user) => {
       dispatch(getUserArticles(user));
+    },
+    addSelectedInterest: () => {
+      dispatch(addSelectedInterest());
     },
   };
 };

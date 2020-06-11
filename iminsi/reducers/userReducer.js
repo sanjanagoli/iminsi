@@ -8,6 +8,7 @@ const initialState = {
   webView: true,
   organizations: [],
   interests: null,
+  selectedInterests: null,
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -16,7 +17,9 @@ const UserReducer = (state = initialState, action) => {
       console.log('reached auth user');
       return { ...state, currentUser: action.payload, loaded: true };
     case ActionTypes.DEAUTH_USER:
-      return { ...state, currentUser: {}, loaded: false };
+      return {
+        ...state, currentUser: null, loaded: false, selectedInterests: null,
+      };
     case ActionTypes.UPDATE_USER:
       return { ...state, currentUser: {} };
     case ActionTypes.GET_COUNTRIES:
@@ -35,6 +38,8 @@ const UserReducer = (state = initialState, action) => {
       return { ...state, organizations: action.payload };
     case ActionTypes.GET_USER_ARTICLES:
       return { ...state, articles: action.payload, loaded: true };
+    case ActionTypes.ADD_SELECTED_INTEREST:
+      return { ...state, selectedInterests: action.payload, loaded: true };
     case ActionTypes.AUTH_ERROR:
       return { ...state, error: action.payload };
     default:
