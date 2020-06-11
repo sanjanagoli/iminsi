@@ -185,7 +185,6 @@ class ProfileScreen extends Component {
               </View>
             );
           } else {
-            // trustedNames.push(newsOrgname.organization.orgName);
             return (
               <View key={keyChoice} />
             );
