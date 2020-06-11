@@ -23,6 +23,7 @@ import {
   removeUserArticles,
   toggleWebView,
   addInterests,
+  addSelectedInterest,
   signOut,
 } from './user';
 
@@ -56,6 +57,7 @@ export {
   decrementScore,
   signUpUser,
   signInUser,
+  addSelectedInterest,
   updateUser,
   getUserInterests,
   getOrganizations,

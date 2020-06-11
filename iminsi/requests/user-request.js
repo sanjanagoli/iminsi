@@ -44,12 +44,12 @@ const updateUser = (params) => {
 const getInterests = (user) => {
   console.log('in the user action for get user interests', user);
   return new Promise((resolve, reject) => {
-    axios.get(`${URL}/user/${user.id}/profileInterests`)
+    axios.get(`${URL}/user/${user}/profileInterests`)
       .then((response) => {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error);
       });
   });
 };
