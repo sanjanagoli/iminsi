@@ -5,7 +5,7 @@
 
 ## Architecture
 
-Backend: https://github.com/dartmouth-cs52-20S/project-api-iminsi
+Backend: https://github.com/sanjanagoli/project-api-iminsi
 
 ## Setup
 
