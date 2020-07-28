@@ -9,7 +9,7 @@ Backend: https://github.com/sanjanagoli/project-api-iminsi
 
 ## Setup
 
-`cd project-iminsi/iminsi` <br />
+`cd iminsi/iminsi` <br />
 Run `expo start` in terminal (need to have Xcode simulator downloaded) <br />
 
 ## Deployment
