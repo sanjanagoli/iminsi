@@ -5,7 +5,7 @@
 
 ## Architecture
 
-Backend: https://github.com/sanjanagoli/project-api-iminsi
+Backend: https://github.com/sanjanagoli/iminsi-api
 
 ## Setup
 
