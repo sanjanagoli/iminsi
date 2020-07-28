@@ -1,4 +1,4 @@
-# Project Name: Iminsi
+# Iminsi
 
 ![Trending](./trending-iminsi.gif)
 ![User](./user-flow%20(1).gif)
